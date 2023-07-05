@@ -1,0 +1,279 @@
+@import "/src/styles.scss";
+
+header.header {
+  width: calc(100% - 250px);
+  height: auto;
+  background-color: $light;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  transition: all 0.5s;
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+
+    .heading {
+      @include itemPosition(center, flex-start);
+      gap: 10px;
+
+      i {
+        color: $dark;
+        cursor: pointer;
+        font-size: 26px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      position: relative;
+
+      .notification {
+        @include roundShape(50px, 50px, $light);
+        color: rgba($color: $dark, $alpha: 0.3);
+        position: relative;
+        cursor: pointer;
+
+        i {
+          font-size: 25px;
+        }
+
+        i.update {
+          position: absolute;
+          font-size: 9px;
+          color: $primary;
+          top: 16px;
+          right: 14px;
+        }
+      }
+
+      .notificationBox {
+        background-color: $light;
+        position: absolute;
+        top: 70px;
+        right: 10px;
+        width: 300px;
+        padding: 10px;
+        border: 1px solid rgba($color: $primary, $alpha: 0.5);
+        border-radius: 15px;
+        .notificaionHeader {
+          @include itemPosition(center, space-between);
+          gap: 15px;
+          .close {
+            i {
+              color: $primary;
+            }
+          }
+        }
+        .notificationList {
+          max-height: 300px;
+          overflow: auto;
+          margin: 10px 0;
+          .notificationText {
+            i {
+              color: $primary;
+            }
+          }
+        }
+      }
+
+      .profileDetails {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .profileImage {
+          width: 50px;
+          height: 50px;
+          @include itemPosition(center, center);
+
+          img {
+            width: 100%;
+            border-radius: 50%;
+            height: 100%;
+          }
+        }
+
+        .profileText {
+          @include itemPosition(flex-start, flex-start);
+          gap: 10px;
+          flex: 1;
+          p.smallText {
+            overflow-wrap: anywhere;
+          }
+
+          p.category {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.notification-container {
+  cursor: default;
+  height: 185px;
+  overflow-y: auto;
+  font-weight: 300;
+  background: white;
+  border-radius: 0.5rem;
+  box-sizing: border-box;
+  box-shadow: 0.5rem 0.5rem 2rem #0003;
+  animation-name: dropPanel;
+  animation-iteration-count: 1;
+  animation-timing-function: all;
+  animation-duration: 0.75s;
+  text-align: left;
+}
+
+.notification-container h3 {
+  text-transform: uppercase;
+  font-size: 12px !important;
+  font-weight: 600;
+  color: #84929f;
+  padding: 5px 20px;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+@media only screen and (max-width: 1400px) {
+  header.header {
+    width: calc(100% - 220px);
+    height: auto;
+
+    .content {
+      .heading {
+        i {
+          color: $dark;
+          cursor: pointer;
+          font-size: 26px;
+        }
+
+        h1 {
+          font-size: 25px;
+        }
+      }
+
+      .profile {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+
+        .notification {
+          @include roundShape(30px, 30px, $light);
+          color: rgba($color: $dark, $alpha: 0.3);
+          position: relative;
+
+          i {
+            font-size: 20px;
+          }
+
+          i.update {
+            font-size: 9px;
+            top: 5px;
+            right: 5px;
+          }
+          p {
+            font-size: 9px;
+          }
+        }
+
+        .notificationBox {
+          top: 40px;
+        }
+
+        .profileDetails {
+          .profileImage {
+            width: 30px;
+            height: 30px;
+          }
+
+          .profileText {
+            p.category {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  header.header {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  header.header {
+    height: auto;
+
+    .content {
+      .heading {
+        h1 {
+          font-size: 20px;
+        }
+      }
+
+      .profile {
+        gap: 20px;
+
+        .notification {
+          @include roundShape(30px, 30px, $light);
+
+          i {
+            font-size: 25px;
+          }
+
+          i.update {
+            font-size: 9px;
+            top: 6px;
+            right: 5px;
+          }
+        }
+
+        .profileDetails {
+          // .profileImage {
+          //   width: 28px;
+          // }
+
+          .profileText {
+            p {
+              font-size: 10px;
+              font-weight: 500;
+            }
+
+            p.category {
+              font-size: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dropdown-item {
+  padding: 0.25rem 1rem !important;
+}
+
+.dropdown-item:active {
+  background-color: $primary !important;
+  color: $light !important;
+  padding: 0.25rem 1rem !important;
+}
+
+.dropdown-menu {
+  padding: 0;
+}

@@ -1,0 +1,105 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="calenderTabs"></div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i class="fa-solid fa-chevron-left" (click)="goBack()"></i>
+          </div>
+
+          <h2 class="mb-0">Sessions</h2>
+        </div>
+
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <input
+              type="text"
+              class="form-control border-end-0 form-control-lg"
+              placeholder="Search"
+              style="font-size: 13px"
+              (keyup)="onKeyUpEvent($event)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab">
+    <div class="tabContent">
+      <div class="row">
+        <div class="col-xl-4 col-md-6" *ngFor="let data of allData">
+          <div
+            class="content"
+            [routerLink]="['/mentor/mentor-dashboard/ratings']"
+            [queryParams]="{ _id: data._id }"
+          >
+            <div class="contentDetail">
+              <div class="image">
+                <img
+                  *ngIf="data?.image"
+                  [src]="showImage + data.image"
+                  alt="Image"
+                />
+                <img
+                  *ngIf="!data?.image"
+                  src="../../../../assets/images/currentsession1.png"
+                  alt=""
+                />
+              </div>
+              <div class="text">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>{{ data.start_date | date : "mediumDate" }} </span>
+                  {{ data.time }}
+                </div>
+                <h5 class="title">{{ data?.session_name }}</h5>
+                <h2>Rating</h2>
+                <div class="d-flex">
+                  <span>{{ data?.averageRating }}</span>
+
+                  <div class="starBox">
+                    <ng-container
+                      *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                    >
+                      <ng-container *ngIf="i < data?.averageRating">
+                        <ng-container *ngIf="data?.averageRating - i < 1">
+                          <i class="fa-solid fa-star-half-stroke"></i>
+                        </ng-container>
+                        <ng-container *ngIf="data?.averageRating - i >= 1">
+                          <i class="fa-solid fa-star"></i>
+                        </ng-container>
+                      </ng-container>
+                      <ng-container *ngIf="i >= data?.averageRating">
+                        <i class="fa-regular fa-star"></i>
+                      </ng-container>
+                    </ng-container>
+                    <span
+                      [innerHTML]="
+                        !data?.averageRating
+                          ? '<span class=\'new\'>NEW</span>'
+                          : ''
+                      "
+                    ></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="check" *ngIf="allData?.length === 0">
+          No Session Found Yet
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,764 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon" (click)="back()">
+            <i class="fa-solid fa-chevron-left"></i>
+            <!-- [routerLink]="['/mentee/mentee-dashboard/session']" -->
+          </div>
+          <p class="mb-0">Session Details</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout" *ngIf="render">
+    <div class="row">
+      <div class="col-12">
+        <div class="sessionContent">
+          <div class="sessionImage">
+            <img
+              *ngIf="oneSessionDetail?.image"
+              [src]="showImage + oneSessionDetail?.image"
+              class="img-fluid"
+              alt="Image"
+            />
+            <img
+              *ngIf="!oneSessionDetail?.image"
+              src="../../../../../../assets/images/sessions.png"
+              class="img-fluid"
+              alt=""
+            />
+            <!-- <img src="../../../../../../assets/images/tabImage1.png" alt="" /> -->
+          </div>
+          <div class="sessionText">
+            <h3>
+              {{
+                oneSessionDetail?.session_name
+                  ? oneSessionDetail?.session_name
+                  : "-"
+              }}
+            </h3>
+            <p>
+              <i class="fa-solid fa-calendar-days"></i> &nbsp;
+              <span>{{
+                oneSessionDetail?.start_date | date : "mediumDate"
+              }}</span
+              >&nbsp; <i class="fa-regular fa-clock"></i>&nbsp;
+              <span
+                >{{
+                  oneSessionDetail?.time
+                    ? (oneSessionDetail?.time | timeFormat)
+                    : "-"
+                }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="sessionContent">
+          <div class="sessionDescription">
+            <h3 class="mb-2">Session Description</h3>
+            <p>
+              {{
+                oneSessionDetail?.description
+                  ? oneSessionDetail?.description
+                  : "-"
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="mode == 1">
+      <div class="col-12">
+        <div class="sessionoptions">
+          <div class="sessionpart">
+            <p>Session duration</p>
+            <h4>
+              {{
+                oneSessionDetail?.session_duration
+                  ? oneSessionDetail?.session_duration
+                  : "-"
+              }}hour(s)
+            </h4>
+          </div>
+          <div class="sessionpart">
+            <p>Session Link</p>
+            <h4>
+              <a>{{
+                oneSessionDetail?.session_link
+                  ? oneSessionDetail?.session_link
+                  : "-"
+              }}</a>
+              <i
+                class="fa-regular fa-clone cursor-pointer"
+                (click)="copyText()"
+              >
+              </i>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="offlineoptions">
+          <div
+            class="offlinepart"
+            data-toggle="modal"
+            data-target="#bookProgram"
+          >
+            <div class="location">
+              <img
+                src="../../../../../../assets/images/icon/giveTip.svg"
+                alt=""
+              />
+              <p class="mb-0">Give Tip to Mentor</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+
+          <div
+            class="offlinepart"
+            *ngIf="type"
+            [routerLink]="['/mentee/mentee-dashboard/raise-dispute']"
+            [queryParams]="{ session_id: oneSessionDetail?._id }"
+          >
+            <div class="location">
+              <img
+                src="../../../../../../assets/images/icon/dispute.svg"
+                alt=""
+              />
+              <p class="mb-0">Raise a Dispute</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+          <!-- <div class="offlinepart" [routerLink]="['/mentee/mentee-dashboard/view-ratings']"
+            [queryParams]="{ session_id: oneSessionDetail?._id}">
+            <div class="location">
+              <img src="../../../../../../assets/images/icon/viewrating.svg" alt="" />
+              <p class="mb-0">View Ratings</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="mode == 0">
+      <div class="col-12">
+        <div class="sessionoptions">
+          <div class="sessionpart">
+            <p>Session duration</p>
+            <h4>
+              {{
+                oneSessionDetail?.session_duration
+                  ? oneSessionDetail?.session_duration
+                  : "-"
+              }}
+              hour(s)
+            </h4>
+          </div>
+          <div class="sessionpart">
+            <p>Location</p>
+            <h4>
+              {{
+                oneSessionDetail?.location ? oneSessionDetail?.location : "-"
+              }}
+            </h4>
+          </div>
+          <div class="sessionpart">
+            <div class="icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="offlineoptions">
+          <div
+            class="offlinepart"
+            data-toggle="modal"
+            data-target="#bookProgram"
+          >
+            <div class="location">
+              <img
+                src="../../../../../../assets/images/icon/giveTip.svg"
+                alt=""
+              />
+              <p class="mb-0">Give Tip to Mentor</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+          <div
+            *ngIf="type"
+            class="offlinepart"
+            [routerLink]="['/mentee/mentee-dashboard/raise-dispute']"
+            [queryParams]="{ session_id: oneSessionDetail?._id }"
+          >
+            <div class="location">
+              <img
+                src="../../../../../../assets/images/icon/dispute.svg"
+                alt=""
+              />
+              <p class="mb-0">Raise a Dispute</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+          <div [style.display]="canTrack === true ? 'block' : 'none'">
+            <div class="offlinepart" *ngIf="!(sessionCanceled || present)">
+              <div class="location" (click)="goTomap()">
+                <img
+                  src="../../../../../../assets/images/icon/location.svg"
+                  alt=""
+                />
+                <p class="mb-0">Track Trip</p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <div [style.display]="canTrack === true ? 'block' : 'none'">
+            <div class="offlinepart" *ngIf="sessionCanceled !== true">
+              <div
+                class="location"
+                data-target="#sharelocation"
+                data-toggle="modal"
+              >
+                <img
+                  src="../../../../../../assets/images/icon/3blackusers.svg"
+                  alt=""
+                />
+                <p class="mb-0">Share location & Meeting Info</p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+
+          <!-- <div class="offlinepart" [routerLink]="['/mentee/mentee-dashboard/view-ratings']"
+            [queryParams]="{ session_id: oneSessionDetail._id}">
+            <div class="location">
+              <img src="../../../../../../assets/images/icon/viewrating.svg" alt="" />
+              <p class="mb-0">View Ratings</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div> -->
+          <div [style.display]="canTrack === true ? 'block' : 'none'">
+            <div
+              *ngIf="!(sessionCanceled || present)"
+              class="offlinepart2"
+              data-target="#haveyoumetmentor"
+              data-toggle="modal"
+            >
+              <p class="mb-0">Have you met Mentor ?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3" *ngIf="mode == 0">
+      <div class="col text-right" *ngIf="!type">
+        <div class="buttonsPairAllignments">
+          <div *ngIf="!isTodayDateGreaterThanTrimDate">
+            <button
+              class="btn btn-main-outline"
+              [disabled]="sessionCanceled === true"
+              (click)="cancelMeeting()"
+            >
+              Cannot Attend Session
+            </button>
+          </div>
+          <!-- <div [style.display]="canTrack === true ? 'block' : 'none'">
+            <button
+              [disabled]="sessionCanceled === true || present === true"
+              class="btn btn-main"
+            >
+              Start Trip
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3" *ngIf="mode == 1">
+      <div class="col text-right" *ngIf="!type">
+        <div
+          *ngIf="!isTodayDateGreaterThanTrimDate"
+          class="buttonsPairAllignments"
+        >
+          <button
+            [disabled]="sessionCanceled === true"
+            class="btn btn-main"
+            (click)="cancelMeeting()"
+          >
+            Cannot Attend Session
+          </button>
+          <!-- <button class="btn btn-main" (click)="cancelMeeting()">Cannot Attend Session</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Give Tip  -->
+<div
+  class="modal fade"
+  id="giveTip"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Give Tip to Mentor</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <img
+              src="../../../../../../assets/images/giveTip.png"
+              alt=""
+              class="w-50 d-block m-auto"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 p-3 form">
+            <label for="giveTip" class="px-2">Tip Amount</label>
+            <div class="inputField">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Tip Amount"
+              />
+            </div>
+            <button class="btn btn-main mt-3">Give Tip</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- card payment modal -->
+
+<div
+  class="modal fade"
+  id="bookProgram"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Give a Tip</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="tipForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <div class="AmountBox">
+                <h4>Amount to Pay</h4>
+                <div class="inputField">
+                  <p class="dollarprice">
+                  <span>$</span>
+                  <input
+                    type="sting"
+                    class="form-control"
+                    (keypress)="onlyNumbers($event)"
+                    formControlName="amount"
+                    placeholder="Tip Amount"
+                    [ngClass]="{ 'is-invalid': submitted && tipForm.get('amount')!.errors?.['required']}"
+                    max="10000000"
+                    min="1"
+                  />
+                </p>
+                  <div
+                    *ngIf="submitted && tipForm.controls['amount']!.errors"
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="tipForm.controls['amount']!.errors?.['required']"
+                    >
+                      Amount is required
+                    </div>
+                    <div *ngIf="tipForm.controls['amount']!.errors?.['min']">
+                      Minimum 1 can be set
+                    </div>
+                  </div>
+                </div>
+                <!-- <h3>{{allData.price | currency}}</h3> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6 mb-2" data-dismiss="modal">
+            <button
+              class="btn btn-main"
+              routerLink="/mentee/mentee-dashboard/add-account"
+            >
+              Add Card
+            </button>
+          </div>
+          <!-- <div class="row">
+            <div class="col-12">
+              <h5>Pay From</h5>
+              <div class="bankcard">
+                <div class="cardList" *ngFor="let card of cardDetails">
+                  <div class="bankIcon" *ngIf="card.brand == 'Visa'">
+                    <img class="m-0" src="../../../../../../assets/images/visacard.png" alt="" />
+                  </div>
+                  <div class="bankIcon" *ngIf="card.brand == 'Mastercard'">
+                    <img src="../../../../../../assets/images/Mastercard.png" alt="" />
+                  </div>
+                  <div class="bankIcon" *ngIf="card.brand == 'American Express'">
+                    <img src="../../../../../../assets/images/american-express.png" alt="" />
+                  </div>
+                  <div class="bankIcon" *ngIf="card.brand == ''">
+                    <p>Card</p>
+                  </div>
+                  <div class="backText" data-dismiss="modal" routerLink="/mentee/mentee-dashboard/add-account">
+                    <p class="mb-0">Pay via Card</p>
+                    <div><span>xxx xxxx xxxx {{card.last4}}</span></div>
+                  </div>
+                </div>
+                <div class="nextArrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-main" data-toggle="modal" data-target="#paymentMethods" data-dismiss="modal">
+                Proceed to Pay
+              </button>
+            </div> 
+          </div> -->
+          <div class="row">
+            <div class="col-12">
+              <h5 *ngIf="cardDetails.length > 0">Pay From</h5>
+              <div class="bankcard d-block">
+                <div class="cardList" *ngFor="let card of cardDetails">
+                  <div class="bankIcon col-md-3" *ngIf="card.brand == 'Visa'">
+                    <img
+                      class="m-0"
+                      src="../../../../../../assets/images/visacard.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="bankIcon" *ngIf="card.brand == 'MasterCard'">
+                    <img
+                      src="../../../../../../assets/images/Mastercard.png"
+                      alt=""
+                    />
+                  </div>
+                  <div
+                    class="bankIcon"
+                    *ngIf="card.brand == 'American Express'"
+                  >
+                    <img
+                      src="../../../../../../assets/images/american-express.png"
+                      alt=""
+                    />
+                  </div>
+                  <div class="bankIcon" *ngIf="card.brand == ''">
+                    <p>Card</p>
+                  </div>
+                  <!-- <div *ngIf="!tipForm.valid">
+                    <p>Please enter amount greater than 0</p>
+                  </div> -->
+                  <div
+                    *ngIf="tipForm.valid"
+                    class="backText col-md-9"
+                    data-dismiss="modal"
+                    data-toggle="modal"
+                    data-target="#cardselected"
+                    (click)="getid(card.id)"
+                  >
+                    <p class="mb-0">Pay via Card</p>
+                    <div>
+                      <span>xxx xxxx xxxx {{ card.last4 }}</span>
+                    </div>
+                  </div>
+                  <div>
+                    <i
+                      class="fa-solid fa-trash-can"
+                      (click)="deleteCard(card.customer, card.id)"
+                    ></i>
+                  </div>
+                </div>
+                <!-- <div></div> -->
+                <!-- <div class="nextArrow">
+                  <i class="fa-solid fa-chevron-right"></i>
+                </div> -->
+              </div>
+            </div>
+            <!-- <div class="col-12">
+              <button class="btn btn-main" data-toggle="modal" data-target="#paymentMethods" data-dismiss="modal">
+                Proceed to Pay
+              </button>
+            </div> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Method Popup -->
+<div
+  class="modal fade"
+  id="paymentMethods"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Method</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-5">
+          <ngx-stripe-card
+            [options]="cardOptions"
+            [elementsOptions]="elementsOptions"
+          ></ngx-stripe-card>
+          <button
+            (click)="createToken()"
+            class="btn btn-main"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            Pay
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- share location and meeting info modal start   -->
+<div
+  class="modal fade"
+  id="sharelocation"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Share Location & Meeting Info</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="sharelocationForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+              <!-- <label class="invaliddiv">*</label>  -->
+              <input
+                type="email"
+                placeholder="email"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && sharelocationForm.get('email')!.errors?.['required']}"
+                class="form-control"
+              />
+
+              <div
+                *ngIf="submitted && sharelocationForm.controls['email']!.errors"
+                class="invaliddiv"
+              >
+                <div
+                  *ngIf="sharelocationForm.controls['email']!.errors?.['required']"
+                >
+                  Email is required
+                </div>
+                <div
+                  *ngIf="sharelocationForm.controls['email']!.errors?.['email']"
+                >
+                  Email must be a valid email address
+                </div>
+              </div>
+              <br />
+              <!-- <label class="invaliddiv">*</label>   -->
+
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="6"
+                class="form-control"
+                placeholder="text here..."
+                value="{{ shareDetail }}"
+              >
+              </textarea>
+              <!--  [ngClass]="{ 'is-invalid': submitted && sharelocationForm.get('body')!.errors?.['required']}" -->
+              <!-- <div *ngIf="submitted && sharelocationForm.controls['body']!.errors" class="invaliddiv">
+                <div *ngIf="sharelocationForm.controls['body']!.errors?.['required']"> This field is required
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center my-4"></div>
+            <div class="col-12">
+              <!-- [disabled]="sharelocationForm.invalid" -->
+              <button
+                (click)="sendEmail()"
+                data-dismiss="modal"
+                [disabled]="sharelocationForm.invalid"
+                class="btn btn-main"
+              >
+                Send Mail
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- share location and meeting info modal end   -->
+
+<!-- share Have you met mentor modal start   -->
+
+<div
+  class="modal fade"
+  id="haveyoumetmentor"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="closemodaldelete"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center p-4">
+        <h5 class="">Have you met the mentor?</h5>
+      </div>
+      <div class="deletePairAllignments">
+        <button type="button" class="btn btn-grey" data-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          (click)="markAttendance()"
+          data-dismiss="modal"
+          class="btn btn-main"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Have you met mentor modal end   -->
+
+<div
+  class="modal fade"
+  id="cardselected"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Method</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <h4>Ready to proceed with the payment?</h4>
+          </div>
+          <div class="col-12 d-flex p-2">
+            <div class="col-md-6 mr-2">
+              <button data-dismiss="modal" class="btn btn-main">Close</button>
+            </div>
+
+            <div class="col-md-6">
+              <button
+                (click)="cardSelected()"
+                data-dismiss="modal"
+                class="btn btn-main"
+              >
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

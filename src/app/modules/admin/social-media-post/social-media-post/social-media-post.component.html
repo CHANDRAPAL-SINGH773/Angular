@@ -1,0 +1,157 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-6 text-start">
+        <h4 class="fs-28 fw-bold">Social Media Post</h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select class="form-select me-3">
+            <option value="">All</option>
+            <option value="false">Pending</option>
+            <option value="true">Approved</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0" placeholder="Search" style="font-size: 13px" />
+            <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0 rounded">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>Post Url</th>
+                  <th>Post By</th>
+                  <th>Email</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="
+                    let data of socialMediaData
+                      | paginate
+                        : {
+                            itemsPerPage: 10,
+                            currentPage: mediaPost_page,
+                            totalItems: totaldocs
+                          }
+                  ">
+                  <td data-label="First Name">
+                    <a target="”_blank" href="{{ data.media_post }}">{{
+                      data.media_post
+                      }}</a>
+                  </td>
+
+                  <td data-label="postBy">
+                    {{ data.userData[0].firstName ? data.userData[0].firstName : "-" }}
+                    {{ data.userData[0].lastName ? data.userData[0].lastName : "-" }}
+                  </td>
+
+                  <td data-label="email">
+                    {{ data.userData[0].email ? data.userData[0].email : "-" }}
+                  </td>
+
+                  <td data-label="Status" [style.color]="
+                      data.status === 1
+                        ? 'green'
+                        : data.status === 2
+                        ? 'red'
+                        : 'orange'
+                    ">
+                    {{
+                    data.status === 1
+                    ? "Approved"
+                    : data.status === 2
+                    ? "Disapproved"
+                    : "Pending"
+                    }}
+                  </td>
+                  <td data-label="Action">
+                    <p class="d-flex justify-content-end justify-content-lg-start">
+                      <button class="main-round-btn" data-toggle="modal" data-target="#editPost">
+                        <i class="bi bi-pencil" title="Edit" (click)="clickAction(data._id)"></i>
+                      </button>
+                      <!-- <button class="secondary-round-btn" [routerLink]="['/admin-user-profile']">
+                                                <i class="bi bi-eye" title="View"></i>
+                                            </button> -->
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+              <!-- <pagination-controls (pageChange)="pageChange($event)" id="second" previousLabel="" nextLabel=""
+                  autoHide="true"></pagination-controls> -->
+            </table>
+            <pagination-controls (pageChange)="pageChange($event)" (pageChange)="mediaPost_page = $event">
+            </pagination-controls>
+            <!-- <div class="check" *ngIf="patientList?.length === 0">
+                <h1 class="text-center w-100">
+                  {{ "Physician.pages.Patients.norecord" | translate }}
+                </h1>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="modal fade" id="editPost" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered deleteModel modal-sm" role="document">
+    <div class="modal-content">
+      <form [formGroup]="socialMediaApprovalForm">
+        <div class="modal-body text-center">
+          <h4 class="my-3">Are you sure you want to change the status</h4>
+          <div class="deleteIcon">
+            <!-- <i class="fa-solid fa-trash-can"></i> -->
+            <div class="inputField">
+              <select id="selectProgram" class="form-control" (change)="showlocation($event)"
+                formControlName="media_postApproval"
+                [ngClass]="{ 'is-invalid': submitted && socialMediaApprovalForm.get('media_postApproval')!.errors?.['required']}">
+                <option value="2">Disapproved</option>
+                <option value="1">Approved</option>
+              </select>
+              <div *ngIf="
+                  submitted &&
+                  socialMediaApprovalForm.controls['media_postApproval']!.errors
+                " class="invaliddiv">
+                <div *ngIf="socialMediaApprovalForm.controls['media_postApproval']!.errors?.['required']">
+                  Mentorship Mode is required
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="deletePairAllignments">
+            <button type="button" class="btn btn-grey m-2" data-dismiss="modal">
+              No
+            </button>
+            <button type="button" data-dismiss="modal" class="btn btn-main m-2" (click)="editpath()">
+              Yes
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

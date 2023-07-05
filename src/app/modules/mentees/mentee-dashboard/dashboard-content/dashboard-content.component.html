@@ -1,0 +1,279 @@
+<div class="container-fluid">
+  <div class="row" *ngIf="role !== 10">
+    <div class="col">
+      <div class="filterBar">
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search"
+              (keyup)="onKeyUpEvent($event)"
+            />
+          </div>
+          <!-- <div class="icon">
+            <i class="fa-solid fa-filter"></i>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row sessions" *ngIf="role !== 10">
+    <div class="col-12">
+      <div class="content">
+        <div class="sessionTitle">
+          <h4>Current Sessions</h4>
+        </div>
+        <div class="row">
+          <div class="col-xl-3 col-sm-6" *ngFor="let data of AllData">
+            <div class="sessionData">
+              <div class="image">
+                <img
+                  *ngIf="data?.sessionImage"
+                  [src]="showImage + data.sessionImage"
+                  class="img-fluid"
+                  alt="Image"
+                />
+                <img
+                  *ngIf="!data?.sessionImage"
+                  src="../../../assets/images/sessions.png"
+                  class="img-fluid"
+                  alt=""
+                />
+              </div>
+              <div
+                class="textData"
+                [routerLink]="['/mentee/mentee-dashboard/added-sessions']"
+                [queryParams]="{
+                  session_id: data.sessionId,
+                  mode: data.mentorship_mode
+                }"
+              >
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span
+                    >{{
+                      data.start_date
+                        ? (data.start_date | date : "mediumDate")
+                        : "-"
+                    }}
+                  </span>
+                  |
+                  {{ data.time ? (data.time | timeFormat) : "-" }}
+                </div>
+                <h6 class="mt-2">
+                  {{ data.categoryName ? data.categoryName : "-" }}
+                </h6>
+                <h5 class="mt-2">
+                  {{ data.programName ? data.programName : "-" }}
+                </h5>
+                <h6 class="mt-2">
+                  {{ data.sessionName ? data.sessionName : "-" }}
+                </h6>
+                <!-- <p>
+                  {{ data.sessionDescription ? data.sessionDescription : "-" }}
+                </p> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="AllData.length <= 0">
+      <p class="text-center my-4">No current sessions available</p>
+    </div>
+  </div>
+  <div class="row sessions">
+    <div class="col-12">
+      <div class="content">
+        <div class="row">
+          <div class="col sessionTitle">
+            <h4>Trending Programs</h4>
+            <!-- <p>Become a Scrum Master</p> -->
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="col-xl-3 col-sm-6 mt-3"
+            *ngFor="
+              let item of oneUserData
+                | paginate
+                  : {
+                      itemsPerPage: 10,
+                      currentPage: mentorship_page,
+                      totalItems: totaldocs
+                    }
+            "
+          >
+            <div
+              class="sessionData"
+              [routerLink]="['/mentee/mentee-dashboard/programs']"
+              [queryParams]="{ programid: item._id }"
+            >
+              <div class="image">
+                <img
+                  *ngIf="item?.image"
+                  [src]="showImage + item?.image"
+                  class="img-fluid"
+                  alt=""
+                />
+                <img
+                  *ngIf="item?.verify_badge"
+                  src="../../../../../assets/images/medal.png"
+                  alt=""
+                  class="medal"
+                />
+                <img
+                  *ngIf="!item?.image"
+                  src="../../../assets/images/sessions.png"
+                  class="img-fluid"
+                  alt=""
+                />
+                <!-- <img src="../../../assets/images/currentsession1.png" alt="" /> -->
+              </div>
+              <div class="textData">
+                <div class="time xsmallText mt-2">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>{{ item.start_date | date : "mediumDate" }}</span>
+                  <!-- <span>03-16-2022 | 03:50 PM</span> -->
+                </div>
+                <h6 class="mt-2">
+                  {{
+                    item.category.categoryName
+                      ? item.category.categoryName
+                      : "-"
+                  }}
+                </h6>
+                <h5 class="mt-2">
+                  {{ item.mentorship_name ? item.mentorship_name : "-" }}
+                </h5>
+                <div class="ratings mt-2">
+                  <div class="price">
+                    <h6>{{ item.price | currency }}</h6>
+                  </div>
+                </div>
+              </div>
+              <div class="experence">
+                <div class="profile">
+                  <div class="image2">
+                    <img
+                      *ngIf="item?.userimage"
+                      [src]="showImage + item.userimage"
+                      class="img-fluid"
+                      alt="Image"
+                    />
+                    <img
+                      *ngIf="!item?.userimage"
+                      src="../../../../assets/images/sessions.png"
+                      class="img-fluid"
+                      alt=""
+                    />
+                    <img
+                      src="../../../../../assets/images/icon/verify.svg"
+                      alt=""
+                      class="verify"
+                      *ngIf="item?.userbadge === true"
+                    />
+                  </div>
+                  <div class="text2">
+                    <h6 class="mb-0">
+                      {{ item.verified_badge }}
+                      {{ item.firstName ? item.firstName : "-" }}
+                      {{ item.lastName ? item.lastName : "-" }}
+                    </h6>
+                    <p class="mb-0">
+                      {{ item.experience ? item.experience : "-" }} Experience
+                    </p>
+                  </div>
+                </div>
+                <div class="stars">
+                  <i *ngIf="item.rating" class="fas fa-star"></i>
+                  <span [ngClass]="{ new: !item.rating }">{{
+                    item.rating ? item.rating : "NEW"
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <pagination-controls
+            class="mt-5"
+            (pageChange)="pageChange($event)"
+          ></pagination-controls>
+          <!-- <div class="col-xl-3 col-sm-6">
+            <div class="sessionData">
+              <div class="image">
+                <img src="../../../assets/images/currentsession1.png" alt="" />
+              </div>
+              <div class="textData">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>03-16-2022 | 03:50 PM</span>
+                </div>
+                <h6>Career Consultation</h6>
+                <h5>Economics Nature</h5>
+                <div class="ratings">
+                  <div class="price">
+                    <h6>$14.99</h6>
+                  </div>
+                  <div class="stars">
+                    <i class="fa-solid fa-star"></i> <span> 4.5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6">
+            <div class="sessionData">
+              <div class="image">
+                <img src="../../../assets/images/currentsession1.png" alt="" />
+              </div>
+              <div class="textData">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>03-16-2022 | 03:50 PM</span>
+                </div>
+                <h6>Career Consultation</h6>
+                <h5>Economics Nature</h5>
+                <div class="ratings">
+                  <div class="price">
+                    <h6>$14.99</h6>
+                  </div>
+                  <div class="stars">
+                    <i class="fa-solid fa-star"></i> <span> 4.5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-xl-3 col-sm-6">
+            <div class="sessionData">
+              <div class="image">
+                <img src="../../../assets/images/currentsession1.png" alt="" />
+              </div>
+              <div class="textData">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>03-16-2022 | 03:50 PM</span>
+                </div>
+                <h6>Career Consultation</h6>
+                <h5>Economics Nature</h5>
+                <div class="ratings">
+                  <div class="price">
+                    <h6>$14.99</h6>
+                  </div>
+                  <div class="stars">
+                    <i class="fa-solid fa-star"></i> <span> 4.5</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

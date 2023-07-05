@@ -1,0 +1,142 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i
+              class="fa-solid fa-chevron-left"
+              [routerLink]="['/mentee/mentee-dashboard/session']"
+              (click)="goBack()"
+            ></i>
+          </div>
+          <p class="mb-0">Session Details</p>
+        </div>
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <input
+              type="text"
+              class="form-control border-end-0 form-control-lg"
+              placeholder="Search"
+              style="font-size: 13px"
+              (keyup)="onKeyUpEvent($event)"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab">
+    <div class="tabContent">
+      <div class="row">
+        <div
+          class="col-xl-4 col-md-6"
+          *ngFor="
+            let data of AllData
+              | paginate
+                : {
+                    itemsPerPage: 10,
+                    currentPage: session_page,
+                    totalItems: totaldocs
+                  }
+          "
+        >
+          <div
+            class="content"
+            [routerLink]="['/mentee/mentee-dashboard/added-sessions']"
+            [queryParams]="{ session_id: data.sessionId, mode: data.mentorship_mode, type :true }"
+          >
+            <div class="contentDetail">
+              <div class="image">
+                <img
+                  *ngIf="data?.sessionImage"
+                  [src]="showImage + data.sessionImage"
+                  class="img-fluid"
+                  alt="Image"
+                />
+                <img
+                  *ngIf="!data?.sessionImage"
+                  src="../../../../assets/images/sessions.png"
+                  class="img-fluid"
+                  alt=""
+                />
+              </div>
+              <div class="text">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span
+                    >{{
+                      data.start_date
+                        ? (data.start_date | date : "mediumDate")
+                        : "-"
+                    }}
+                  </span>
+                 | {{ data.time ?( data.time | timeFormat ): "-" }}
+                </div>
+                <h6 class="subtitle">
+                  {{ data.categoryName ? data.categoryName : "-" }}
+                </h6>
+                <h5 class="title">
+                  {{ data.programName ? data.programName : "-" }}
+                </h5>
+                <h6 class="title">
+                  {{ data.sessionName ? data.sessionName : "-" }}
+                </h6>
+              </div>
+            </div>
+            <div class="experence">
+              <div class="profile">
+                <div class="image2">
+                  <img
+                    *ngIf="data?.image"
+                    height="100px"
+                    width="100px"
+                    [src]="showImage + data.image"
+                    class="img-fluid"
+                    alt="Image"
+                  />
+                  <img
+                    *ngIf="!data?.image"
+                    src="../../../../assets/images/currentsession1.png"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <div class="text2">
+                  <h6 class="mb-0">
+                    {{ data.firstName ? data.firstName : "-" }}
+                    {{ data.lastName ? data.lastName : "-" }}
+                  </h6>
+                  <p class="mb-0">
+                    {{ data.experience ? data.experience : "-" }} Experience
+                  </p>
+                </div>
+              </div>
+              <div class="right">
+                <i
+                  class="fa-solid fa-chevron-right"
+                  [routerLink]="['/mentee/mentee-dashboard/mentors-details']"
+                  [queryParams]="{ user_id: data.user_id }"
+                >
+                </i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="AllData.length == 0" class="check">
+          <h3  class="text-center w-100">Sorry, there are no past sessions available at
+            this time</h3>
+        </div>
+        <div class="tabFilter">
+          <div class="pagination">
+            <pagination-controls (pageChange)="pageChange($event)">
+            </pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

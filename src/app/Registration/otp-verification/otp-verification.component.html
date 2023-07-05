@@ -1,0 +1,75 @@
+<!-- 
+<form [formGroup]="verificationForm">
+
+<input type="text" placeholder="Enter OTP" formControlName="otp" class="space"><br>
+
+<button class="space" (click)="optverified()">Verify OTP </button>
+
+<button class="space" (click)="ResendOTP()">Resend OTP</button>
+</form> -->
+
+<div class="container-fluid">
+  <div class="row h-100">
+    <div class="col-md-6 sliderection centerMid">
+      <div class="sliderContainer">
+        <div class="logo">
+          <img src="../../../assets/images/logo.png" alt="" />
+        </div>
+        <div class="sliderImg">
+          <img src="../../../assets/images/enterOtp.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 centerMid">
+      <div class="formContainer">
+        <div class="logoIcon">
+          <img src="../../../assets/images/keyIcon.png" alt="" />
+        </div>
+        <h1>Enter OTP</h1>
+        <p>
+          A 6 digit code has been sent to <b>{{ mailID }}</b>
+        </p>
+
+        <div class="row">
+          <div class="col p-0">
+            <div class="inputField">
+              <ng-otp-input
+                (onInputChange)="onOtpChange($event)"
+                [config]="{ length: 6, allowNumbersOnly: true }"
+              >
+                <!-- <input type="text" placeholder="_" class="form-control" />
+                <input type="text" placeholder="_" class="form-control" />
+                <input type="text" placeholder="_" class="form-control" />
+                <input type="text" placeholder="_" class="form-control" />
+                <input type="text" placeholder="_" class="form-control" />
+                <input type="text" placeholder="_" class="form-control" /> -->
+              </ng-otp-input>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <p>
+              I didn't receive code.
+              <a style="cursor: pointer" (click)="ResendOTP()">
+                <b>Resend code</b>
+              </a>
+            </p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-12 mt-4">
+            <button class="btn btn-main" (click)="optverified()">Submit</button>
+          </div>
+          <div class="col-12 mt-4 text-center">
+            <p>
+              Back to login ?
+              <a class="bold" (click)="gotoLogin()"> Log in </a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

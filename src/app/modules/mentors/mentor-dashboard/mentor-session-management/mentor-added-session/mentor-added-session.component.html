@@ -1,0 +1,425 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i
+              class="fa-solid fa-chevron-left"
+              [routerLink]="['/mentor/mentor-dashboard/session-management']"
+            ></i>
+          </div>
+          <p class="mb-0">Session Details</p>
+        </div>
+        <!-- <div class="buttonBox">
+          <button class="btn btn-main" (click)="cancelSession()">
+            Cancel Session
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col-12">
+        <div class="sessionContent">
+          <div class="sessionImage">
+            <span>
+              <img
+                width="100"
+                height="100"
+                *ngIf="oneSessionDetail?.image"
+                [src]="showImage + oneSessionDetail?.image"
+                class="img-fluid"
+                alt="Image"
+              />
+              <img
+                *ngIf="!oneSessionDetail?.image"
+                src="../../../../../../assets/images/sessions.png"
+                class="img-fluid"
+                alt="Image"
+              />
+            </span>
+            <!-- <img [src]="imgsrc" width="200" height="200" class="" /> -->
+          </div>
+          <div class="sessionText">
+            <h3>
+              {{
+                oneSessionDetail?.session_name
+                  ? oneSessionDetail?.session_name
+                  : "-"
+              }}
+            </h3>
+            <p>
+              <i class="fa-solid fa-calendar-days"></i> &nbsp;
+              <span>{{
+                oneSessionDetail?.start_date | date : "mediumDate"
+              }}</span
+              >&nbsp; <i class="fa-regular fa-clock"></i>&nbsp;
+              <span
+                >{{
+                  oneSessionDetail?.time
+                    ? convertTimeFormat(oneSessionDetail?.time)
+                    : "-"
+                }}
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="sessionContent">
+          <div class="sessionDescription">
+            <h3 class="mb-2">Session Description</h3>
+            <p>
+              {{
+                oneSessionDetail?.description
+                  ? oneSessionDetail?.description
+                  : "-"
+              }}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="col-12" *ngIf="mode == 1">
+        <div class="sessionoptions">
+          <div class="sessionpart">
+            <p>Session duration</p>
+            <h4>
+              {{
+                oneSessionDetail?.session_duration
+                  ? oneSessionDetail?.session_duration
+                  : "-"
+              }}
+              hour(s)
+            </h4>
+          </div>
+          <!-- <div class="sessionpart">
+            <p>Location</p>
+            <h4>{{(oneSessionDetail?.location)?oneSessionDetail?.location:"-"}}</h4>
+          </div> -->
+          <div class="sessionpart">
+            <p>Session Link</p>
+            <h4>
+              <a>{{
+                oneSessionDetail?.session_link
+                  ? oneSessionDetail?.session_link
+                  : "-"
+              }}</a>
+              <i
+                class="fa-regular fa-clone cursor-pointer"
+                (click)="copyText()"
+              >
+              </i>
+            </h4>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row" *ngIf="mode == 0">
+      <div class="col-12">
+        <div class="sessionoptions">
+          <div class="sessionpart">
+            <p>Session duration</p>
+            <h4>
+              {{
+                oneSessionDetail?.session_duration
+                  ? oneSessionDetail?.session_duration
+                  : "-"
+              }}
+              hour(s)
+            </h4>
+          </div>
+          <div class="sessionpart">
+            <p>Location</p>
+            <h4>
+              {{
+                oneSessionDetail?.location ? oneSessionDetail?.location : "-"
+              }}
+            </h4>
+          </div>
+          <div class="sessionpart">
+            <div class="icon">
+              <i class="fa-solid fa-location-dot"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <!-- <div [style.display]="canTrack === true ? 'block' : 'none'"> -->
+        <div *ngIf="canTrack === true" class="offlineoptions">
+          <div class="offlinepart">
+            <div class="location" (click)="goTomap()">
+              <i class="fa-solid fa-location-dot"></i>
+              <p class="mb-0">Tracks Trip</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+          <!-- </div> -->
+          <!-- <div [style.display]="canTrack === true ? 'block' : 'none'"> -->
+          <div *ngIf="canTrack === true" class="offlinepart">
+            <div
+              class="location"
+              data-target="#sharelocation"
+              data-toggle="modal"
+            >
+              <i class="fa-solid fa-users"></i>
+              <p class="mb-0">Share location & Meeting Info</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+          <!-- </div> -->
+          <div [style.display]="canTrack === true ? 'block' : 'none'">
+            <div
+              class="offlinepart2"
+              data-target="#haveyoumetmentee"
+              data-toggle="modal"
+              (click)="getAllresigsterMentees()"
+              (click)="getAttendance()"
+            >
+              <p class="mb-0">Have you met Mentee ?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-3">
+      <div class="col text-right">
+        <div class="buttonsPairAllignment">
+          <button
+            class="btn btn-main-outline"
+            data-toggle="modal"
+            data-target="#deleteSession"
+          >
+            Delete Session
+          </button>
+          <button class="btn btn-main" (click)="editSession()">
+            Edit Session
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteSession"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="closemodaldelete"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center p-4">
+        <h5 class="">Are you sure to delete this session?</h5>
+      </div>
+      <div class="deletePairAllignments">
+        <button type="button" class="btn btn-grey" data-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          (click)="deleteSession()"
+          data-dismiss="modal"
+          class="btn btn-main"
+        >
+          Sure
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- share location and meeting info modal start   -->
+<div
+  class="modal fade"
+  id="sharelocation"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Share Location & Meeting Info</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="sharelocationForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+              <!-- <label class="invaliddiv">*</label>  -->
+              <input
+                type="email"
+                placeholder="email"
+                formControlName="email"
+                [ngClass]="{ 'is-invalid': submitted && sharelocationForm.get('email')!.errors?.['required']}"
+                class="form-control"
+              />
+
+              <div
+                *ngIf="submitted && sharelocationForm.controls['email']!.errors"
+                class="invaliddiv"
+              >
+                <div
+                  *ngIf="sharelocationForm.controls['email']!.errors?.['required']"
+                >
+                  Email is required
+                </div>
+                <div
+                  *ngIf="sharelocationForm.controls['email']!.errors?.['email']"
+                >
+                  Email must be a valid email address
+                </div>
+              </div>
+              <br />
+              <!-- <label class="invaliddiv">*</label>   -->
+
+              <textarea
+                name=""
+                id=""
+                cols="30"
+                rows="6"
+                class="form-control"
+                placeholder="text here..."
+                value="{{ shareDetail }}"
+              >
+              </textarea>
+              <!--  [ngClass]="{ 'is-invalid': submitted && sharelocationForm.get('body')!.errors?.['required']}" -->
+              <!-- <div *ngIf="submitted && sharelocationForm.controls['body']!.errors" class="invaliddiv">
+                <div *ngIf="sharelocationForm.controls['body']!.errors?.['required']"> This field is required
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center my-4"></div>
+            <div class="col-12">
+              <!-- [disabled]="sharelocationForm.invalid" -->
+              <button
+                (click)="sendEmail()"
+                data-dismiss="modal"
+                [disabled]="sharelocationForm.invalid"
+                class="btn btn-main"
+              >
+                Send Mail
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- share location and meeting info modal end   -->
+
+<!-- share Have you met mentee modal start   -->
+<div
+  class="modal fade"
+  id="haveyoumetmentee"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Mark the Attendance</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <!-- extra -->
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>Mentee Names</th>
+
+                  <th>Mark</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let data of userList">
+                  <td>
+                    {{
+                      data.userData.firstName ? data.userData.firstName : "-"
+                    }}
+                    {{ data.userData.lastName ? data.userData.lastName : "-" }}
+                  </td>
+                  <td>
+                    <!-- {{attendanceList.includes(data.userData._id)}} -->
+                    <input
+                      *ngIf="
+                        attendanceList.includes(data.userData._id);
+                        else elseBlock
+                      "
+                      checked
+                      type="checkbox"
+                      (click)="checkboxCheck(data.userData._id, $event)"
+                    />
+                    <ng-template #elseBlock>
+                      <input
+                        type="checkbox"
+                        (click)="checkboxCheck(data.userData._id, $event)"
+                      />
+                    </ng-template>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 text-center my-4"></div>
+          <div class="col-12">
+            <button
+              (click)="markAttendance()"
+              data-dismiss="modal"
+              class="btn btn-main"
+            >
+              Submit
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Have you met mentee modal end   -->

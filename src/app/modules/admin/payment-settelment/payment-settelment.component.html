@@ -1,0 +1,214 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-3 text-start">
+        <h4 class="fs-28 fw-bold">Payment-Settelment List</h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select class="form-select me-3">
+            <option value="">All</option>
+            <option value="false">Pending</option>
+            <option value="true">Approved</option>
+          </select>
+        </div>
+      </div>
+     
+      <div class="col-12 col-md-4 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control border-end-0"
+              placeholder="Search"
+              style="font-size: 13px"
+              (keyup)="onKeyUpEvent($event)"
+            />
+            <span class="input-group-text border-start-0"
+              ><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-2 col-lg-3 text-end">
+        <button
+          class="btn btn-grey mt-4"
+          id="preview"
+          data-target="#report"
+          data-toggle="modal"
+          (click)="openPreviewModal()"
+        >
+          Preview
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>
+                    Program Name
+                    <!-- <i class="bi bi-arrow-up" (click)="sortingUp('asc', 'firstName')"></i>
+
+                                        <i class="bi bi-arrow-down" (click)="sortingUp('desc', 'firstName')"></i> -->
+                  </th>
+
+                  <th>
+                    Mentor Name
+                    <!-- <i class="bi bi-arrow-up" (click)="sortingAge('asc', 'date_of_birth')"></i>
+
+                                        <i class="bi bi-arrow-down" (click)="sortingAge('desc', 'date_of_birth')"></i> -->
+                  </th>
+                  <th>Amount</th>
+                  <th>Mentor Amount</th>
+                  <th>Admin Amount(Commission Percentage)</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr
+                  *ngFor="
+                    let data of payementData
+                      | paginate
+                        : {
+                            itemsPerPage: 10,
+                            currentPage: payment_page,
+                            totalItems: totaldocs
+                          }
+                  "
+                >
+                  <td data-label=" mentorship_name">
+                    {{ data.program_data[0]?.mentorship_name }}
+                  </td>
+                  <td data-label="mentorName">
+                    {{ data.mentor_data[0]?.firstName }}
+                  </td>
+                  <td data-label="amount">{{ data.totalProgramAmount }}</td>
+                  <td data-label="mentorName">{{ data.transferAmount }}</td>
+                  <td data-label="divideamount">
+                    {{ data.adminAmount }} ({{
+                      data.adminCommissionPercentage
+                    }}%)
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="pageChange($event)"
+              (pageChange)="payment_page = $event"
+            ></pagination-controls>
+            <!-- <div class="check" *ngIf="patientList?.length === 0">
+                <h1 class="text-center w-100">
+                  {{ "Physician.pages.Patients.norecord" | translate }}
+                </h1>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+  <div class="modal fade" id="report" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Preview Payment</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <br />
+        <p class="date">Today's date is {{ today | date : "mediumDate" }}</p>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-2">
+              <label for="startDate">Start Date:</label>
+              <input type="date" class="form-control" [(ngModel)]="startDate" name="startDate" />
+            </div>
+            <div class="col-md-2">
+              <label for="endDate">End Date:</label>
+              <input type="date" class="form-control" [(ngModel)]="endDate" name="endDate" />
+            </div>
+            <div class="col-md-2"></div>
+           
+            <div class="col-md-4">
+              <button class="btn btn-grey mt-4" id="search" (click)="filterData()">Search</button>
+            </div>
+            <div class="col-md-2">
+              <button data-dismiss="modal" class="btn btn-main mt-4" (click)="downloadExcel()">Download Report</button>
+          </div>
+          </div>
+          <br />
+          <div class="card border-0">
+            <div class="card-body">
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-12 table-responsive">
+                    <table class="table">
+                      <thead class="d-lg-block-thead">
+                        <tr>
+                          <th>Program Name</th>
+                          <th>Mentor Name</th>
+                          <th>Amount</th>
+                          <th>Mentor Amount</th>
+                          <th>Admin Amount(Commission Percentage)</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let data of filteredPaymentData
+                              | paginate
+                                : {
+                                    itemsPerPage: 10,
+                                    currentPage: payment_page,
+                                    totalItems: totaldocs
+                                  }
+                          "
+                        >
+                          <td>{{ data.program_data[0]?.mentorship_name }}</td>
+                          <td>{{ data.mentor_data[0]?.firstName }}</td>
+                          <td>{{ data.program_data[0].updatedAt ? (data.updatedAt | date) : "-" }}</td>
+                          <td>{{ data.totalProgramAmount }}</td>
+                          <td>{{ data.transferAmount }}</td>
+                          <td>{{ data.adminAmount }} ({{ data.adminCommissionPercentage }}%)</td>
+                        </tr>
+                        <tr *ngIf="filteredPaymentData.length === 0">
+                          <td colspan="6" class="text-center">No data found</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="row">
+            <div class="col-12 text-center my-4">
+              <h4 class="fw-normal"></h4>
+            </div>
+            <div class="col-12">
+              <button data-dismiss="modal" class="btn btn-main" (click)="downloadExcel()">Download</button>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+
+

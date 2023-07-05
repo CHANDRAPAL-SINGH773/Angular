@@ -1,0 +1,190 @@
+@import "/src/styles.scss";
+
+.disputes {
+    border: 1px solid $secondary;
+    padding: 15px 15px 30px;
+    border-radius: 15px;
+    margin: 15px;
+    background-color: $light;
+    .userRatings {
+      @include itemPosition(flex-start, space-between);
+      flex-wrap: wrap;
+      .userProfile {
+        @include itemPosition(flex-start, flex-start);
+        gap: 15px;
+      }
+      .image {
+        width: 200px;
+        height: 100px;
+  
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 15px;
+        }
+      }
+      .text {
+        h2 {
+          span {
+            font-weight: 400;
+          }
+        }
+        p {
+          span {
+            font-weight: 500;
+          }
+        }
+      }
+      h5 {
+        font-size: 18px;
+        color: #0c2f49;
+      }
+    }
+    .dateofPost {
+      p {
+        font-weight: 500;
+      }
+    }
+  }
+  
+  .btn-replay {
+    background-color: $secondary;
+    border-radius: 30px;
+    padding: 10px 30px;
+    font-weight: 500;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  
+  textarea {
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba($color: $input, $alpha: 0.15);
+    font-weight: 500;
+    font-size: 12px;
+    margin-top: 15px;
+  
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  
+  @media only screen and (max-width: 1400px) {
+    .ratings {
+      padding: 10px;
+      margin: 10px;
+      h5 {
+        font-size: 16px;
+      }
+      .stars {
+        gap: 10px;
+  
+        h6 {
+          font-size: 14px;
+        }
+        .starBox {
+          i {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  
+    .btn-replay {
+      padding: 4px 30px;
+    }
+  }
+  .filterBar {
+    @include itemPosition(center, space-between);
+    margin: 15px;
+    gap: 10px;
+  
+    .searchBox {
+      border: 1px solid $secondary;
+      max-width: 550px;
+      display: flex;
+      background-color: white;
+      border-radius: 10px;
+      color: $dark;
+  
+      .icon {
+        width: 50px;
+        height: 50px;
+        @include itemPosition(center, center);
+      }
+  
+      .searchBox {
+        flex: 1;
+        border: none;
+  
+        input {
+          border: none;
+          outline: none;
+          border-radius: 10px;
+  
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+  
+  .resolved,
+  .not-resolved,
+  .default-resolved {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 5px;
+    color: #fff;
+  }
+  
+/* Example styles, adjust as needed */
+.form-check-label {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+  padding-left: 30px;
+}
+
+.toggle-slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 30px;
+  border-radius: 15px;
+  background-color: #ccc;
+  transition: background-color 0.3s ease;
+}
+
+.form-check-input {
+  margin-left:1rem;
+}
+
+.form-check-label{
+  margin-left: 2rem;
+}
+
+.form-check-input:checked + .form-check-label .toggle-slider {
+  background-color: #4CAF50;
+}
+
+.form-check-input:checked + .form-check-label .toggle-label {
+  color: #4CAF50;
+}
+
+.checkmark-resolved {
+  background-color: green;
+  border-radius: 50%;
+  color: white;
+}
+
+.evidence-padding {
+  padding-top: 5rem;
+}

@@ -1,0 +1,43 @@
+@import "/src/styles.scss";
+
+.uploadAddbtn {
+  @include itemPosition(flex-end, center);
+
+  .inputField {
+    flex: 1;
+  }
+
+  .btn-main {
+    margin-bottom: 17.5px;
+  }
+}
+
+.addSkills {
+  input {
+    width: 100% !important;
+  }
+}
+
+.profileImage {
+  height: 150px !important;
+}
+
+.profileImage img.img-fluid {
+  height: 150px !important;
+  width: 150px !important;
+}
+
+@media only screen and (max-width: 1400px) {
+  .uploadAddbtn {
+    .btn-main {
+      margin-bottom: 12.5px;
+    }
+  }
+}
+
+.no-certificate {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

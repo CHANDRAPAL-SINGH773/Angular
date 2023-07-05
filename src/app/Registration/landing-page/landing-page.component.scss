@@ -1,0 +1,410 @@
+@import "/src/styles.scss";
+
+.landingPage {
+  header {
+    @include itemPosition(center, space-between);
+    height: 80px;
+    background-color: $light;
+    gap: 15px;
+    padding: 0 100px;
+    .logo {
+      img {
+        width: 160px;
+      }
+    }
+    .navigations {
+      @include itemPosition(center, center);
+      gap: 20px;
+
+      a {
+        text-decoration: none;
+        color: $dark;
+        font-weight: 600;
+
+        &:hover {
+          color: $primary;
+        }
+      }
+    }
+
+    .buttonBox {
+      @include itemPosition(center, center);
+      gap: 15px;
+    }
+  }
+
+  .main-content {
+    @include itemPosition(center, center);
+    flex-direction: column;
+    gap: 15px;
+    padding-top: 62px;
+
+    background: linear-gradient(
+      180deg,
+      rgba($color: $dark, $alpha: 0.03) 60%,
+      rgba(255, 255, 255, 1) 60%
+    );
+
+    p {
+      max-width: 500px;
+    }
+
+    img {
+      margin-top: 20px;
+      width: 100%;
+    }
+  }
+
+  .whyUs {
+    padding: 60px 0;
+    background-color: rgba($color: $primary, $alpha: 0.05);
+
+    img {
+      width: 70%;
+    }
+
+    .whyUsContent {
+      padding-left: 100px;
+    }
+  }
+
+  .experties {
+    text-align: center;
+    padding: 60px 0;
+    background-color: $light;
+
+    .techRow {
+      @include itemPosition(center, flex-start);
+      padding: 20px 0;
+      gap: 80px;
+
+      .techBox {
+        padding: 10px;
+        border-radius: 10px;
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+        background-color: $light;
+
+        .image {
+          width: 50px;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .text {
+          text-align: left;
+
+          h3 {
+            font-size: 24px;
+          }
+        }
+      }
+    }
+  }
+
+  .findMentor {
+    padding: 60px 0;
+    background-color: rgba($color: $dark, $alpha: 0.02);
+
+    img {
+      width: 50%;
+    }
+
+    .fingMentorContent {
+      padding-left: 100px;
+    }
+  }
+
+  .becomeMentor {
+    padding: 60px 0;
+    background-color: light;
+
+    img {
+      width: 50%;
+    }
+
+    .becomeMentorContent {
+      padding-right: 100px;
+    }
+  }
+
+  .downloadApp {
+    background-color: $light;
+
+    .btnbox {
+      img {
+        width: 200px;
+      }
+    }
+
+    .downloadAppContent {
+      padding-left: 100px;
+    }
+  }
+
+  .footerContent {
+    @include itemPosition(center, space-between);
+    padding: 20px 100px;
+    border-bottom: 1px solid $secondary;
+
+    .socialMedia {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+
+      .icon {
+        @include itemPosition(center, center);
+        border: 1px solid $dark;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        i {
+          color: $dark;
+        }
+
+        &:hover {
+          background-color: $dark;
+
+          i {
+            color: $light;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1400px) {
+  .landingPage {
+    h1 {
+      font-size: 20px;
+    }
+    p {
+      font-size: 12px;
+    }
+    .btn {
+      font-size: 14px;
+      padding: 5px 10px;
+      height: 35px;
+    }
+    header {
+      height: 60px;
+      gap: 15px;
+      .logo {
+        img {
+          width: 120px;
+        }
+      }
+      .navigations {
+        gap: 15px;
+        a {
+          font-size: 14px;
+        }
+      }
+
+      .buttonBox {
+        @include itemPosition(center, center);
+        gap: 15px;
+        .btn {
+          font-size: 14px;
+          padding: 5px 10px;
+          height: 35px;
+        }
+      }
+    }
+
+    .main-content {
+      padding-top: 50px;
+      h1 {
+        font-size: 16px !important;
+      }
+      p {
+        font-size: 14px;
+      }
+      .btn {
+        font-size: 14px;
+      }
+    }
+
+    .whyUs {
+      img {
+        width: 70%;
+      }
+      h2 {
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+      p {
+        font-size: 14px;
+      }
+    }
+
+    .experties {
+      h1 {
+        font-size: 20px;
+      }
+      p {
+        font-size: 14px;
+      }
+      .techRow {
+        padding: 10px 0;
+        gap: 15px;
+
+        .techBox {
+          padding: 10px;
+          border-radius: 10px;
+
+          .image {
+            width: 50px;
+
+            img {
+              width: 100%;
+            }
+          }
+
+          .text {
+            text-align: left;
+
+            h3 {
+              font-size: 16px;
+            }
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+
+    .findMentor {
+      .fingMentorContent {
+        h1 {
+          font-size: 20px;
+        }
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .becomeMentor {
+      padding: 60px 0;
+      background-color: light;
+
+      img {
+        width: 50%;
+      }
+
+      .becomeMentorContent {
+        padding-right: 100px;
+      }
+    }
+
+    .downloadApp {
+      background-color: $light;
+
+      .btnbox {
+        img {
+          width: 150px;
+        }
+      }
+
+      .downloadAppContent {
+        padding-left: 100px;
+      }
+    }
+
+    .footerContent {
+      @include itemPosition(center, space-between);
+      padding: 20px 100px;
+      border-bottom: 1px solid $secondary;
+
+      .socialMedia {
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+        .icon {
+          width: 30px;
+          height: 30px;
+          i {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 992px) {
+  .landingPage {
+    header {
+      padding: 0 10px;
+    }
+
+    .whyUs {
+      padding: 60px 0;
+
+      .whyUsContent {
+        padding-left: 15px;
+        padding: 15px;
+      }
+      img {
+        width: 100%;
+      }
+    }
+
+    .findMentor {
+      .fingMentorContent {
+        padding-left: 15px;
+        padding: 15px;
+      }
+    }
+
+    .becomeMentor {
+      .becomeMentorContent {
+        padding-right: 15px;
+        padding: 15px;
+      }
+    }
+
+    .downloadApp {
+      .downloadAppContent {
+        padding-left: 15px;
+        padding: 20px;
+
+        .btnbox {
+          text-align: center;
+        }
+      }
+    }
+
+    .footerContent {
+      @include itemPosition(center, center);
+      padding: 20px 100px;
+      border-bottom: 1px solid $secondary;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+  }
+}
+
+@media only screen and (max-width: 650px) {
+  .landingPage {
+    header {
+      @include itemPosition(center, center);
+      height: auto;
+      padding: 10px;
+      flex-wrap: wrap;
+
+      .navigations {
+        order: 3;
+        @include itemPosition(center, center);
+        gap: 20px;
+      }
+
+      .buttonBox {
+        @include itemPosition(center, center);
+        gap: 15px;
+      }
+    }
+  }
+}

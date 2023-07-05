@@ -1,0 +1,206 @@
+@import "../../../styles.scss";
+
+.container-fluid {
+  height: 100vh;
+
+  .sliderection {
+    position: relative;
+    height: 100%;
+    background-image: url("../../../assets/images/authBg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    .sliderContainer {
+      width: -webkit-fill-available;
+
+      .logo {
+        position: absolute;
+        top: 0;
+        img {
+          display: inline-block;
+          margin: 30px;
+          width: 150px;
+        }
+      }
+
+      .sliderImg {
+        text-align: center;
+
+        img {
+          width: 60%;
+          display: block;
+          margin: auto;
+        }
+
+        p {
+          max-width: 450px;
+          margin: auto;
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    max-width: 400px;
+    width: -webkit-fill-available;
+    padding: 15px;
+
+    .logoIcon {
+      @include roundShape(80px, 80px, $secondary);
+      border: 1px solid rgba($color: $dark, $alpha: 0.07);
+      margin-bottom: 20px;
+
+      img {
+        width: 70%;
+      }
+    }
+
+    h1 {
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 490px;
+      color: $dark;
+
+      label {
+        margin: 15px 0 10px;
+        font-weight: 600;
+      }
+
+      .inputField {
+        position: relative;
+
+        input {
+          height: 46px;
+          border-radius: 10px;
+          padding: 10px;
+          background-color: rgba($color: $input, $alpha: 0.15);
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
+        img {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 15px;
+        }
+
+        i {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 15px;
+        }
+
+        img.onerror {
+          position: absolute;
+          top: 35% !important;
+          transform: translateY(-50%);
+          right: 35px !important;
+        }
+
+        i.onerror {
+          position: absolute;
+          top: 35% !important;
+          transform: translateY(-50%);
+          right: 35px !important;
+        }
+      }
+
+      .form-check {
+        margin-left: 25px;
+        @include itemPosition(center, flex-start);
+
+        label {
+          margin-bottom: 0;
+          font-weight: 400;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: $dark;
+        font-weight: 600;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+//css added by tanay
+.invaliddiv {
+  color: red;
+}
+
+@media only screen and (max-width: 1400px) {
+  .container-fluid {
+    .sliderection {
+      .sliderContainer {
+        .logo {
+          img {
+            width: 120px;
+          }
+        }
+      }
+    }
+
+    .formContainer {
+      .logoIcon {
+        @include roundShape(60px, 60px, $secondary);
+
+        img {
+          width: 50%;
+        }
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+
+      form {
+        label {
+          margin: 15px 0 4px;
+          font-size: 12px;
+        }
+
+        .inputField {
+          position: relative;
+
+          input {
+            height: 35px;
+          }
+
+          img {
+            width: 14px;
+          }
+        }
+
+        a {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .container-fluid {
+    .sliderection {
+      display: none;
+    }
+  }
+}

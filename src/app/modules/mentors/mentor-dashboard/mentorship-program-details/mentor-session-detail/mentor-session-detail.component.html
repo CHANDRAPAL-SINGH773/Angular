@@ -1,0 +1,322 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i class="fa-solid fa-chevron-left" (click)="back()"></i>
+          </div>
+          <p class="mb-0">{{ showHeading }}</p>
+        </div>
+        <div class="d-flex">
+          <div class="buttonBox">
+            <button
+              class="btn btn-main"
+              [routerLink]="['/mentor/mentor-dashboard/edit-program']"
+              [queryParams]="{ _id: programid, category: showHeading }"
+            >
+              Edit Program
+            </button>
+          </div>
+          <div class="buttonBox mx-2">
+            <button class="btn btn-main" (click)="cancelSession()">
+              Cancel Program
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col">
+        <div class="profileContent">
+          <div class="profile">
+            <div class="image">
+              <span>
+                <img
+                  *ngIf="singleData?.image"
+                  [src]="showImage + singleData?.image"
+                  class="img-fluid"
+                  alt=""
+                />
+                <img
+                  *ngIf="!singleData?.image"
+                  src="../../../../../assets/images/sessions.png"
+                  class="img-fluid"
+                  alt=""
+                />
+              </span>
+              <!-- <img src="../../../../../assets/images/tabImage1.png" alt="" /> -->
+            </div>
+            <div class="text2">
+              <h5 class="title">
+                {{
+                  singleData.mentorship_name ? singleData.mentorship_name : "-"
+                }}
+              </h5>
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>&nbsp;
+                <span>{{
+                  singleData.start_date
+                    ? (singleData.start_date | date : "mediumDate")
+                    : "-"
+                }}</span
+                >&nbsp;
+                <!-- <i class="fa-solid fa-clock"></i>&nbsp;<span> {{field.time}}03:50 PM</span> -->
+              </div>
+              <div class="price">
+                <div class="row">
+                  <div class="col-5">
+                    <h5>
+                      {{
+                        singleData.price ? (singleData.price | currency) : "-"
+                      }}
+                    </h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chat">
+            <div
+              *ngIf="!registerMentees || registerMentees === 0; else next"
+              class="chatIcon"
+            >
+              <i
+                class="bi bi-info-circle-fill hover-text"
+                style="color: aliceblue"
+                ><span class="tooltip-text" id="left"
+                  >No mentees available for this program.</span
+                ></i
+              >
+              <!-- <img src="../.../../../../../../../assets/images/icon/ChatIcon.svg" alt=""/> -->
+            </div>
+            <ng-template #next>
+              <div class="chatIcon" (click)="createGroupFuntion()">
+                <img
+                  src="../.../../../../../../../assets/images/icon/ChatIcon.svg"
+                  alt=""
+                />
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="tabButtons">
+          <button
+            class="btn btn-tab"
+            [class.active]="ids === 'Sessions'"
+            (click)="changeTab('Sessions')"
+          >
+            Sessions
+          </button>
+          <button
+            class="btn btn-tab"
+            [class.active]="ids === 'More'"
+            (click)="changeTab('More')"
+          >
+            More
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row sessionDetails" *ngIf="ids === 'Sessions'">
+      <div class="check" *ngIf="allData?.length === 0">
+        <h3 class="text-center w-100">No session added yet.</h3>
+      </div>
+      <!-- {{totaldocs}}{{detailPage}} -->
+      <div class="col-lg-6 mt-3" *ngFor="let field of allData | paginate : {
+        itemsPerPage: 10,
+        currentPage: detailPage,
+        totalItems: totaldocs }
+        let i = index" >
+        <!-- {{detailPage}} {{totaldocs}} -->
+        <div class="sessionContent">
+          <div class="sessionProfile">
+            <div class="image">
+              <span>
+                <img
+                  class="rounded-circle"
+                  *ngIf="field?.image"
+                  [src]="showImage + field?.image"
+                  class="img-fluid"
+                  alt=""
+                />
+                <img
+                  class="rounded-circle"
+                  *ngIf="!field?.image"
+                  src="../../../../../../assets/images/sessions.png"
+                  class="img-fluid"
+                  alt=""
+                />
+              </span>
+              <!-- <img src="../../../../../../assets/images/sessionDetails.png" alt="" />image -->
+            </div>
+            <div class="text">
+              <h3>
+                {{ ((i + 1) + ((detailPage - 1) * 10 ))}}. {{ field.session_name ? field.session_name : "-" }}
+              </h3>
+              <p class="sessionDescription">
+                {{ field.description ? field.description : "-" }}
+              </p>
+            </div>
+          </div>
+          <div class="sessionTime">
+            <div>
+              <p>Session duration</p>
+              <h4>
+                {{ field.session_duration ? field.session_duration : "-" }}
+                hour(s)
+              </h4>
+            </div>
+            <div>
+              <p>Date</p>
+              <h4>
+                {{
+                  field.start_date
+                    ? (field.start_date | date : "mediumDate")
+                    : "-"
+                }}
+              </h4>
+            </div>
+            <div>
+              <p>Scheduled time</p>
+              <h4>{{ field.time ?(convertTimeFormat(field.time))  : "-" }}</h4>
+              <!-- <h4>{{field.time | date:'shortTime'}}</h4> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="pagination">
+        <pagination-controls (pageChange)="pageChange($event)" (pageChange)="detailPage = $event">
+        </pagination-controls>
+      </div>
+    </div>
+   
+    <div class="row moreDetails" *ngIf="ids === 'More'">
+      <div class="col-12">
+        <div class="moreContent">
+          <h3>Program Description</h3>
+          <p>
+            {{ data1.description }}
+          </p>
+          <div class="moreData">
+            <div>
+              <p>Mentorship Mode</p>
+              <h4 *ngIf="singleData.mentorship_mode === 1">Online</h4>
+              <h4 *ngIf="singleData.mentorship_mode === 0">Offline</h4>
+            </div>
+            <div>
+              <p>Availability</p>
+              <h4>
+                {{ convertTimeFormat(singleData.availibility_from) }} to
+                {{ convertTimeFormat(singleData.availibility_to) }}
+              </h4>
+            </div>
+            <div class="text-center">
+              <p>Mentee allowed</p>
+              <h4>{{ singleData.mentee_limit }}</h4>
+            </div>
+            <div class="text-center">
+              <p>Mentee registered</p>
+              <h4>{{ registerMetees }}</h4>
+            </div>
+          </div>
+
+          <div class="offlineoptions">
+            <div class="offlinepart">
+              <div class="location">
+                <img
+                  src="../../../../../../assets/images/icon/newSession.svg"
+                  alt=""
+                />
+                <p
+                  class="mb-0"
+                  [routerLink]="['/mentor/mentor-dashboard/add-session']"
+                  [queryParams]="{
+                    _id: programid,
+                    category: showHeading,
+                    mode: singleData.mentorship_mode
+                  }"
+                >
+                  Add New Session
+                </p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+            <div
+              class="offlinepart"
+              [routerLink]="['/mentor/mentor-dashboard/registered-mentees']"
+              [queryParams]="{ program_id: programid }"
+            >
+              <div class="location">
+                <img
+                  src="../../../../../../assets/images/icon/registeredMentor.svg"
+                  alt=""
+                />
+                <p class="mb-0">Registered Mentees</p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+            <div
+              class="offlinepart"
+              [routerLink]="['/mentor/mentor-dashboard/completed-sessions']"
+              [queryParams]="{ program_id: programid }"
+            >
+              <div class="location">
+                <img
+                  src="../../../../../../assets/images/icon/completedSessions.svg"
+                  alt=""
+                />
+                <p class="mb-0">Completed Sessions</p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+            <!-- <div
+              class="offlinepart"
+              [routerLink]="['/mentor/mentor-dashboard/view-ratings']"
+              [queryParams]="{ program_id: programid }"
+            >
+              <div class="location">
+                <img
+                  src="../../../../../../assets/images/icon/viewrating.svg"
+                  alt=""
+                />
+                <p class="mb-0">View Ratings</p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div> -->
+            <div
+              class="offlinepart"
+              [routerLink]="['/mentor/mentor-dashboard/raise-dispute']"
+              [queryParams]="{ program_id: programid }"
+            >
+              <div class="location">
+                <img
+                  src="../../../../../../assets/images/icon/dispute.svg"
+                  alt=""
+                />
+                <p class="mb-0">Raise a Dispute</p>
+              </div>
+              <div class="rightBtn">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

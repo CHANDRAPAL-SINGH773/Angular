@@ -1,0 +1,128 @@
+<div class="container-fluid">
+  <div class="row statistics">
+    <div class="col-md-4">
+      <div class="content">
+        <div class="icon">
+          <img src="../../../assets/images/icon/3User.svg" alt="" />
+        </div>
+        <div *ngIf="loadData" class="text">
+          <p class="mb-0 xsmallText">Current Mentees</p>
+          <h1>{{UserData ? UserData : "0" }}</h1>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-8">
+      <div class="content">
+        <div class="icon">
+          <img src="../../../assets/images/icon/mentorshipBig.svg" alt="" />
+        </div>
+        <div class="text">
+          <p class="mb-0 xsmallText">Total Number of Sessions</p>
+          <div class="dataItems">
+            <div class="data">
+              <h1>{{ currentSessionCount }}</h1>
+              <p class="mb-0 ml-1" style="color: #707070">Current</p>
+            </div>
+            <div class="data">
+              <h1>{{ pastSessionCount }}</h1>
+              <p class="mb-0 ml-1" style="color: #707070">Past</p>
+            </div>
+            <div class="data">
+              <h1>{{ upcomingSessionCount }}</h1>
+              <p class="mb-0 ml-1" style="color: #707070">Upcoming</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row graphs">
+    <div class="col-md-8">
+      <div class="content">
+        <h4>Number of Mentees who signed up</h4>
+        <!-- <div>Graph 1</div> -->
+        <canvas baseChart [data]="salesData" [type]="'line'" [options]="chartOptions">
+        </canvas>
+      </div>
+    </div>
+    <div class="col-md-4 mt-4 mt-md-0">
+      <div class="content">
+        <h4>Total Revenue</h4>
+        <!-- <div>Graph 2</div> -->
+        <canvas baseChart [data]="salesData1" [type]="'pie'" [options]="chartOptionsPie">
+        </canvas>
+        <div class="d-flex chartPieData">
+          <div>
+            <p>$ {{pieData?.revenueDetails?.TotalRevenue}}</p>
+            <h4>Total</h4>
+          </div>
+          <div>
+            <p>$ {{pieData?.revenueDetails?.onlineTotal }}</p>
+            <h4>Online Sessions</h4>
+          </div>
+          <div>
+            <p>$ {{pieData?.revenueDetails?.offlineTotal}}</p>
+            <h4>Offline Sessions</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row sessions mt-4">
+    <div class="col-12">
+      <div class="content">
+        <h4>Current Sessions</h4>
+        <div class="row">
+          <div class="col-xl-3 col-sm-6 mt-3" *ngFor="
+              let session of currentSession
+                | paginate
+                  : {
+                      itemsPerPage: 10,
+                      currentPage: session_page,
+                      totalItems: totaldocs
+                    }
+            ">
+            <div class="sessionData">
+              <div class="image">
+                <img *ngIf="session?.image" [src]="showImage + session?.image" class="img-fluid"
+                  alt="" />
+                <!-- <img *ngIf="!currentSession[0]?.image" src="../../../assets/images/{{ session.session_image }}" -->
+                <img *ngIf="!session?.image" src="../../../assets/images/sessions.png"
+                  class="img-fluid" alt="" />
+              </div>
+              <!--  -->
+              <div class="textData" [routerLink]="['/mentor/mentor-dashboard/edit-session']" [queryParams]="{
+                  edit: session._id,
+                  onlineMode: session.session_data.mentorship_mode
+                }">
+                <div class="time mt-2">
+                  <i class="fa-solid fa-calendar-days smallText"></i>
+                  <span class="xsmallText">{{
+                    session.updatedAt ? (session.updatedAt | date) : "-"
+                    }} |
+                    {{ convertTimeFormat(session.time) }}</span>
+                </div>
+                <h5 class="mt-2">
+                  {{ session.category_data[0].categoryName }}
+                </h5>
+                <p class="mt-2">{{ session.session_data.mentorship_name }}</p>
+                <h6 class="mt-2">{{ session.session_name }}</h6>
+
+                <!-- <p class="smallText">{{  session.session_data.description }}</p> -->
+              </div>
+            </div>
+          </div>
+          <div class="check" *ngIf="currentSession?.length === 0">
+            <p class="text-center w-100">
+              You currently have no scheduled mentorship sessions, consider creating new sessions to engage with mentees
+            </p>
+          </div>
+          <pagination-controls class="mt-5" (pageChange)="pageChange($event)"></pagination-controls>
+        </div>
+        <!-- <pagination-controls (pageChange)="pageChange($event)"></pagination-controls> -->
+
+
+      </div>
+    </div>
+  </div>
+</div>

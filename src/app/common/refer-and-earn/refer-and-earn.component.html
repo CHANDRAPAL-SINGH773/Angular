@@ -1,0 +1,126 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 mb-3">
+      <div class="referContent centerMid">
+        <div class="customWidth">
+          <h4 class="mediumText">Refer & Get 5% off</h4>
+          <p class="smallText">On next mentorship session pay</p>
+          <div class="form">
+            <label for="refer" class="smallText">Your Referral Code</label>
+            <div class="inputField">
+              <input type="text" class="form-control" id="refer"  value="{{myreferalcode}}" />
+              <img src="../../../assets/images/icon/copyLink.svg" class="cursor-pointer" (click)="copyText()" alt="" />
+            </div>
+          </div>
+          <div class="inviteButtons" *ngIf="showButton">
+            <button class="btn btn-main-outline" data-target="#inviteLink" data-toggle="modal" >
+              <i class="fa-solid fa-share-nodes" ></i> Share invite link
+            </button>
+            <button class="btn btn-main">
+              <i class="fa-brands fa-whatsapp"></i> <a target="_blank" href="https://wa.me/?text={{hello}}">Invite Via
+                Whatsapp</a>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div *ngIf="role===2" class="col-md-4 mb-3">
+      <div class="savedAmount centerMid">
+        <div>
+          <img src="../../../assets/images/winPrice.png" alt="" />
+          <div class="amountPlate">
+            <p class="smallText">Total Saved</p>
+            <p class="smallText">${{reward_amount.amount | number:'1.2-2'}} </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout mt-3">
+    <div class="row p-3">
+      <div class="col-6">
+        <h3 class="mediumText">My Rewards</h3>
+      </div>
+      <!-- <div class="col-6 text-end" *ngIf="mentees.length >0 || mentors.length >0"> -->
+      <div class="col-6 text-end" >
+        <h3 class="mediumText">{{refToMenteeCount?refToMenteeCount:0}} Mentee(s) {{refToMentorCount?refToMentorCount:0}} Mentor(s) </h3>
+      </div>
+    </div>
+    <div class="row couponsCards">
+      <div class="col-xl-3 col-lg-4 col-sm-6" *ngFor="let rewards of rewardData">
+        <div class="coupons">
+          <div class="couponsImg">
+            <img src="../../../../../assets/images/coupons.svg" alt="" />
+            <p>{{rewards.percentOff?(rewards.percentOff):"-"}}% Off</p>
+          </div>
+          <h5>{{rewards.type?(rewards.type):"-"}}</h5>
+          <h6>{{rewards.description?(rewards.description):"-"}}</h6>
+        </div>
+      </div>
+      <div *ngIf="rewardData.length === 0">
+      <p class="text-center">No new reward found</p>
+      </div>
+      <!-- <div class="col-xl-3 col-lg-4 col-sm-6">
+        <div class="coupons">
+          <div class="couponsImg">
+            <img src="../../../../../assets/images/coupons.svg" alt="" />
+            <p>5% Off</p>
+          </div>
+          <h5>Mentorship Reward</h5>
+          <h6>Jane Cooper Enrolled</h6>
+        </div>
+      </div> -->
+
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="inviteLink" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Invitation Mail</h5><label class="invaliddiv">*</label>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="inviteForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+              <!-- <label class="invaliddiv">*</label>  -->
+              <input type="email"  placeholder="email" formControlName="email"
+              [ngClass]="{ 'is-invalid': submitted && inviteForm.get('email')!.errors?.['required']}" class="form-control" />
+             
+              <div *ngIf="submitted && inviteForm.controls['email']!.errors" class="invaliddiv">
+                <div *ngIf="inviteForm.controls['email']!.errors?.['required']"> Email is required
+                </div>
+                <div *ngIf="inviteForm.controls['email']!.errors?.['email']">
+                    Email must be a valid email address
+                </div>
+              </div>
+              <br>
+              <!-- <label class="invaliddiv">*</label>   -->
+            <textarea  *ngIf="myreferalcode!==undefined" name="" id=""  cols="30"  rows="6" class="form-control"  value="{{hello}}">
+            </textarea>
+            <!-- [ngClass]="{ 'is-invalid': submitted && inviteForm.get('body')!.errors?.['required']}" -->
+              <!-- <div *ngIf="submitted && inviteForm.controls['body']!.errors" class="invaliddiv">
+                <div *ngIf="inviteForm.controls['body']!.errors?.['required']"> This field is required
+                </div>
+              </div>-->
+            </div> 
+          </div>
+          <div class="row">
+            <div class="col-12 text-center my-4">
+
+            </div>
+            <div class="col-12">
+              <button (click)="sendEmail()" data-dismiss="modal"  [disabled]="inviteForm.invalid"  class="btn btn-main">Submit Response</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,61 @@
+<!-- <nav class="inner_nav">
+  <div class="navbar-title">
+    <i
+      class="fa-solid fa-bars d-inline-block d-xl-none"
+      (click)="toggleSidebar()"
+    ></i>
+    <a href="#">Hello, {{ name }}!</a>
+  </div>
+  <div class="admin_box"> -->
+<!-- <div class="bell_icon">
+                <span><img src="../../assets/images/bell.png" class="img-fluid" alt=""></span>
+            </div> -->
+<!-- <div class="avtar_box">
+      <span
+        ><img
+          src="../../assets/images/profile-img.jpg"
+          class="img-fluid"
+          alt=""
+      /></span>
+    </div>
+  </div>
+</nav> -->
+
+<header class="header">
+  <div class="content">
+    <div class="heading">
+      <i class="fa-solid fa-bars d-block d-lg-none" (click)="toggleSidebar()"></i>
+      <!-- <h1>Dashboard</h1> -->
+    </div>
+    <div class="profile">
+      <!-- <div class="notification">
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-circle update"></i>
+      </div> -->
+      <div class="profileDetails">
+        <div class="profileImage" [routerLink]="['/admin-profile']">
+          <img *ngIf="oneUserData?.image" [src]="showImage + oneUserData?.image" class="img-fluid" alt="" />
+          <img *ngIf="!oneUserData?.image" src="../../../../../assets/images/uploadProfile.png" class="img-fluid"
+            alt="" />
+        </div>
+        <div class="profileText">
+          <div>
+            <p class="mb-0"> {{ oneUserData?.firstName ? oneUserData?.firstName : "-" }}
+              {{ oneUserData?.lastName ? oneUserData?.lastName : "-" }}</p>
+            <p class="category mb-0">Admin</p>
+          </div>
+          <div class="dropdown">
+            <i class="fa-solid fa-angle-down cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+            </i>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" [routerLink]="['/admin-profile']">Profile</a>
+              <a class="dropdown-item" (click)="logOut()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

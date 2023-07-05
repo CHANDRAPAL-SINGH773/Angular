@@ -1,0 +1,195 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox" (search)="applyFilter($event)" (keyup)="applyFilter($event)">
+            <input type="text" class="form-control" placeholder="Search" />
+          </div>
+          <div class="icon">
+            <i class="fa-solid fa-filter"></i>
+          </div>
+        </div>
+        <!-- <div *ngIf="loggedInUserRole == 1">
+          <button class="btn btn-main" data-toggle="modal" data-target="#creatGroupModal2" (click)="getAllMentee()">
+            <i class="fas fa-plus"></i> Create Group
+          </button>
+        </div> -->
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout my-0">
+    <div class="chatBox">
+      <div class="chatlist" [class.chatlistOpen]="togglechatList">
+        <i class="fa-solid fa-circle-xmark d-block d-lg-none" (click)="togglechatList = !togglechatList"></i>
+        <div *ngFor="let data of allGroupChatsData; let i = index" (click)="changeChat(data._id)">
+          <div class="contact" [class.active]="contactId === data._id" (click)="togglechatList = !togglechatList">
+            <div class="profile" [routerLink]="[data._id]">
+              <div class="image" *ngIf="!data.isGroupChat">
+                <img *ngIf="data?.image" [src]="data.image" class="img-fluid" alt="Image" />
+
+                <span *ngIf="isOnline[i]">
+                  <i class="fa-solid fa-circle"></i>
+                </span>
+                <img *ngIf="!data?.image" src="../../../assets/images/single_icon.jpg" class="img-fluid" alt="" />
+                <i *ngIf="isOnline[i]" class="fa-solid fa-circle"></i>
+              </div>
+
+              <div class="image" *ngIf="data.isGroupChat">
+                <img *ngIf="data?.groupDetails?.image" [src]="data?.groupDetails?.image" class="img-fluid"
+                  alt="Image" />
+                <!-- <i class="fa-solid fa-circle"></i> -->
+                <img *ngIf="!data?.groupDetails?.image" src="../../../assets/images/single_icon.jpg" class="img-fluid"
+                  alt="" />
+                <!-- <i class="fa-solid fa-circle"></i> -->
+              </div>
+              <div class="text">
+                <h6>{{ data.chatName }}</h6>
+                <!-- 
+                <h6 *ngIf="!data.isGroupChat">{{ chatNamecheck }}</h6> -->
+                <p>{{ data.latestMessage }}</p>
+              </div>
+            </div>
+            <div class="dateTime">
+              <p>{{ data.updatedAt ? (data.updatedAt | timeago) : "-" }}</p>
+              <i class="fa-solid fa-trash-can" data-toggle="modal" (click)="getId(data._id)"
+                data-target="#deleteConfirmation"></i>
+
+              <!-- <span *ngFor="let count of unreadCountArray">
+                <small class="unread-message-count" *ngIf="(count._id === data._id)">
+                  {{count?.count}} -->
+              <!--  <span *ngFor="let count of unreadCountArray"> {{count | json}}</span> -->
+              <!-- </small>
+              </span> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="converstaion">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="creatGroupModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered chatModel" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          <span>Create Group</span>
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" data-dismiss="modal"
+          aria-label="Close"></button>
+      </div>
+      <form [formGroup]="groupchatForm">
+        <div class="modal-body">
+          <div class="form-group">
+            <div class="row">
+              <div class="col-12">
+                <div class="inputField">
+                  <label for="">Group Name</label><span class="invaliddiv">*</span>
+                  <input type="text" placeholder="Enter Group Name" class="form-control" formControlName="name"
+                    [ngClass]="{ 'is-invalid': submitted && groupchatForm.get('name')!.errors?.['required']}" />
+                  <div *ngIf="submitted && groupchatForm.controls['name']!.errors" class="invaliddiv">
+                    <div *ngIf="groupchatForm.controls['name']!.errors?.['required']">
+                      Name is required
+                    </div>
+                  </div>
+                </div>
+                <!-- <div class="">
+                <small class="text-danger ng-star-inserted">
+                  Name is required.
+                </small>
+              </div> -->
+              </div>
+              <div class="col-12">
+                <div class="filterBar mx-0">
+                  <div class="searchBox">
+                    <div class="icon">
+                      <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div class="searchBox">
+                      <input type="text" class="form-control border-end-0 form-control-lg" placeholder="Search"
+                        style="font-size: 13px" (keyup)="onKeyUpEvent($event)" />
+                    </div>
+                    <!-- <div class="icon">
+                    <i class="fa-solid fa-filter"></i>
+                  </div> -->
+                  </div>
+                </div>
+              </div>
+              <h5>Mentee List</h5>
+              <span class="invaliddiv">*</span>
+              <div class="col-12" *ngFor="let users of UserData">
+                <div class="scrollBox">
+                  <div class="checkBox">
+                    <div class="profile">
+                      <div class="image">
+                        <img *ngIf="users?.image" [src]="showImage + users?.image" class="img-fluid" alt="" />
+                        <img *ngIf="!users?.image" src="../../../assets/images/profileImage.png" class="img-fluid"
+                          alt="" />
+                        <!-- <img
+                        src="../../../assets/images/profileImage.png"
+                        alt=""
+                      /> -->
+                      </div>
+                      <div class="text">
+                        <p class="mb-0">
+                          {{ users.firstName ? users.firstName : "-" }}
+                          {{ users.lastName ? users.lastName : "-" }}
+                        </p>
+                      </div>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" formArrayName="ckeckedUsers"
+                        (change)="onCheckboxChange($event)" [value]="users._id" id="flexCheckDefault" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="btnBox">
+            <button type="button" class="btn btn-grey" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" (click)="submit()" data-dismiss="modal" class="btn btn-main">
+              Sure
+            </button>
+            <!-- <button type="button" (click)="submit()"  class="btn btn-main">
+              Sure
+            </button> -->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="deleteConfirmation" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered deleteModel" role="document">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <div class="deleteIcon">
+          <i class="fa-solid fa-trash-can"></i>
+        </div>
+        <h4 class="my-3">Are you sure you want to delete this chat?</h4>
+        <div class="btnBox">
+          <button type="button" class="btn btn-grey" data-dismiss="modal">
+            No
+          </button>
+          <button type="button" data-dismiss="modal" class="btn btn-main" (click)="deleteGroup()">
+            Yes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,156 @@
+@import "/src/styles.scss";
+
+.paymentReceive {
+  background-color: $light;
+  border-radius: 15px;
+  padding: 15px;
+  margin: 15px;
+  @include itemPosition(center, flex-start);
+  gap: 15px;
+
+  .image {
+    width: 80px;
+    height: 80px;
+    border-radius: 15px;
+    background-color: rgba($color: $primary, $alpha: 0.1);
+    @include itemPosition(center, center);
+
+    img {
+      width: 70%;
+    }
+  }
+
+  .text {
+    h4 {
+      font-size: 18px;
+    }
+
+    .money {
+      @include itemPosition(baseline, flex-start);
+      gap: 15px;
+    }
+  }
+}
+
+.paymentContent {
+  padding: 15px;
+  border-radius: 15px;
+  margin: 7.5px;
+  height: 115px;
+
+  p {
+    font-weight: 500;
+  }
+
+  &.bg-red {
+    background-color: rgba($color: $primary, $alpha: 0.1);
+    border: 1px solid rgba($color: $primary, $alpha: 0.2);
+  }
+
+  &.bg-blue {
+    background-color: #d7e7ff;
+    border: 1px solid #c5dcff;
+  }
+}
+
+.calsenderBtns {
+  @include itemPosition(center, flex-start);
+  padding: 15px;
+  gap: 15px;
+  flex-wrap: wrap;
+
+  .btn {
+    width: 100px;
+  }
+  .Active {
+    background-color: $primary !important;
+    color: $light;
+    &:hover {
+      color: $light;
+      opacity: 0.9;
+    }
+  }
+}
+
+.registeredMentees {
+  h4 {
+    span {
+      font-weight: 500;
+      font-size: 16px;
+    }
+  }
+}
+
+.row.registeredMentees .menteesContent .menteeProfile .image img.img-fluid {
+  height: 100% !important;
+}
+
+@media only screen and (max-width: 1400px) {
+  .paymentReceive {
+    .text {
+      h4 {
+        font-size: 14px;
+      }
+
+      .money {
+        gap: 15px;
+
+        h2 {
+          font-size: 20px;
+        }
+      }
+    }
+  }
+
+  .paymentContent {
+    height: auto;
+
+    p {
+      font-size: 14px;
+    }
+
+    h2 {
+      font-size: 20px;
+    }
+
+    img {
+      width: 25px;
+    }
+  }
+
+  .registeredMentees {
+    h4 {
+      font-size: 16px;
+
+      span {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+#preview{
+  width: 50%;
+  margin-top: 3rem;
+}
+
+#preview:hover{
+  background-color: #fe4d4d !important;
+}
+
+.modal {
+  display: none;
+}
+
+#search{
+  width: 50%;
+  float: right;
+}
+
+#search:hover{
+  background-color: #fe4d4d !important;
+}
+
+.date {
+margin-left: auto;
+}

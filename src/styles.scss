@@ -1,0 +1,1187 @@
+/* You can add global styles to this file, and also import other style files */
+// @import "../node_modules/angular-calendar/css/angular-calendar.css";
+@import "ngx-toastr/toastr.css";
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+// Common Colors
+
+$primary: #fe4d4d;
+$dark: #313131;
+$background: #f7f9fd;
+$secondary: #f0eff3;
+$input: #e7e5e5;
+$inputBorder: #ced4da;
+$light: #ffffff;
+$yellow: #fdbe10;
+
+// Common Mixins
+
+@mixin itemPosition($align, $justify) {
+  display: flex;
+  align-items: $align;
+  justify-content: $justify;
+}
+
+@mixin roundShape($width, $height, $bgColor) {
+  width: $width;
+  height: $height;
+  border-radius: 50%;
+  background-color: $bgColor;
+  @include itemPosition(center, center);
+}
+
+@mixin formFields {
+  height: 46px;
+  border-radius: 10px;
+  padding: 10px;
+  // width: 100%;
+  background-color: rgba($color: $input, $alpha: 0.15);
+  font-weight: 500;
+  border: 1px solid $inputBorder;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+@mixin buttonsPair {
+  @include itemPosition(center, flex-end);
+  margin: 15px 7.5px;
+  gap: 15px;
+
+  .btn {
+    width: 170px;
+  }
+}
+
+// Common Buttons
+.btn {
+  padding: 10px 20px;
+  width: 100%;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  height: 46px;
+  &:focus {
+    box-shadow: none;
+  }
+}
+.btn-main {
+  background-color: $primary;
+  color: $light;
+  &:hover {
+    color: $light;
+    opacity: 0.9;
+  }
+}
+
+.btn-grey {
+  background-color: rgba($color: $dark, $alpha: 0.06);
+  color: $dark;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+.btn-plane {
+  background-color: $light;
+  padding: 10px 20px;
+  border-radius: 10px;
+  height: 46px;
+  width: 100%;
+  color: $primary;
+  font-weight: 700;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.btn-main-outline {
+  background-color: $light;
+  padding: 10px;
+  border-radius: 10px;
+  height: 46px;
+  width: 100%;
+  color: $primary;
+  font-weight: 700;
+  border: 1px solid $primary;
+
+  &:focus {
+    box-shadow: none;
+  }
+
+  &:hover {
+    color: $light;
+    opacity: 0.9;
+  }
+}
+
+.main-round-btn {
+  @include roundShape(40px, 40px, $primary);
+  margin: 5px;
+  border: none;
+
+  i {
+    color: $light;
+    display: flex;
+  }
+}
+
+.secondary-round-btn {
+  @include roundShape(40px, 40px, $dark);
+  margin: 5px;
+  border: none;
+
+  i {
+    color: $light;
+    display: flex;
+  }
+}
+
+.grey-round-btn {
+  @include roundShape(40px, 40px, rgba($color: $dark, $alpha: 0.06));
+  margin: 5px;
+  border: none;
+
+  i {
+    color: $dark;
+    display: flex;
+  }
+}
+
+.auto-width {
+  width: auto !important;
+}
+
+// Common Classes
+body {
+  background-color: $background;
+}
+
+.centerMid {
+  @include itemPosition(center, center);
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.filterBar {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+  gap: 10px;
+
+  .pageTitle {
+    @include itemPosition(center, flex-start);
+    gap: 10px;
+
+    .icon {
+      width: 40px;
+      height: 40px;
+      @include itemPosition(center, center);
+      color: $dark;
+      background-color: $light;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    p {
+      flex: 1;
+      font-weight: 500;
+      font-size: 22px;
+    }
+  }
+
+  .searchBox {
+    border: 1px solid $secondary;
+    max-width: 550px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    color: $dark;
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      @include itemPosition(center, center);
+    }
+
+    .searchBox {
+      flex: 1;
+      border: none;
+
+      input {
+        border: none;
+        outline: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.invaliddiv {
+  color: red;
+}
+
+.primaryLayout {
+  margin: 15px;
+  border-radius: 15px;
+  background-color: $light;
+}
+
+.form {
+  padding: 7.5px;
+  background-color: $light;
+  border-radius: 15px;
+
+  .uploadProfile {
+    margin: 15px 07.5px 0;
+
+    .profileImage {
+      width: 200px;
+      img {
+        border-radius: 8px;
+      }
+    }
+  }
+
+  label {
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+
+  label.uploadFile {
+    @include formFields;
+    display: block;
+    width: 100%;
+    border: 1px solid $inputBorder;
+    position: relative;
+    padding-right: 25px;
+
+    i {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .inputField {
+    margin: 7.5px;
+    position: relative;
+
+    input,
+    select {
+      @include formFields;
+    }
+
+    textarea {
+      border-radius: 10px;
+      padding: 10px;
+      background-color: rgba($color: $input, $alpha: 0.15);
+      font-weight: 500;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    p {
+      font-weight: 500;
+      color: $dark;
+      cursor: pointer;
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 15px;
+    }
+  }
+
+  .buttons {
+    @include buttonsPair;
+  }
+}
+
+.layoutHeader {
+  padding: 7.5px;
+  @include itemPosition(center, space-between);
+  flex-wrap: wrap;
+  gap: 15px;
+
+  .imageBox {
+    @include itemPosition(center, flex-start);
+    gap: 15px;
+
+    .image {
+      img {
+        width: 100%;
+      }
+    }
+
+    .text {
+      h4 {
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+.profileContent {
+  @include itemPosition(center, space-between);
+  border-bottom: 1px solid $secondary;
+  padding: 15px;
+
+  .profile {
+    @include itemPosition(center, flex-start);
+    gap: 15px;
+
+    .image {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      border-radius: 15px;
+      @include itemPosition(center, center);
+      img {
+        width: 100%;
+        border-radius: 5px;
+      }
+
+      img.verify {
+        position: absolute;
+        bottom: -7px;
+        right: -7px;
+      }
+    }
+
+    .text {
+      h3 {
+        font-size: 22px;
+      }
+
+      .stars {
+        i {
+          color: #e8a908;
+        }
+      }
+    }
+
+    .text2 {
+      .text {
+        flex: 1;
+
+        h5.title {
+          width: 150px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+          font-size: 16px;
+        }
+
+        .time {
+          color: rgba($color: $dark, $alpha: 0.8);
+          font-weight: 500;
+          font-size: 14px;
+
+          i {
+            display: inline-block;
+            margin-right: 10px;
+          }
+        }
+
+        .price {
+          p {
+            font-weight: 500;
+            font-size: 13px;
+          }
+
+          h5 {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .chat {
+    .chatIcon {
+      @include roundShape(50px, 50px, #fe4d4d);
+      cursor: pointer;
+
+      img {
+        width: 25px;
+      }
+    }
+  }
+}
+
+.registeredMentees {
+  padding: 7.5px;
+
+  .menteesContent {
+    @include itemPosition(center, space-between);
+    padding: 15px;
+    gap: 15px;
+    border: 1.2px solid $secondary;
+    border-radius: 15px;
+    margin: 7.5px;
+
+    .menteeProfile {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+
+      .image {
+        width: 60px;
+        height: 60px;
+
+        img {
+          width: 100%;
+        }
+      }
+
+      .text {
+        h3 {
+          font-size: 16px;
+        }
+
+        p {
+          font-size: 14px;
+        }
+      }
+    }
+
+    .menteeChat {
+      .chatIcon {
+        @include roundShape(50px, 50px, #fe4d4d);
+        cursor: pointer;
+
+        img {
+          width: 25px;
+        }
+      }
+    }
+  }
+}
+
+.buttonsPairAllignment {
+  @include buttonsPair();
+}
+
+.deletePairAllignments {
+  @include itemPosition(center, center);
+  margin: 15px 7.5px;
+  gap: 15px;
+
+  .btn {
+    width: 150px;
+  }
+}
+
+.form-control.is-invalid,
+.was-validated .form-control:invalid {
+  background-image: none;
+}
+
+.tabFilter {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+
+  .pageNuber {
+    @include itemPosition(center, flex-start);
+    gap: 10px;
+
+    select {
+      width: 50px;
+      text-align: center;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+  }
+
+  .pagination {
+    @include itemPosition(center, center);
+    gap: 10px;
+
+    .icon {
+      width: 35px;
+      height: 35px;
+      border-radius: 10px;
+      @include itemPosition(center, center);
+      border: 1px solid $primary;
+      color: $primary;
+
+      &:hover {
+        background-color: $primary;
+        color: $light;
+      }
+    }
+  }
+}
+
+.modal-dialog {
+  margin: auto;
+
+  .modal-content {
+    border-radius: 15px;
+    padding: 15px;
+
+    .modal-header {
+      border-bottom: none;
+    }
+    .modal-body {
+      .inputField {
+        label {
+          margin-bottom: 10px;
+          font-weight: 500;
+        }
+        input,
+        select {
+          @include formFields;
+        }
+      }
+    }
+  }
+}
+
+.adminStyle {
+  .inputField {
+    margin: 7.5px;
+    position: relative;
+
+    input,
+    select {
+      @include formFields;
+    }
+
+    textarea {
+      border-radius: 10px;
+      padding: 10px;
+      background-color: rgba($color: $input, $alpha: 0.15);
+      font-weight: 500;
+
+      &:focus {
+        box-shadow: none;
+      }
+    }
+
+    p {
+      font-weight: 500;
+      color: $dark;
+      cursor: pointer;
+    }
+
+    img {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 15px;
+    }
+
+    .input-group-text {
+      border-radius: 0 10px 10px 0 !important;
+      cursor: pointer;
+    }
+  }
+}
+
+.fc .fc-button-primary {
+  background-color: #fe4d4d !important;
+  border-color: #fe4d4d !important;
+  color: var(--fc-button-text-color);
+}
+
+.fc .fc-button-primary:not(:disabled).fc-button-active,
+.fc .fc-button-primary:not(:disabled):active {
+  background-color: var(--fc-button-active-bg-color) !important;
+  border-color: var(--fc-button-active-border-color) !important;
+  color: var(--fc-button-text-color);
+}
+p.calederText {
+  max-width: 130px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+@media only screen and (max-width: 1400px) {
+  @mixin formFields {
+    height: 30px;
+    padding: 3px 15px;
+    font-size: 12px;
+    // width: 100%;
+  }
+  // Common Buttons
+  .btn {
+    padding: 5px 10px;
+    width: 100%;
+    font-weight: 500;
+    font-size: 12px;
+    border-radius: 10px;
+    height: 30px;
+    &:focus {
+      box-shadow: none;
+    }
+  }
+  .btn-main {
+    background-color: $primary;
+    color: $light;
+
+    &:hover {
+      color: $light;
+      opacity: 0.9;
+    }
+  }
+
+  .btn-grey {
+    background-color: rgba($color: $dark, $alpha: 0.06);
+    color: $dark;
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .btn-plane {
+    background-color: $light;
+    color: $primary;
+  }
+
+  .btn-main-outline {
+    background-color: $light;
+    color: $primary;
+    border: 1px solid $primary;
+
+    &:hover {
+      color: $primary;
+      opacity: 0.9;
+    }
+  }
+
+  .main-round-btn {
+    @include roundShape(30px, 30px, $primary);
+
+    i {
+      font-size: 14px;
+    }
+  }
+
+  .secondary-round-btn {
+    @include roundShape(30px, 30px, $dark);
+
+    i {
+      font-size: 14px;
+    }
+  }
+
+  .grey-round-btn {
+    @include roundShape(30px, 30px, rgba($color: $dark, $alpha: 0.06));
+
+    i {
+      font-size: 14px;
+    }
+  }
+
+  .auto-width {
+    width: auto !important;
+  }
+
+  // Common Classes
+  body {
+    background-color: $background;
+  }
+
+  .centerMid {
+    @include itemPosition(center, center);
+  }
+
+  .cursor-pointer {
+    cursor: pointer;
+  }
+
+  .filterBar {
+    @include itemPosition(center, space-between);
+    margin: 15px;
+    gap: 10px;
+
+    .pageTitle {
+      @include itemPosition(center, flex-start);
+      gap: 10px;
+
+      .icon {
+        width: 30px;
+        height: 30px;
+        @include itemPosition(center, center);
+        color: $dark;
+        background-color: $light;
+        border-radius: 10px;
+        cursor: pointer;
+        i {
+          font-size: 12px;
+        }
+      }
+
+      p {
+        flex: 1;
+        font-weight: 500;
+        font-size: 12px;
+      }
+    }
+
+    .searchBox {
+      border: 1px solid $secondary;
+      max-width: 550px;
+      display: flex;
+      background-color: white;
+      border-radius: 10px;
+      color: $dark;
+
+      .icon {
+        width: 40px;
+        height: 40px;
+        @include itemPosition(center, center);
+      }
+
+      .searchBox {
+        flex: 1;
+        border: none;
+
+        input {
+          border: none;
+          outline: none;
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+      }
+    }
+  }
+
+  .invaliddiv {
+    color: red;
+  }
+
+  .primaryLayout {
+    margin: 15px;
+    border-radius: 15px;
+    background-color: $light;
+  }
+
+  .form {
+    padding: 5px;
+    background-color: $light;
+    border-radius: 15px;
+
+    .uploadProfile {
+      margin: 15px 07.5px 0;
+
+      .profileImage {
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+
+    label {
+      margin-bottom: 7px;
+      font-weight: 600;
+      font-size: 12px;
+    }
+
+    label.uploadFile {
+      @include formFields;
+      display: block;
+      width: 100%;
+      border: 1px solid $inputBorder;
+      position: relative;
+      padding: 4px 25px 4px 10px;
+      height: 35px;
+
+      i {
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+
+    .inputField {
+      margin: 5px;
+      position: relative;
+
+      input,
+      select {
+        @include formFields;
+        height: 35px;
+        padding: 0 10px;
+        font-size: 12px;
+        font-weight: 400;
+      }
+
+      textarea {
+        border-radius: 10px;
+        padding: 10px;
+        background-color: rgba($color: $input, $alpha: 0.15);
+        font-weight: 500;
+        font-size: 12px;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      p {
+        font-weight: 500;
+        color: $dark;
+        cursor: pointer;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 15px;
+      }
+    }
+
+    .buttons {
+      @include buttonsPair;
+    }
+  }
+
+  .layoutHeader {
+    padding: 7.5px;
+    @include itemPosition(center, space-between);
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .imageBox {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+
+      .image {
+        img {
+          width: 100%;
+        }
+      }
+
+      .text {
+        h4 {
+          font-size: 22px;
+        }
+      }
+    }
+  }
+
+  .profileContent {
+    @include itemPosition(center, space-between);
+    border-bottom: 1px solid $secondary;
+    padding: 15px;
+
+    .profile {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+
+      .image {
+        width: 60px;
+        height: 60px;
+        position: relative;
+        border-radius: 15px;
+        @include itemPosition(center, center);
+
+        img {
+          width: 100%;
+          border-radius: 5px;
+        }
+
+        img.verify {
+          position: absolute;
+          bottom: -7px;
+          right: -7px;
+          width: 15px;
+        }
+      }
+
+      .text {
+        h3 {
+          font-size: 16px;
+        }
+      }
+
+      .text2 {
+        .text {
+          flex: 1;
+
+          h5.title {
+            font-size: 14px;
+          }
+
+          .time {
+            font-weight: 400;
+            font-size: 12px;
+          }
+
+          .price {
+            p {
+              font-weight: 400;
+              font-size: 12px;
+            }
+
+            h5 {
+              font-size: 14px;
+            }
+          }
+        }
+      }
+    }
+
+    .chat {
+      .chatIcon {
+        @include roundShape(40px, 40px, #fe4d4d);
+        cursor: pointer;
+
+        img {
+          width: 20px;
+        }
+      }
+    }
+  }
+
+  .registeredMentees {
+    padding: 7.5px;
+
+    .menteesContent {
+      @include itemPosition(center, space-between);
+      padding: 10px;
+      gap: 15px;
+      border: 1.2px solid $secondary;
+      border-radius: 15px;
+      margin: 7.5px;
+
+      .menteeProfile {
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+
+        .image {
+          width: 60px;
+          height: 60px;
+
+          img {
+            width: 100%;
+          }
+        }
+
+        .text {
+          h3 {
+            font-size: 14px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+
+      .menteeChat {
+        .chatIcon {
+          @include roundShape(40px, 40px, #fe4d4d);
+          cursor: pointer;
+
+          img {
+            width: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  .buttonsPairAllignment {
+    @include buttonsPair();
+  }
+
+  .deletePairAllignments {
+    @include itemPosition(center, center);
+    margin: 15px 7.5px;
+    gap: 15px;
+
+    .btn {
+      width: 150px;
+    }
+  }
+
+  .form-control.is-invalid,
+  .was-validated .form-control:invalid {
+    background-image: none;
+  }
+
+  .tabFilter {
+    @include itemPosition(center, space-between);
+    margin: 15px;
+
+    .pageNuber {
+      @include itemPosition(center, flex-start);
+      gap: 10px;
+
+      select {
+        width: 50px;
+        text-align: center;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .pagination {
+      @include itemPosition(center, center);
+      gap: 10px;
+
+      .icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        @include itemPosition(center, center);
+        border: 1px solid $primary;
+        color: $primary;
+
+        &:hover {
+          background-color: $primary;
+          color: $light;
+        }
+      }
+    }
+  }
+
+  .modal-dialog {
+    margin: auto;
+
+    .modal-content {
+      border-radius: 15px;
+      padding: 15px;
+
+      .modal-header {
+        border-bottom: none;
+      }
+    }
+  }
+
+  .adminStyle {
+    .inputField {
+      margin: 7.5px;
+      position: relative;
+
+      input,
+      select {
+        @include formFields;
+      }
+
+      textarea {
+        border-radius: 10px;
+        padding: 10px;
+        background-color: rgba($color: $input, $alpha: 0.15);
+        font-weight: 500;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      p {
+        font-weight: 500;
+        color: $dark;
+        cursor: pointer;
+      }
+
+      img {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 15px;
+      }
+
+      .input-group-text {
+        border-radius: 0 10px 10px 0 !important;
+        cursor: pointer;
+        height: 30px;
+        font-size: 13px;
+      }
+
+      .input-group {
+        input,
+        select {
+          @include formFields;
+        }
+      }
+    }
+  }
+
+  .fc .fc-button-primary {
+    background-color: #fe4d4d !important;
+    border-color: #fe4d4d !important;
+    color: var(--fc-button-text-color);
+  }
+
+  .fc .fc-button-primary:not(:disabled).fc-button-active,
+  .fc .fc-button-primary:not(:disabled):active {
+    background-color: var(--fc-button-active-bg-color) !important;
+    border-color: var(--fc-button-active-border-color) !important;
+    color: var(--fc-button-text-color);
+  }
+
+  .xsmallText {
+    font-size: 12px !important;
+  }
+
+  .smallText {
+    font-size: 14px !important;
+  }
+
+  .mediumText {
+    font-size: 16px !important;
+  }
+
+  .normalText {
+    font-size: 18px !important;
+  }
+  .largeText {
+    font-size: 20px !important;
+  }
+
+  h1 {
+    font-size: 25px;
+  }
+  h2 {
+    font-size: 20px;
+  }
+  h3 {
+    font-size: 18px;
+  }
+  h4 {
+    font-size: 16px;
+  }
+  h5 {
+    font-size: 14px;
+  }
+  h6 {
+    font-size: 12px;
+  }
+  p {
+    font-size: 14px;
+  }
+}

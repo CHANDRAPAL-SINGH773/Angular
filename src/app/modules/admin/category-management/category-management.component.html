@@ -1,0 +1,230 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-7 text-start">
+        <h4 class="fs-28 fw-bold">Category List</h4>
+      </div>
+
+      <!-- filter -->
+      <!-- <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select (change)="selectOption($event)" class="form-select me-3">
+            <option value="">All</option>
+            <option value="pending">Pending</option>
+            <option value="approved">Approved</option>
+          </select>
+        </div>
+      </div> -->
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0" placeholder="Search" style="font-size: 13px"
+              (keyup)="onKeyUpEvent($event)" />
+            <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-5 col-lg-2 text-start centerMid">
+        <button type="button" class="btn btn-main" data-toggle="modal" data-target="#addCategory">
+          Add Category
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>Category Name</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="
+                    let data of categoryData
+                      | paginate
+                        : {
+                            itemsPerPage: 5,
+                            currentPage: category_page,
+                            totalItems: totaldocs
+                          }
+                  ">
+                  <td data-label="category name">
+                    <div class="admin_box">
+                      <div class="d-flex text-center align-items-center">
+                        <div class="avtar_box">
+                          <span>
+                            <img *ngIf="data.image" [src]="imagecategory + data.image" class="img-fluid" alt="" />
+                            <img *ngIf="!data.image" src="../../assets/images/sessions.png" class="img-fluid"
+                              alt="" />
+                          </span>
+                        </div>
+                        <span>
+                          {{ data.categoryName }}
+                        </span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td data-label="Status">
+                    <div class="form-check form-switch d-flex align-items-center">
+                      <input class="form-check-input" type="checkbox" role="switch"
+                        [checked]="data.status === 1 ? true : false" (click)="changeStatus($event, data._id)"
+                        id="flexSwitchCheckChecked" />
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p class="d-flex justify-content-end justify-content-lg-start">
+                      <button class="main-round-btn" (click)="getId(data._id, data.categoryName)" data-toggle="modal"
+                        data-target="#editCategoryModal">
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button class="grey-round-btn" (click)="getId(data._id, data.categoryName)" data-toggle="modal"
+                        data-target="#deleteCategory">
+                        <i class="bi bi-trash" title="delete"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageChange($event)" (pageChange)="category_page = $event">
+            </pagination-controls>
+
+            <div class="check" *ngIf="categoryData?.length === 0">
+              <h3 class="text-center w-100">No record found</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Category Modal ----- Start -->
+  <div class="modal fade" id="addCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="createCategory">
+            <div class="inputField">
+              <input type="file" (change)="handleimage($event, 'image')" class="form-control" placeholder="Image"
+                formControlName="image" accept="image/x-png,image/jpg,image/jpeg" />
+            </div>
+            <div class="inputField mt-3">
+              <input type="text" placeholder="Category Name" formControlName="categoryName" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && createCategory.get('categoryName')!.errors?.['required']}" />
+              <div *ngIf="
+                  submitted && createCategory.controls['categoryName']!.errors
+                " class="invaliddiv">
+                <div *ngIf="createCategory.controls['categoryName']!.errors?.['required']">
+                  Category Name is required
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="deletePairAllignments">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="createnewCategory()" class="btn btn-main">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Add Category Modal ----- End -->
+  <!-- Edit Category Modal ----- Start -->
+  <div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closemodaledit">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="editCategory">
+            <div class="inputField">
+              <input type="file" (change)="handleimage($event, 'image')" class="form-control" placeholder="Image"
+                formControlName="image" accept="image/x-png,image/jpg,image/jpeg" />
+            </div>
+            <div class="inputField mt-3">
+              <input type="text" placeholder="Category Name" formControlName="categoryName" class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && editCategory.get('categoryName')!.errors?.['required']}" />
+              <div *ngIf="
+                  submitted && editCategory.controls['categoryName']!.errors
+                " class="invaliddiv">
+                <div *ngIf="editCategory.controls['categoryName']!.errors?.['required']">
+                  Category Name is required
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="deletePairAllignments">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="updateCategory()" class="btn btn-main">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Category Modal ----- End -->
+  <!-- Delete Category Modal ----- Start -->
+  <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closemodaldelete">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center p-4">
+          <h3>Are you sure to delete this category?</h3>
+        </div>
+        <!-- <div class="modal-body">
+                    <input type="text" placeholder="Category Name" [(ngModel)]="categoryName" value = {{categoryName}} class="space"><br>
+                </div> -->
+        <div class="deletePairAllignments">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="deletecategory()" class="btn btn-main">
+            Sure
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete Category Modal ----- End -->
+</main>

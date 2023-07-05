@@ -1,0 +1,13 @@
+@import "../login/login.component.scss";
+.inputField {
+  display: flex;
+  gap: 10px;
+  input {
+    width: 40px;
+    text-align: center;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}

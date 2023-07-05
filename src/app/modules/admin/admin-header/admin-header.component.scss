@@ -1,0 +1,162 @@
+// .navbar-title {
+//   i {
+//     font-size: 25px;
+//     margin-right: 20px;
+//   }
+// }
+
+@import "/src/styles.scss";
+
+header.header {
+  width: calc(100% - 265px);
+  height: 80px;
+  background-color: $light;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 5;
+  transition: all 0.5s;
+  padding: 0 20px;
+
+  .content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
+    .heading {
+      @include itemPosition(center, flex-start);
+      gap: 10px;
+
+      i {
+        color: $dark;
+        cursor: pointer;
+        font-size: 26px;
+      }
+
+      h1 {
+        font-size: 30px;
+      }
+    }
+
+    .profile {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+
+      .notification {
+        @include roundShape(50px, 50px, $light);
+        color: rgba($color: $dark, $alpha: 0.3);
+        position: relative;
+
+        i {
+          font-size: 25px;
+        }
+
+        i.update {
+          position: absolute;
+          font-size: 9px;
+          color: $primary;
+          top: 16px;
+          right: 14px;
+        }
+      }
+
+      .profileDetails {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        .profileImage {
+          width: 50px;
+          height: 50px;
+          @include itemPosition(center, center);
+
+          img {
+            width: 100%;
+            border-radius: 50%;
+            height: 100%;
+          }
+        }
+
+        .profileText {
+          @include itemPosition(top, flex-start);
+          gap: 10px;
+
+          p.category {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  header.header {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  header.header {
+    height: 60px;
+
+    .content {
+      .heading {
+        h1 {
+          font-size: 20px;
+        }
+      }
+
+      .profile {
+        gap: 20px;
+
+        .notification {
+          @include roundShape(30px, 30px, $light);
+
+          i {
+            font-size: 25px;
+          }
+
+          i.update {
+            font-size: 9px;
+            top: 6px;
+            right: 5px;
+          }
+        }
+
+        .profileDetails {
+          .profileImage {
+            width: 28px;
+          }
+
+          .profileText {
+            p {
+              font-size: 10px;
+              font-weight: 500;
+            }
+
+            p.category {
+              font-size: 8px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.dropdown-item {
+  padding: 0.25rem 1rem !important;
+}
+
+.dropdown-item:active {
+  background-color: $primary  !important;
+  color: $light  !important;
+  padding: 0.25rem 1rem !important;
+}
+
+.dropdown-menu {
+  padding: 0;
+}

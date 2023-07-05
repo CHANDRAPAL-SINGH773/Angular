@@ -1,0 +1,93 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+    <section class="content px-0 py-2">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-6">
+                            <h2>
+                                <strong class="fs-28 me-3">
+                                    <a class="fw-bold text-dark back-btn" routerLink="/admin-user-management"><i
+                                            class="bi bi-chevron-left"></i></a>
+                                    {{oneUserData.firstName? oneUserData.firstName:"-"}}
+                                    {{oneUserData.lastName? oneUserData.lastName:"-"}}</strong>
+                            </h2>
+                        </div>
+                    </div>
+                    <div class="card shadow border-0 mt-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 col-lg-3 text-center mt-3">
+                                    <span>
+                                        <img *ngIf="oneUserData.image" [src]="showImage+oneUserData.image"
+                                            class="img-fluid imageUser" alt="">
+                                        <img *ngIf="!oneUserData.image" src="../../assets/images/user.png"
+                                            class="img-fluid imageUser" alt="">
+                                    </span>
+                                </div>
+
+                                <div class="col-12 col-md-9">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12 col-lg-6 mb-3">
+                                                <p class="fs-18 border-bottom mb-0">
+                                                    <span class="fw-bold">First Name</span>
+                                                    <span class="ms-auto fs-14 d-block py-2"> {{oneUserData.firstName?
+                                                        oneUserData.firstName:"-"}}</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-12 col-lg-6 mb-3">
+                                                <p class="fs-18 border-bottom mb-0">
+                                                    <span class="fw-bold">Last Name</span>
+                                                    <span class="ms-auto fs-14 d-block py-2">
+                                                        {{oneUserData.lastName? oneUserData.lastName:"-"}}</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-12 col-lg-6 mb-3">
+                                                <p class="fs-18 border-bottom mb-0">
+                                                    <span class="fw-bold">Phone</span>
+                                                    <span class="ms-auto fs-14 d-block py-2">
+                                                        {{oneUserData.phone? oneUserData.phone:"-"}}</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-12 col-lg-6 mb-3">
+                                                <p class="fs-18 border-bottom mb-0">
+                                                    <span class="fw-bold">Status</span>
+                                                    <span class="ms-auto fs-14 d-block py-2">
+                                                        {{(oneUserData.status===1)?"Active":"Inactive"}}
+                                                    </span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-12 col-lg-6 mb-3">
+                                                <p class="fs-18 border-bottom mb-0">
+                                                    <span class="fw-bold">Email</span>
+                                                    <span class="ms-auto fs-14 d-block py-2">
+                                                        {{oneUserData.email?oneUserData.email:"-"}}</span>
+                                                </p>
+                                            </div>
+
+                                            <div class="col-12 col-lg-6 mb-3">
+                                                <p class="fs-18 border-bottom mb-0">
+                                                    <span class="fw-bold">Verfied Badge</span>
+                                                    <span class="ms-auto fs-14 d-block py-2">
+                                                        {{(oneUserData.verified_badge==true)?"Yes":"No"}}
+                                                    </span>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

@@ -1,0 +1,74 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div
+            class="icon"
+            [routerLink]="['/mentor/mentor-dashboard/raise-dispute']"
+            [queryParams]="{ _id: sessionId,program_id:programid}" >
+            <i class="fa-solid fa-chevron-left"></i>
+          </div>
+          <p class="mb-0">Raise a Dispute</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row p-3 pb-0">
+      <div class="col">
+        <h5 class="mb-0">Selected Session</h5>
+      </div>
+    </div>
+    <div class="row completedSessions">
+      <div class="col-lg-6">
+        <div
+          class="menteesContent"
+          [routerLink]="['/mentor/mentor-dashboard/dispute-session']"
+        >
+          <div class="menteeProfile">
+            <div class="image">
+              <span>
+                <img class="rounded-circle" *ngIf="sessionData?.image" [src]="showImage + sessionData?.image" class="img-fluid"
+                  alt="" />
+                <img class="rounded-circle" *ngIf="!sessionData?.image"
+                src="../../../../../../../assets/images/sessions.png" class="img-fluid" alt="" />
+              </span>
+            </div>
+            <div class="text">
+              <h3>{{sessionData.session_name?(sessionData.session_name):"-"}}</h3>
+              <p>
+                {{sessionData.description?(sessionData.description):"-"}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row completedSessions">
+      <div class="col-lg-4 col-sm-6" *ngFor="let data of userData | paginate: { itemsPerPage: 10, 
+        currentPage: usersPage ,totalItems: totaldocs
+      }">
+        <div
+          class="menteesContent"
+          [routerLink]="['/mentor/mentor-dashboard/dispute-comment']"
+          [queryParams]="{ _id: sessionId,program_id:data._id, userId:data.userData._id}">
+          <div class="menteeProfile">
+            <div class="image2">
+              <img *ngIf="data.userData.image" [src]="showImage+data.userData.image" class="img-fluid" alt="">
+              <img *ngIf="!data.userData.image" src="../../assets/images/user.png" class="img-fluid" alt="">
+            
+            </div>
+            <div class="text">
+              <h3>{{data.userData.firstName?(data.userData.firstName):"-"}} {{data.userData.lastName?(data.userData.lastName):"-"}}</h3>
+              <p class="calederText">{{data.userData.bio?(data.userData.bio):"-"}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+     <div class="text-center" *ngIf="!userData || userData.length==0">No active mentee found for this session.</div>
+     <pagination-controls (pageChange)="usersPage = $event"></pagination-controls>
+    </div>
+  </div>
+</div>

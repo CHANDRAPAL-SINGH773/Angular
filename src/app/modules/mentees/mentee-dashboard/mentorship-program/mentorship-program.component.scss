@@ -1,0 +1,81 @@
+@import "/src/styles.scss";
+
+.filterBar {
+  flex-wrap: wrap;
+
+  .status {
+    @include itemPosition(center, center);
+    gap: 10px;
+    background-color: $secondary;
+    padding: 10px;
+    border-radius: 10px;
+
+    .online {
+      color: $dark;
+      border-radius: 6px;
+      padding: 5px 10px;
+      cursor: pointer;
+
+      &.active {
+        background-color: #fe4d4d;
+        color: $light;
+      }
+    }
+  }
+}
+
+.sessions {
+  padding: 7.5px;
+
+  .sessionData {
+    background-color: $light;
+    border-radius: 15px;
+    margin: 20px 0 0 0;
+    border: 1.5px solid $secondary;
+    margin: 7.5px;
+    cursor: pointer;
+    height: 100%;
+
+    .image {
+      background-color: #faf2ef;
+      border-radius: 15px 15px 0 0;
+      position: relative;
+
+      img {
+        width: 100%;
+        border-radius: 15px 15px 0 0;
+      }
+
+      img.medal {
+        width: 25px;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+      }
+    }
+
+    .textData {
+      padding: 15px;
+
+      h5 {
+        font-size: 14px;
+        text-transform: uppercase;
+      }
+
+      h4 {
+        margin-top: 10px;
+        font-size: 16px;
+      }
+
+      .SessionData {
+        margin-top: 10px;
+        @include itemPosition(center, space-between);
+        gap: 10px;
+      }
+    }
+  }
+}
+
+.sessionData .image img.img-fluid {
+  height: 150px;
+}

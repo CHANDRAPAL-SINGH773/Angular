@@ -1,0 +1,371 @@
+// @import "/src/styles.scss";
+
+// .profileContent {
+//   border-bottom: 1px solid $secondary;
+// }
+
+// .ratings {
+//   border: 1px solid $secondary;
+//   padding: 15px;
+//   border-radius: 15px;
+//   max-width: 275px;
+//   margin: 15px;
+//   h5 {
+//     font-size: 18px;
+//     color: #0c2f49;
+//   }
+//   .stars {
+//     @include itemPosition(center, flex-start);
+//     gap: 15px;
+//     h1 {
+//       color: #0c2f49;
+//     }
+//     h6 {
+//       font-size: 16px;
+//     }
+//     .starBox {
+//       @include itemPosition(center, space-between);
+//       gap: 10px;
+//       i {
+//         color: $yellow;
+//         font-size: 20px;
+//       }
+//     }
+//   }
+// }
+
+// .review {
+//   border: 1px solid $secondary;
+//   padding: 15px;
+//   border-radius: 15px;
+//   margin: 15px;
+//   .userRatings {
+//     @include itemPosition(center, space-between);
+//     flex-wrap: wrap;
+//     .userProfile {
+//       @include itemPosition(center, flex-start);
+//       gap: 15px;
+//     }
+//     h5 {
+//       font-size: 18px;
+//       color: #0c2f49;
+//     }
+//     .stars {
+//       @include itemPosition(center, flex-start);
+//       gap: 15px;
+//       h1 {
+//         color: #0c2f49;
+//       }
+//       h6 {
+//         font-size: 16px;
+//       }
+//       .starBox {
+//         @include itemPosition(center, space-between);
+//         gap: 5px;
+//         i {
+//           color: $yellow;
+//           font-size: 15px;
+//         }
+//       }
+//     }
+//   }
+//   .dateofPost {
+//     p {
+//       font-weight: 500;
+//     }
+//   }
+// }
+
+// .btn-replay {
+//   background-color: $secondary;
+//   border-radius: 30px;
+//   padding: 10px 30px;
+//   font-weight: 500;
+//   &:focus {
+//     box-shadow: none;
+//   }
+// }
+
+// .ratingProgress {
+//   padding: 0 15px;
+//   border-radius: 15px;
+//   margin: 15px;
+
+//   i {
+//     color: $yellow;
+//   }
+//   p {
+//     font-weight: 500;
+//   }
+//   .progress {
+//     .progress-bar {
+//       background-color: $yellow;
+//     }
+//   }
+// }
+
+@import "/src/styles.scss";
+
+.filterBar {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+  gap: 10px;
+
+  .calenderTabs {
+    display: flex;
+    gap: 10px;
+
+    .list {
+      @include itemPosition(center, center);
+      gap: 10px;
+
+      .icon {
+        gap: 10px;
+        color: $primary;
+        border: 1px solid $primary;
+        width: 40px;
+        height: 40px;
+        @include itemPosition(center, center);
+        cursor: pointer;
+        border-radius: 10px;
+        background-color: $light;
+
+        &:hover {
+          color: $light;
+          background-color: $primary;
+        }
+
+        &.active {
+          color: $light;
+          background-color: $primary;
+        }
+      }
+    }
+
+    .status {
+      @include itemPosition(center, center);
+      gap: 10px;
+      background-color: $secondary;
+      padding: 10px;
+      border-radius: 10px;
+
+      .online {
+        color: $dark;
+        border-radius: 6px;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &.active {
+          background-color: $dark;
+          color: $light;
+        }
+      }
+    }
+  }
+
+  .searchBox {
+    border: 1px solid $secondary;
+    max-width: 550px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    color: $dark;
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      @include itemPosition(center, center);
+    }
+
+    .searchBox {
+      flex: 1;
+      border: none;
+
+      input {
+        border: none;
+        outline: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.tab {
+  background-color: $light;
+  border-radius: 15px;
+  margin: 15px;
+
+  .tabContent {
+    padding: 7.5px;
+
+    .content {
+      margin: 7.5px;
+      background-color: rgba($color: $secondary, $alpha: 0.2);
+      border: 1px solid $secondary;
+      padding: 15px;
+      border-radius: 15px;
+
+      .contentDetail {
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+        margin: 7.5px;
+
+        .image {
+          width: 130px;
+          border-radius: 15px;
+          height: 130px;
+          @include itemPosition(center, center);
+
+          img {
+            width: 100%;
+            border-radius: 8px;
+          }
+        }
+
+        .text {
+          flex: 1;
+
+          h5.title {
+            width: 150px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+
+          .time {
+            color: rgba($color: $dark, $alpha: 0.8);
+            font-weight: 500;
+            font-size: 14px;
+
+            i {
+              display: inline-block;
+              margin-right: 10px;
+            }
+          }
+
+          .price {
+            p {
+              font-weight: 500;
+            }
+          }
+        }
+      }
+
+      .experence {
+        @include itemPosition(center, space-between);
+        padding-top: 15px;
+        border-top: 1px solid $secondary;
+
+        .profile {
+          @include itemPosition(center, center);
+          gap: 15px;
+        }
+
+        .right {
+          i {
+            color: $dark;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+
+  .tabFilter {
+    @include itemPosition(center, space-between);
+    margin: 15px;
+
+    .pageNuber {
+      @include itemPosition(center, flex-start);
+      gap: 10px;
+
+      select {
+        width: 50px;
+        text-align: center;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+
+    .pagination {
+      @include itemPosition(center, center);
+      gap: 10px;
+
+      .icon {
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        @include itemPosition(center, center);
+        border: 1px solid $primary;
+        color: $primary;
+
+        &:hover {
+          background-color: $primary;
+          color: $light;
+        }
+      }
+    }
+  }
+}
+
+// calendar css start
+
+h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+ul {
+  margin: 0;
+  padding: 0 0 0 1.5em;
+}
+
+li {
+  margin: 1.5em 0;
+  padding: 0;
+}
+
+b {
+  /* used for event dates/times */
+  margin-right: 3px;
+}
+
+.demo-app {
+  display: flex;
+  min-height: 100%;
+  font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+  font-size: 14px;
+}
+
+.demo-app-sidebar {
+  width: 300px;
+  line-height: 1.5;
+  background: #eaf9ff;
+  border-right: 1px solid #d3e2e8;
+}
+
+.demo-app-sidebar-section {
+  padding: 2em;
+}
+
+.demo-app-main {
+  flex-grow: 1;
+  padding: 3em;
+}
+
+.fc {
+  /* the calendar root */
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+// end calendar css
+
+.starBox{
+  color :rgb(235, 184, 19)
+}

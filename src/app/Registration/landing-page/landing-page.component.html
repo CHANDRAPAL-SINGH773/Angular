@@ -1,0 +1,308 @@
+<div class="container-fluid landingPage">
+  <div class="row">
+    <div class="col">
+      <header>
+        <div class="logo">
+          <img src="../../../assets/images/logo.png" alt="" />
+        </div>
+        <div class="navigations">
+          <a href="#becomementor">Become a Mentor</a>
+          <a href="#findmentor">Find a Mentor</a>
+        </div>
+        <div class="buttonBox">
+          <button
+            class="btn btn-plane"
+            [routerLink]="['/mentee-signup']"
+            [queryParams]="{ type: 'mentee' }"
+          >
+            Sign up
+          </button>
+          <button class="btn btn-main" [routerLink]="['/login']">Log in</button>
+        </div>
+      </header>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col text-center">
+      <div class="main-content">
+        <h1>Discover a new way of learning!</h1>
+        <p>
+          Join our community today and start your mentorship journey. With
+          Pxalm, the possibilities for growth and success are endless.
+        </p>
+        <button
+          class="btn btn-main auto-width"
+          [routerLink]="['/mentee-signup']"
+          [queryParams]="{ type: 'mentee' }"
+        >
+          Join Now
+        </button>
+        <img src="../../../assets/images/mainImage.png" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="row whyUs">
+    <div class="col-lg-6">
+      <div class="whyUsContent">
+        <h2>Why Choose Pxalm</h2>
+        <p>
+          Choosing Pxalm as your mentoring partner sets you up for success in
+          the dynamic and ever-changing modern world. Our platform offers a
+          range of features and resources designed to help you connect, grow,
+          and thrive as a mentor or mentee.
+        </p>
+        <p>
+          With Pxalm, you can take control of your professional development and
+          set yourself on a path to achieve your goals. Our intuitive platform
+          makes it easy to find the right mentor or mentee who can provide
+          guidance and support in areas that matter most to you. Whether you're
+          seeking career advice, industry insights, or a fresh perspective,
+          Pxalm puts the power of mentorship within reach.
+        </p>
+        <p>
+          At Pxalm, we believe that mentorship is about more than just passing
+          on knowledge; it's about building relationships and empowering each
+          other to succeed. That's why our platform is built on the principles
+          of trust, support, and collaboration. With features like secure
+          messaging, progress tracking, and customizable scheduling, Pxalm makes
+          it easy to establish a strong, productive mentorship relationship.
+        </p>
+      </div>
+    </div>
+    <div class="col-lg-6 text-end">
+      <img src="../../../assets/images/whyUs.png" alt="" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col experties">
+      <h1>Learn and grow across expertise</h1>
+      <p>Discover Mentors in Product-related Industries Worldwide</p>
+      <marquee behavior="" direction="left" class="mt-4">
+        <div class="techRow">
+          <div class="techBox shadow" *ngFor="let data of mentorData">
+            <div class="image">
+              <img
+                *ngIf="data?.image"
+                [src]="showImage + data.image"
+                alt="Image"
+              />
+              <img
+                *ngIf="!data?.image"
+                src="../../../assets/images/icon/customerSuccess.svg"
+                alt=""
+              />
+            </div>
+            <div class="text">
+              <h3>{{ data.categoryName }}</h3>
+              <p>{{ data.count }} Program(s)</p>
+            </div>
+          </div>
+          <!-- <div class="techBox shadow">
+            <div class="image">
+              <img src="../../../assets/images/icon/Immigrations.svg" alt="" />
+            </div>
+            <div class="text">
+              <h3>Immigration</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+          <div class="techBox shadow">
+            <div class="image">
+              <img src="../../../assets/images/icon/educations.svg" alt="" />
+            </div>
+            <div class="text">
+              <h3>Education</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+          <div class="techBox shadow">
+            <div class="image">
+              <img src="../../../assets/images/icon/design.svg" alt="" />
+            </div>
+            <div class="text">
+              <h3>Design / UX</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+          <div class="techBox shadow">
+            <div class="image">
+              <img src="../../../assets/images/icon/productAnalysis.svg" alt="" />
+            </div>
+            <div class="text">
+              <h3>Product Analytics</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div> -->
+        </div>
+      </marquee>
+      <!-- <marquee behavior="" direction="right" class="mt-4" loop="">
+        <div class="techRow">
+          <div class="techBox shadow">
+            <div class="image">
+              <img
+                src="../../../assets/images/icon/CareerConsultations.svg"
+                alt=""
+              />
+            </div>
+            <div class="text">
+              <h3>Career Consultation</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+          <div class="techBox shadow">
+            <div class="image">
+              <img
+                src="../../../assets/images/icon/InvestmentorBusiness.svg"
+                alt=""
+              />
+            </div>
+            <div class="text">
+              <h3>Investment or Business</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+          <div class="techBox shadow">
+            <div class="image">
+              <img
+                src="../../../assets/images/icon/SocialMediaMarketing.svg"
+                alt=""
+              />
+            </div>
+            <div class="text">
+              <h3>Social Media Marketing</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+          <div class="techBox shadow">
+            <div class="image">
+              <img src="../../../assets/images/icon/DataScience.svg" alt="" />
+            </div>
+            <div class="text">
+              <h3>Data Science</h3>
+              <p>5471 Mentors</p>
+            </div>
+          </div>
+        </div>
+      </marquee> -->
+    </div>
+  </div>
+  <div class="row findMentor" id="findmentor">
+    <div class="col-md-6 centerMid">
+      <div class="fingMentorContent">
+        <h1>Find a Mentor</h1>
+        <p class="mt-3">
+          Finding a mentor can be a game changer in your personal and
+          professional growth. Having a mentor can provide you with invaluable
+          advice and guidance, as well as give you access to new opportunities
+          and networks. Whether you're looking to advance in your career, start
+          a new business, or simply want to improve yourself, having a mentor
+          can help you reach your goals faster and more effectively.
+        </p>
+        <button
+          class="btn btn-main auto-width mt-3"
+          [routerLink]="['/mentee-signup']"
+          [queryParams]="{ type: 'mentee' }"
+        >
+          Register Now
+        </button>
+      </div>
+    </div>
+    <div class="col-md-6 text-center centerMid">
+      <img src="../../../assets/images/findMentor.png" alt="" />
+    </div>
+  </div>
+  <div class="row becomeMentor" id="becomementor">
+    <div class="col-md-6 text-center centerMid">
+      <img src="../../../assets/images/becomeMentor.png" alt="" />
+    </div>
+    <div class="col-md-6 centerMid">
+      <div class="becomeMentorContent">
+        <h1>Become a Mentor</h1>
+        <p class="mt-3">
+          As an experienced professional in your field, you have the knowledge
+          and skills to help others reach their potential. Becoming a mentor is
+          a rewarding way to give back to your community, support the next
+          generation of professionals, and help shape the future of your
+          industry. Whether you choose to mentor a student, a recent graduate,
+          or someone just starting out in their career, your guidance can make a
+          lasting impact on their development and success. As a mentor, you will
+          have the opportunity to share your wisdom, provide constructive
+          feedback, and inspire your mentee to reach new heights. Join the ranks
+          of successful mentors today and help shape the future of your field.
+        </p>
+        <button
+          class="btn btn-main auto-width mt-3"
+          [routerLink]="['/mentor-signup']"
+          [queryParams]="{ type: 'mentor' }"
+        >
+          Get Started
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row downloadApp">
+    <div class="col-md-6 centerMid">
+      <div class="downloadAppContent">
+        <h1>Get Pxalm app on your Android and iOS phones.</h1>
+        <p>
+          Are you looking for a mentorship partner who will help you navigate
+          the challenges of the modern world, choose Pxalm today and start your
+          journey to success.
+        </p>
+        <div class="btnbox">
+          <img src="../../../assets/images/android.png" alt="" />
+          <img src="../../../assets/images/apple.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 centerMid">
+      <img src="../../../assets/images/downloadApp.png" alt="" class="w-75" />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="footerContent">
+        <div class="logo">
+          <!-- <img src="../../../assets/images/logo.png" alt="" /> -->
+        </div>
+        <div class="socialMedia">
+          <div
+            class="icon"
+            onclick="window.location.href = 'https://twitter.com/pxalmHQ';"
+          >
+            <i class="fa-brands fa-twitter"></i>
+          </div>
+          <div
+            class="icon"
+            onclick="window.location.href = 'https://www.facebook.com/pxalmhq';"
+          >
+            <i class="fa-brands fa-facebook-f"></i>
+          </div>
+          <div
+            class="icon"
+            onclick="window.location.href = 'https://instagram.com/pxalmhq';"
+          >
+            <i class="fa-brands fa-instagram"></i>
+          </div>
+          <div
+            class="icon"
+            onclick="window.location.href = 'https://www.linkedin.com/company/pxalmhq/';"
+          >
+            <i class="fa-brands fa-linkedin-in"></i>
+          </div>
+          <div
+            class="icon"
+            onclick="window.location.href = 'https://www.youtube.com/@pxalmhq';"
+          >
+            <i class="fa-brands fa-youtube"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row copyright">
+    <div class="col text-center py-3">
+      <p class="mb-0">© Copyright 2023, All Rights Reserved by Pxalm</p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,388 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i
+              class="fa-solid fa-chevron-left"
+              [routerLink]="['/mentor/mentor-dashboard/session-management']"
+            ></i>
+          </div>
+          <p class="mb-0">Edit Session</p>
+        </div>
+        <div class="buttonBox">
+          <button class="btn btn-main" (click)="cancelSession()">
+            Cancel Session
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <form [formGroup]="editDayWise" action="" class="form">
+      <div class="row">
+        <div class="col">
+          <div class="uploadProfile">
+            <label for="upload">
+              <div class="profileImage">
+                <!-- <span>
+                  <img src="../../../../../../assets/images/tabImage1.png" class="img-fluid" alt="" />
+                </span> -->
+
+                <span>
+                  <img
+                    width="100"
+                    height="100"
+                    [src]="imgsrc"
+                    class="img-fluid"
+                    alt="Image"
+                  />
+                  <!-- <img *ngIf="!oneSessionDetail?.image" src="../../../../../../assets/images/tabImage1.png"
+                    class="img-fluid" alt=""> -->
+                </span>
+                <!-- <div class="icon">
+                  <i class="fa-solid fa-pencil"></i>
+                </div> -->
+              </div>
+              <input
+                type="file"
+                (change)="handleimage($event, 'image')"
+                class="d-none"
+                id="upload"
+                formControlName="image"
+                accept="image/x-png,image/jpg,image/jpeg"
+              />
+              <!-- <input type="file" (change)="handleimage($event,'image')" class="form-contro d-nonel" placeholder="Image"
+              formControlName="image" accept="image/x-png,image/jpg,image/jpeg"><br> -->
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionName">Session Name</label
+            ><span class="text-danger">*</span>
+            <!-- <input type="text" class="form-control" id="sessionName" placeholder="Session Name" /> -->
+
+            <input
+              type="text"
+              placeholder="Session Name"
+              id="sessionName"
+              formControlName="sessionName"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('sessionName')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && editDayWise.controls['sessionName']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editDayWise.controls['sessionName']!.errors?.['required']"
+              >
+                Session Name is required
+              </div>
+              <div
+                *ngIf="editDayWise.controls['sessionName']!.errors?.['maxlength']"
+              >
+                Session Name should be at most 50 characters long,
+              </div>
+              <div
+                *ngIf="editDayWise.controls['sessionName']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="selectProgram">Select Program</label
+            ><span class="text-danger">*</span>
+            <select
+              id="selectProgram"
+              class="form-control"
+              #selectProgram
+              (change)="seeMode(selectProgram.value)"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('program_id')!.errors?.['required']}"
+              formControlName="program_id"
+            >
+              <option value="" selected>Select Program</option>
+              <option
+                *ngFor="let data of gotPrograms"
+                [value]="data._id"
+                default
+              >
+                {{ data.mentorship_name | titlecase }}
+              </option>
+
+              <!-- <option value="Female">Female</option>
+              <option value="Other">Other</option> -->
+            </select>
+            <div
+              *ngIf="submitted && editDayWise.controls['program_id']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                class="text-danger"
+                *ngIf="editDayWise.controls['program_id']!.errors?.['required']"
+              >
+                Program is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4" *ngIf="onlineMode ===true">
+          <div class="inputField">
+            <label for="sessionLink">Session link</label
+            ><span class="text-danger">*</span>
+            <!-- <input type="text" class="form-control" id="sessionLink" placeholder="Session link" /> -->
+            <input
+              type="text"
+              id="sessionLink"
+              placeholder="Session link"
+              formControlName="sessionLink"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('sessionLink')!.errors?.['pattern']}"
+            />
+            <div
+              *ngIf="submitted && editDayWise.controls['sessionLink']!.errors"
+              class="invaliddiv"
+            >
+              <!-- <div *ngIf="editDayWise.controls['sessionLink']!.errors?.['required']">
+                Session Link is required
+              </div> -->
+              <div
+                *ngIf="editDayWise.controls['sessionLink']!.errors?.['pattern']"
+              >
+                Session Link should be valid link
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="col-md-4"
+          [style.display]="onlineMode === false ? 'block' : 'none'"
+        >
+          <div class="inputField">
+            <label for="Location">Location</label
+            ><span class="text-danger">*</span>
+            <!-- <input type="text" class="form-control" id="Location" placeholder="Location" />/ -->
+            <input
+              type="text"
+              id="location"
+              #search
+              placeholder="location"
+              (change)="showLoc($event)"
+              formControlName="location"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('location')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && editDayWise.controls['location']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editDayWise.controls['location']!.errors?.['required']"
+              >
+                Location is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="date">Start Date</label
+            ><span class="text-danger">*</span>
+            <input
+              type="date"
+              id="date"
+              placeholder="Date"
+              class="space form-control"
+              formControlName="start_date"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('start_date')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && editDayWise.controls['start_date']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editDayWise.controls['start_date']!.errors?.['required']"
+              >
+                Start Date is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div [formGroup]="sessionDuration"> -->
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration">Session Duration</label
+            ><span class="text-danger">*</span>
+            <!-- <input type="text" class="form-control" id="sessionDuration" placeholder="Session Duration" /> -->
+            <p class="hourduration">
+              <span>hour(s)</span>
+              <!-- step="0.10" -->
+              <input
+                type="number"
+                id="sessionDuration"
+                formControlName="sessionDuration"
+                class="space form-control"
+                min="1"
+                [ngClass]="{ 'is-invalid': submitted && editDayWise.get('sessionDuration')!.errors?.['required']}"
+              />
+            </p>
+            <div
+              *ngIf="
+                submitted && editDayWise.controls['sessionDuration']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editDayWise.controls['sessionDuration']!.errors?.['required']"
+              >
+                Session Duration is required
+              </div>
+              <div
+                *ngIf="editDayWise.controls['sessionDuration']!.errors?.['min']"
+              >
+                Session Duration should be greater than 0
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-2">
+          <div class="inputField">
+            <label for="sessionDuration">Session Duration</label><span class="text-danger">*</span>
+         
+
+            <input type="number" id="sessionDuration" placeholder="Session Duration" formControlName="sessionDuration"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('sessionDuration')!.errors?.['required']}" />
+            <div *ngIf="submitted && editDayWise.controls['sessionDuration']!.errors" class="invaliddiv">
+              <div *ngIf="editDayWise.controls['sessionDuration']!.errors?.['required']">Session Duration is required
+              </div>
+            </div>
+          </div>
+        </div> -->
+        <!-- </div> -->
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="time">Time</label><span class="text-danger">*</span>
+            <!-- <input type="time" class="form-control" placeholder="Time" id="time" /> -->
+            <input
+              type="time"
+              id="time"
+              placeholder="Time"
+              formControlName="time"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('time')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && editDayWise.controls['time']!.errors"
+              class="invaliddiv"
+            >
+              <div *ngIf="editDayWise.controls['time']!.errors?.['required']">
+                Time is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="inputField">
+            <label for="sessionDescription">Session Description</label
+            ><span class="text-danger">*</span>
+            <textarea
+              type="text"
+              class="form-control"
+              id="sessionDescription"
+              rows="4"
+              placeholder="Session Description"
+              formControlName="description"
+              [ngClass]="{ 'is-invalid': submitted && editDayWise.get('description')!.errors?.['required']}"
+            >
+            </textarea>
+            <div
+              *ngIf="submitted && editDayWise.controls['description']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editDayWise.controls['description']!.errors?.['required']"
+              >
+                Description is required
+              </div>
+              <div
+                *ngIf="editDayWise.controls['description']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="buttons">
+            <button (click)="submit()" class="btn btn-main">
+              Save Session
+            </button>
+            <button
+              class="btn btn-main-outline"
+              data-toggle="modal"
+              data-target="#deleteSession"
+            >
+              Delete Session
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteSession"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="closemodaldelete"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center p-4">
+        <h5 class="">Are you sure to delete this session?</h5>
+      </div>
+      <div class="deletePairAllignments">
+        <button type="button" class="btn btn-grey" data-dismiss="modal">
+          Close
+        </button>
+        <button
+          type="button"
+          (click)="deleteSession()"
+          data-dismiss="modal"
+          class="btn btn-main"
+        >
+          Sure
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

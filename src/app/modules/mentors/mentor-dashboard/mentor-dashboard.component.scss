@@ -1,0 +1,30 @@
+@import "/src/styles.scss";
+
+.dashboard {
+  background-color: $background;
+  width: calc(100% - 250px);
+  position: absolute;
+  top: 80px;
+  right: 0;
+  padding: 0 0 15px 0;
+  transition: all 0.5s;
+}
+
+@media only screen and (max-width: 1400px) {
+  .dashboard {
+    width: calc(100% - 220px);
+    top: 60px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .dashboard {
+    width: 100%;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .dashboard {
+    top: 60px;
+  }
+}

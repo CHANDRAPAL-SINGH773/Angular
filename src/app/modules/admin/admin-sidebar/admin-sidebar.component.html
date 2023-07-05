@@ -1,0 +1,97 @@
+<aside id="sidebar" class="sidebar" [ngClass]="{ toggleSidebar: clicked }">
+  <i class="fa-regular fa-circle-xmark toggler d-inline-block d-xl-none" (click)="clicked = !clicked"></i>
+  <div class="title">
+    <a href="" class=""><img src="../../../../assets/images/logo.png" alt="" /></a>
+  </div>
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a [routerLink]="['/admin-dashboard']" href="" class="nav-link" routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        <span><img src="../../../../assets/images/icon/dashboard.svg" alt="" /></span>
+        Dashboard
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/admin-user-management']" href="" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/user.svg" alt="" /></span>
+        User Management
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/admin-category-management']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/mentorship.svg" alt="" /></span>
+        Category Management
+      </a>
+    </li>
+    <li class="nav-item" routerLinkActive="active">
+      <a [routerLink]="['/admin-category-path']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/user.svg" alt="" /></span>
+        Category Path Management
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/admin-session-management']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/sessionmanagement.svg" alt="" /></span>
+        Sessions Management
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/adminChat']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../assets/images/icon/Chat.svg" alt="" /></span>
+        Chat
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/admin-payment-management']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/payment.svg" alt="" /></span>
+        Payment Management
+      </a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/admin-social-media']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../assets/images/icon/postsocialmedia.svg" alt="" /></span>
+        Post on Social Media</a>
+    </li>
+
+    <li class="nav-item">
+      <a [routerLink]="['/admin-dispute-management']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/dispute.svg" alt="" /></span>
+        Dispute Management
+      </a>
+    </li>
+
+    <li class="nav-item">
+      <a [routerLink]="['/admin-meetingCancelation']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/mentorship.svg" alt="" /></span>
+        Meeting Cancellation Management</a>
+    </li>
+
+    <li class="nav-item">
+      <a [routerLink]="['/admin-requested-program']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/mentorship.svg" alt="" /></span>
+        New Mentorship Request</a>
+    </li>
+
+    <li class="nav-item">
+      <a [routerLink]="['/admin-referal-management']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/referandearn.svg" alt="" /></span>
+        Referal & Incentive Management</a>
+    </li>
+    <li class="nav-item">
+      <a [routerLink]="['/templates']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/referandearn.svg" alt="" /></span>
+        Content Management</a>
+    </li>
+    <!-- <li class="nav-item">
+      <a [routerLink]="['/staticPages']" class="nav-link" routerLinkActive="active">
+        <span><img src="../../../../assets/images/icon/payment.svg" alt="" /></span>
+        Static Pages
+      </a>
+    </li> -->
+    <li>
+      <div class="col-12 text-start mt-3">
+
+      </div>
+    </li>
+  </ul>
+</aside>

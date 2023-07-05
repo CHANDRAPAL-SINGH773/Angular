@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="primaryLayout py-5">
+    <div class="row">
+      <div class="col-12 centerMid">
+        <div class="content mt-3">
+          <img
+            src="../.../../../../assets/images/helpSupport.png"
+            alt=""
+            class="w-75 d-block m-auto"
+          />
+          <div class="sendMail">
+            <div class="mail">
+              <img src="../../../assets/images/icon/mailIcon.svg" alt="" />
+            </div>
+            <a href="" data-toggle="modal" data-target="#mailModal">Send us an e-mail</a>
+            <h2>{{adminData.helpSupportEmail?(adminData.helpSupportEmail):"-"}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="modal fade" id="mailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Support Mail</h5><label class="invaliddiv">*</label>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="helpForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+
+              <textarea name="" id="" formControlName="body" cols="30" rows="6" class="form-control">
+            </textarea>
+            <!-- [ngClass]="{ 'is-invalid': submitted && helpForm.get('body')!.errors?.['required']}" -->
+              <!-- <div *ngIf="submitted && helpForm.controls['body']!.errors" class="invaliddiv">
+                <div *ngIf="helpForm.controls['body']!.errors?.['required']"> this field is required
+                </div>
+              </div> -->
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center my-4">
+
+            </div>
+            <div class="col-12">
+              <button (click)="helpSupport()" data-dismiss="modal" [disabled]="helpForm.invalid" class="btn btn-main">Submit Response</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

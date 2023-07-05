@@ -1,0 +1,259 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon" (click)="goBack()">
+            <i class="fa-solid fa-chevron-left"></i>
+          </div>
+          <p class="mb-0">Ratings</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col">
+        <div class="profileContent">
+          <div class="profile">
+            <div class="image">
+              <img
+                width="100"
+                height="100"
+                *ngIf="programData?.image"
+                [src]="showImage + programData.image"
+                class="img-fluid"
+                alt="Image"
+              />
+              <img
+                *ngIf="!programData?.image"
+                src="../../../../../assets/images/sessions.png"
+                class="img-fluid"
+                alt=""
+              />
+              <!-- <img src="../../../../../assets/images/tabImage1.png" alt="" /> -->
+            </div>
+            <div class="text2">
+              <h5 class="title">
+                {{ programData.mentorship_name ? programData.mentorship_name : "-" }}
+              </h5>
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>&nbsp;
+                <span>{{
+                  programData.start_date
+                    ? (programData.start_date | date : "mediumDate")
+                    : "-"
+                }}</span
+                >&nbsp; <i class="fa-solid fa-clock"></i>&nbsp;<span>
+                  {{ programData.availibility_from ? programData.availibility_from : "-" }}</span
+                >
+              </div>
+              <!-- <div class="price">
+                <div class="row">
+                  <div class="col-5">
+                    <h5>$14.99</h5>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <form [formGroup]="ratingForm">
+        <div class="row">
+          <div class="col-md-6" *ngIf="!disableRating">
+            <div class="rateSession">
+              <h5>Rate this Session</h5>
+              <div class="reviewStars">
+                <!-- <select  formControlName="rating" class="form-control">
+              <option value="1" >1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select> -->
+                <div class="star">
+                  <ngx-star-rating
+                    formControlName="rating"
+                    id="'rating'"
+                    [ngClass]="{ 'is-invalid': submitted && ratingForm.get('rating')!.errors?.['required']}"
+                  >
+                  </ngx-star-rating>
+                </div>
+                <div
+                  *ngIf="submitted && ratingForm.controls['rating']!.errors"
+                  class="invaliddiv"
+                >
+                  <div
+                    *ngIf="ratingForm.controls['rating']!.errors?.['required']"
+                  >
+                    Rating is required
+                  </div>
+                </div>
+                <!-- <i class="fa-solid fa-star">    
+            </i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="ratings">
+              <h5>Average Rating</h5>
+              <div class="stars">
+                <h1>{{ avg }}</h1>
+                <!-- <ng-container *ngFor="let star of [].constructor(sessionAverageRating || 0) | slice:0:5; let i = index;">
+                  <i class="fa-solid fa-star filled"></i>
+                </ng-container>
+                <ng-container *ngFor="let star of [].constructor(5 - (sessionAverageRating || 0)) | slice:0:5; let i = index;">
+                  <i class="far fa-star"></i>
+                </ng-container> -->
+                <div class="starBox" >
+                  <ng-container
+                    *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                  >
+                    <ng-container *ngIf="i < averageRating">
+                      <ng-container *ngIf="averageRating - i < 1">
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                      </ng-container>
+                      <ng-container *ngIf="averageRating - i >= 1">
+                        <i class="fa-solid fa-star"></i>
+                      </ng-container>
+                    </ng-container>
+                    <ng-container *ngIf="i >= averageRating">
+                      <i class="fa-regular fa-star"></i> </ng-container
+                  ></ng-container>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <app-rating ></app-rating> -->
+        <!-- <div class="starBox">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+                class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+            </div> -->
+        <div class="row">
+          <div class="col form" *ngIf="!disableRating">
+            <div class="inputField" id="writereview">
+              <label for="writereview">Write a review</label>
+              <textarea
+                name=""
+                id=""
+                formControlName="comment"
+                cols="30"
+                rows="6"
+                class="form-control"
+              ></textarea>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!disableRating">
+        <button
+          [disabled]="
+            disableRating  
+          "
+          class="btn btn-main btnClass"
+          (click)="ratingReview()"
+        >
+          Submit Rating
+        </button>
+      </div>
+      </form>
+    </div>
+    <div class="row">
+      <div class="col-12" *ngFor="let data of ratingData">
+        <div class="review">
+          <div class="userRatings">
+            <div class="userProfile">
+              <div class="image">
+                <img
+                  width="100"
+                  height="100"
+                  *ngIf="data?.Userimage"
+                  [src]="showImage + data?.Userimage"
+                  class="img-fluid"
+                  alt="Image"
+                />
+                <img
+                  *ngIf="!data?.Userimage"
+                  src="../../../../../../../assets/images/user.png"
+                  class="img-fluid"
+                  alt=""
+                />
+                <!-- <img src="../../../../../../../assets/images/review.png" alt="" /> -->
+              </div>
+              <div class="text">
+                <h6>
+                  {{ data.firstName ? data.firstName : "-" }}
+                  {{ data.lastName ? data.lastName : "-" }}
+                </h6>
+                <div class="stars">
+                  <!-- <div class="star" data-rating="3.5"></div> -->
+
+                  <h6>{{ data.rating ? data.rating : "-" }}</h6>
+                  <div class="starBox">
+                    <!-- <ng-container *ngFor="let star of [].constructor(data.rating || 0) | slice:0:5; let i = index;">
+                      <i class="fa-solid fa-star"></i>
+                    </ng-container>
+                    <ng-container *ngFor="let star of [].constructor(5 - (data.rating || 0)) | slice:0:5; let i = index;">
+                      <i class="far fa-star"></i>
+                    </ng-container> -->
+                    <ng-container
+                      *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                    >
+                      <i class="fa-solid fa-star" *ngIf="i < data.rating"></i>
+                      <i
+                        class="fa-solid fa-star-half-stroke"
+                        *ngIf="i == data.rating - 0.5"
+                      ></i>
+                      <i
+                        class="fa-regular fa-star"
+                        *ngIf="i >= data.rating"
+                      ></i>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="dateofPost">
+              <p>
+                {{
+                  data.createdAt ? (data.createdAt | date : "mediumDate") : "-"
+                }}
+                {{ data.createdAt ? (data.createdAt | date : "HH:mm") : "-" }}
+              </p>
+            </div>
+          </div>
+          <!-- <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                    <i
+                      class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i> -->
+          <!-- <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index;">
+              <i class="fa-solid fa-star" *ngIf="i < data.rating"></i>
+              <i class="fa-solid fa-star-half-stroke" *ngIf="i == data.rating - 0.5"></i>
+            </ng-container> -->
+          <div class="reviewContent">
+            <div class="row">
+              <div class="col-md-10">
+                <p>
+                  {{ data.comment ? data.comment : "-" }}
+                </p>
+              </div>
+              <div class="col-md-2 text-end mt-3">
+                <p>
+                  {{ data.commentReply ? data.commentReply : "-" }}
+                </p>
+                <!-- <button class="btn btn-replay">Reply</button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,99 @@
+@import "/src/styles.scss";
+.tabButtons {
+  @include itemPosition(center, flex-start);
+  background-color: rgba($color: $dark, $alpha: 0.06);
+  padding: 7.5px;
+  margin: 15px;
+  flex-wrap: wrap;
+  border-radius: 15px;
+  gap: 7.5px;
+  .btn {
+    width: auto;
+    &.active {
+      background-color: $primary !important;
+      color: $light;
+    }
+  }
+}
+
+.personalInfo {
+  border-bottom: 1px solid $secondary;
+  padding-bottom: 15px;
+  .data {
+    color: rgba($color: $dark, $alpha: 0.8);
+
+    p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+  }
+}
+.certifications {
+  .data {
+    color: rgba($color: $dark, $alpha: 0.8);
+
+    p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+    h4 {
+      font-size: 18px;
+    }
+  }
+}
+
+.buttonBox {
+  .btn {
+    width: 150px;
+  }
+  @include itemPosition(center, space-between);
+  flex-wrap: wrap;
+  .accountUpdate {
+    flex-wrap: wrap;
+    @include itemPosition(center, center);
+    gap: 15px;
+  }
+}
+.btn-edit {
+  width: 140px;
+}
+
+@media only screen and(max-width:1400px) {
+  .personalInfo {
+    .data {
+      h4 {
+        font-size: 16px;
+      }
+    }
+  }
+  .certifications {
+    .data {
+      p {
+        font-size: 14px;
+        margin-bottom: 5px;
+      }
+      h4 {
+        font-size: 16px;
+      }
+    }
+  }
+}
+@media only screen and(max-width:400px) {
+  .buttonBox {
+    @include itemPosition(center, center);
+    gap: 15px;
+  }
+}
+
+
+.profileImage {
+  height: 150px !important;
+}
+
+.profileImage img.img-fluid {
+  height: 150px !important;
+  width: 150px !important;
+}

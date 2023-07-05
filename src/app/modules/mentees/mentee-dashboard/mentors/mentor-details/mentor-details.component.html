@@ -1,0 +1,96 @@
+<div class="container-fluid">
+  <div class="filterBar">
+    <div class="pageTitle">
+      <div class="icon">
+        <i class="fa-solid fa-chevron-left" (click)="goBack()"></i>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col">
+        <div class="profileContent">
+          <div class="profile">
+            <div class="image">
+              <!-- <img src="../../../../../assets/images/mentorImage.png" alt="" /> -->
+              <img *ngIf="oneUserData?.image" width="200" heig="200" [src]="imgsrc" class="img-fluid" alt="">
+              <img *ngIf="!oneUserData?.image" width="200" heig="200" src="../../assets/images/user.png"
+                class="img-fluid" alt="">
+
+              <img src="../../../../../assets/images/icon/verify.svg" alt="" class="verify"
+                *ngIf="oneUserData.verified_badge ===true" />
+            </div>
+            <div class="text">
+              <h3>{{oneUserData?.firstName?(oneUserData?.firstName):"-"}}
+                {{oneUserData?.lastName?(oneUserData?.lastName):"-"}} </h3>
+                <div class="stars">
+                  <i *ngIf="oneUserData.rating" class="fa-solid fa-star"></i>
+                  <span *ngIf="loading" [ngClass]="{'new': !oneUserData.rating}">{{ oneUserData.rating ? oneUserData.rating : "NEW" }}</span>
+                </div>
+            </div>
+          </div>
+
+          <div class="chat d-flex">
+            <i class="bi bi-info-circle-fill hover-text "><span class="tooltip-text" id="left">Use this button to start
+                a direct chat with this mentor and discuss your goals. Please note that the mentor will respond as soon
+                as possible during their availability hours</span></i>
+            <div class="chatIcon ml-2" (click)="createChatRoom(id, loggedInId)">
+              <img src="../.../../../../../../../assets/images/icon/ChatIcon.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row sessions">
+      <div class="col-12">
+        <div class="content">
+          <div class="sessionTitle">
+            <h4>About Mentor</h4>
+            <p class="">
+              {{ oneUserData?.bio ? oneUserData?.bio : "-" }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row sessions">
+      <div class="col-12">
+        <div class="content">
+          <div class="sessionTitle">
+            <h4>Mentorship Programs</h4>
+          </div>
+          <div class="row">
+            <div class="col-xl-3 col-sm-6" *ngFor="let mentorship of mentorshipData">
+              <div class="sessionData" >
+                <div class="image">
+                  <img *ngIf="mentorship?.docs[0]?.category.image" width="150px" height="150px"
+                    [src]="imagecategory + mentorship?.docs[0]?.category.image" class="img-fluid" alt="" />
+                  <img *ngIf="!mentorship?.docs[0]?.category.image" src="../../../assets/images/sessions.png" class="img-fluid"
+                    alt="" />
+                  <!-- <img src="../../../assets/images/immegration.png" alt="" /> -->
+                </div>
+
+                <div class="textData">
+                  <!-- <h6>{{program.category.categoryName? program.category.categoryName: "No mentorship" }} -->
+                    <h6>{{mentorship._id? mentorship._id: "No mentorship" }}
+
+                  </h6>
+                  <p>Programs</p>
+                  <ul class="cursor-pointer">
+                    <li *ngFor="let program of  mentorship.docs; let i = index" [routerLink]="[
+                        '/mentee/mentee-dashboard/mentor-programs-details'
+                      ]" [queryParams]="{ id: program.category._id, user_id: id }">
+                      {{ i + 1 }}. {{ program.mentorship_name }}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+</div>

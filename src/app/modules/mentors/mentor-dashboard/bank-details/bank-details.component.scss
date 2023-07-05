@@ -1,0 +1,60 @@
+@import "/src/styles.scss";
+
+.bankHeader {
+    padding: 15px;
+
+    p {
+        font-weight: 500;
+    }
+}
+
+.bankPopup {
+    margin: auto;
+
+    .modal-content {
+        border-radius: 15px;
+        padding: 15px;
+
+        .modal-header {
+            border-bottom: none;
+        }
+
+        .modal-body {
+            img {
+                width: 50%;
+                display: block;
+                margin: 20px auto;
+            }
+
+            p {
+                font-weight: 500;
+                margin: 15px 0;
+
+                span {
+                    font-weight: 600;
+                }
+            }
+
+            .form {
+                @include itemPosition(center, flex-start);
+                gap: 15px;
+                margin: 0;
+                padding: 0;
+
+                .inputField {
+                    margin: 0;
+
+                    input {
+                        width: 46px;
+                    }
+                }
+            }
+
+            h4 {
+                font-size: 17px;
+                text-align: center;
+                margin: 25px auto;
+            }
+        }
+    }
+}

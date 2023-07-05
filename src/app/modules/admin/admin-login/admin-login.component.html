@@ -1,0 +1,104 @@
+<!-- <form [formGroup]="loginForm">
+
+
+    <input type="text" placeholder="Email" formControlName="email" class="space"><br>
+
+    <input type="password" placeholder="Password" formControlName="password" class="space">
+
+    <button class="space" (click)="loginAdmin()">Login</button> <br>
+
+    <button class="space" (click)="forgotPassword()">Forgot Password</button> <br>
+
+</form> -->
+
+<div class="container-fluid">
+    <div class="row h-100">
+        <div class="col-md-6 sliderection centerMid">
+            <div class="sliderContainer">
+                <div class="logo">
+                    <img src="../../../../assets/images/logo.png" alt="" />
+                </div>
+                <div class="sliderImg">
+                    <img src="../../../../assets/images/signInSlider.png" alt="" />
+                    <h1>Get Mentorship</h1>
+                    <p>Welcome to our mentorship classes.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 centerMid">
+            <div class="formContainer">
+                <div class="logoIcon">
+                    <img src="../../../../assets/images/logoIcon.png" alt="" />
+                </div>
+                <h1>Let's Log in</h1>
+                <p>Welcome Back, you've been missed!</p>
+                <form [formGroup]="loginForm">
+                    <div class="row">
+                        <div class="col p-0">
+                            <label for="email">Email Address</label><span class="invaliddiv">*</span>
+                            <div class="inputField">
+                                <input id="email" type="text" placeholder="Email" formControlName="email"
+                                    class="form-control text-lowercase"
+                                    [ngClass]="{ 'is-invalid': submitted && loginForm.get('email')!.errors?.['required']}" />
+                                <div *ngIf="submitted && loginForm.controls['email']!.errors" class="invaliddiv">
+                                    <div *ngIf="loginForm.controls['email']!.errors?.['required']">Email is required
+                                    </div>
+                                    <div *ngIf="loginForm.controls['email']!.errors?.['email']">Email must be a valid
+                                        email address</div>
+                                </div>
+                                <img src="../../../../assets/images/icon/email.svg" alt="" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col p-0">
+                            <label for="password">Password</label><span class="invaliddiv">*</span>
+                            <div class="inputField">
+                                <input id="password" [type]="password" placeholder="Password" formControlName="password"
+                                    class="form-control"
+                                    [ngClass]="{ 'is-invalid': submitted && loginForm.get('password')!.errors?.['required']}" />
+                                <div *ngIf="submitted && loginForm.controls['password']!.errors" class="invaliddiv">
+                                    <div *ngIf="loginForm.controls['password']!.errors?.['required']">Password is
+                                        required</div>
+                                    <div *ngIf="loginForm.controls['password']!.errors?.['minlength']">Password must be
+                                        at least 6 characters</div>
+                                </div>
+                                <!-- <img src="../../../assets/images/icon/lock.svg" *ngIf="password === 'password'" alt="" (click)="togglePassword()"/> 
+                                       <img src="../../../assets/images/icon/user.svg" alt="" *ngIf="password === 'text'" (click)="togglePassword()"/>  -->
+                                <span> <i class="bi bi-eye-slash" *ngIf="password === 'password'" alt=""
+                                        (click)="togglePassword()"></i>
+                                    <i class="bi bi-eye-fill" alt="" *ngIf="password === 'text'"
+                                        (click)="togglePassword()"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-6">
+                            <div class="form-check">
+                                <input class="custom-checkbox form-check-input" type="checkbox" value=""
+                                    [checked]="checked" (change)="rememberMe($event)" id="flexCheckChecked" />
+                                <label class="form-check-label mt-0" for="flexCheckChecked">
+                                    Remember Me
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col-md-6 text-end">
+                            <a (click)="forgotPassword()" class="">Forgot Password?</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 my-4">
+                            <button class="btn btn-main" (click)="loginAdmin()">Log in</button>
+                        </div>
+                        <!-- <div class="col-12 text-center">
+                            <p>
+                                Don't have an account yet?
+                                <a (click)="signup()">Sign up</a>
+                            </p>
+                        </div> -->
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

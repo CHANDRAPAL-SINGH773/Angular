@@ -1,0 +1,363 @@
+@import "/src/styles.scss";
+
+.tabButtons {
+  @include itemPosition(center, flex-start);
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+
+  .btn-tab {
+    background-color: $secondary;
+    padding: 10px 20px;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    color: $dark;
+    font-weight: 700;
+    width: 165px;
+
+    &.active {
+      background-color: $primary;
+      color: $light;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.tabContent {
+  padding: 7.5px;
+
+  .data {
+    font-weight: 500;
+
+    p {
+      font-size: 14px;
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+  }
+
+  .content {
+    margin: 7.5px;
+    background-color: rgba($color: $secondary, $alpha: 0.2);
+    border: 1px solid $secondary;
+    padding: 7.5px;
+    border-radius: 15px;
+
+    .contentDetail {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+      margin: 7.5px;
+
+      .image {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        background-color: #ffe9e1;
+        @include itemPosition(center, center);
+
+        img {
+          width: 100%;
+          border-radius: 8px;
+          height: 60px;
+          width: 60px;
+        }
+      }
+
+      .text {
+        flex: 1;
+
+        .time {
+          font-size: 12px;
+          font-weight: 500;
+          color: rgba($color: $dark, $alpha: 0.7);
+
+          span {
+            display: inline-block;
+            margin-left: 5px;
+          }
+        }
+
+        h5.title {
+          width: 200px;
+          font-size: 14px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        h6.subtitle {
+          font-size: 16px;
+        }
+      }
+    }
+
+    .experence {
+      @include itemPosition(center, space-between);
+      padding-top: 15px;
+      border-top: 1px solid $secondary;
+
+      .profile {
+        @include itemPosition(center, center);
+        gap: 15px;
+      }
+
+      .right {
+        i {
+          color: $dark;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .programIMg {
+    width: 60px;
+  }
+
+  .programImage {
+    height: 60px;
+    width: 60px !important;
+  }
+
+  .programDetails {
+    padding: 7.5px 7.5px 25px;
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    border-bottom: 1px solid $secondary;
+  }
+
+  .aboutMentor {
+    margin-top: 15px;
+    padding: 7.5px;
+
+    h3 {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    .mentorContent {
+      @include itemPosition(center, space-between);
+      padding: 15px 0;
+      margin: 7.5px 0;
+      gap: 10px;
+
+      .mentorProfile {
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+
+        .image {
+          width: 80px;
+          height: 80px;
+          position: relative;
+
+          img.profile {
+            width: 100%;
+          }
+
+
+          img.verify {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+          }
+
+        }
+
+        .aboutMentorProfile {
+          h3 {
+            font-size: 18px;
+          }
+        }
+      }
+
+      .heading {
+        @include itemPosition(center, space-between);
+
+        h3 {
+          font-size: 16px;
+        }
+
+        .stars {
+          i {
+            color: #e8a908;
+          }
+        }
+      }
+    }
+
+    .Biodata {
+      @include itemPosition(center, flex-start);
+      gap: 25px;
+      margin-top: 15px;
+    }
+  }
+}
+
+.modal-dialog {
+  .modal-content {
+    .modal-body {
+      .AmountBox {
+        padding: 25px;
+        background-color: rgba($color: $dark, $alpha: 0.02);
+        border-radius: 15px;
+        text-align: center;
+        margin: 25px;
+
+        h4 {
+          font-size: 18px;
+        }
+
+        h3 {
+          font-size: 25px;
+        }
+      }
+
+      .bankcard {
+        @include itemPosition(center, space-between);
+        background-color: rgba($color: $dark, $alpha: 0.02);
+        padding: 10px;
+        border-radius: 15px;
+        margin: 15px 0;
+        cursor: pointer;
+
+        .cardList {
+          @include itemPosition(center, space-between);
+          gap: 15px;
+
+          .bankIcon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: $light;
+
+            img {
+              width: 100%;
+            }
+
+          }
+        }
+
+        .nextArrow {
+          margin-right: 15px;
+        }
+      }
+
+      img {
+        width: 50%;
+        display: block;
+        margin: 20px auto;
+      }
+
+      h4 {
+        font-size: 17px;
+        text-align: center;
+        margin: 25px auto;
+        max-width: 250px;
+      }
+    }
+  }
+}
+
+
+
+@media only screen and (max-width: 1400px) {
+  .tabButtons {
+    padding: 10px;
+
+    .btn-tab {
+      padding: 0px 20px;
+      height: 35px;
+      font-weight: 500;
+    }
+  }
+
+  .tabContent {
+    padding: 5px;
+
+    .data {
+      p {
+        font-size: 12px;
+      }
+
+      h4 {
+        font-size: 14px;
+      }
+    }
+
+    .content {
+      margin: 5px;
+      padding: 5px;
+
+      .contentDetail {
+        margin: 5px;
+
+        .image {
+          width: 80px;
+          height: 80px;
+          border-radius: 8px;
+          background-color: #ffe9e1;
+          @include itemPosition(center, center);
+
+          img {
+            width: 100%;
+            border-radius: 8px;
+          }
+        }
+
+        .text {
+          flex: 1;
+
+          .time {
+            font-size: 12px;
+            font-weight: 500;
+            color: rgba($color: $dark, $alpha: 0.7);
+
+            span {
+              display: inline-block;
+              margin-left: 5px;
+            }
+          }
+
+          h5.title {
+            width: 200px;
+            font-size: 14px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+          }
+
+          h6.subtitle {
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+img.medal {
+  height: 16px;
+  position: relative;
+  top: -50px;
+  max-width: 21px;
+  left: 52px;
+}

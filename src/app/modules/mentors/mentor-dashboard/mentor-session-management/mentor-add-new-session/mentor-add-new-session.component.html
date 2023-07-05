@@ -1,0 +1,346 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i class="fa-solid fa-chevron-left" (click)="goBack()"></i>
+          </div>
+          <p class="mb-0">Add New Session</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <form [formGroup]="addDayWise" action="addDayWise" class="form">
+      <div class="row">
+        <div class="col">
+          <div class="uploadProfile">
+            <label for="upload">
+              <div class="profileImage">
+                <span>
+                  <img
+                    width="200"
+                    height="200"
+                    class="rounded-circle"
+                    *ngIf="imgsrc"
+                    [src]="imgsrc"
+                    class="img-fluid"
+                    alt=""
+                  />
+                  <img
+                    width="200"
+                    height="200"
+                    class="rounded-circle"
+                    *ngIf="!imgsrc"
+                    src="../../../../../assets/images/uploadProfile.png"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </span>
+              </div>
+              <input
+                (change)="handleimage($event, 'image')"
+                type="file"
+                class="d-none"
+                id="upload"
+                formControlName="image"
+                accept="image/x-png,image/jpg,image/jpeg"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionName">Session Name</label
+            ><span class="text-danger">*</span>
+            <input
+              type="text"
+              placeholder="Session Name"
+              id="sessionName"
+              formControlName="sessionName"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('sessionName')!.errors?.['required'] || addDayWise.get('sessionName')!.errors?.['pattern']}"
+            />
+            <div
+              *ngIf="submitted && addDayWise.controls['sessionName']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="addDayWise.controls['sessionName']!.errors?.['required']"
+              >
+                Session Name is required
+              </div>
+              <div
+                *ngIf="addDayWise.controls['sessionName']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+              <!-- <div
+                *ngIf="addDayWise.controls['sessionName']!.errors?.['pattern']"
+              >
+                Session Name must be a string
+              </div> -->
+              <div
+                *ngIf="addDayWise.controls['sessionName']!.errors?.['maxlength']"
+              >
+                Session Name should be at most 50 characters long..
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="selectProgram">Select Program</label
+            ><span class="text-danger">*</span>
+            <select
+              id="selectProgram"
+              #selectProgram
+              class="form-control"
+              (change)="seeMode(selectProgram.value)"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('program')!.errors?.['required'],'disabled': true}"
+              formControlName="program"
+            >
+              <option value="">Select Program</option>
+              <option *ngFor="let data of gotPrograms" [value]="data._id">
+                {{ data.mentorship_name | titlecase }}
+              </option>
+            </select>
+            <div
+              *ngIf="submitted && addDayWise.controls['program']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                class="text-danger"
+                *ngIf="addDayWise.controls['program']!.errors?.['required']"
+              >
+                Program is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- *ngIf="onlineMode" -->
+        <div
+          class="col-md-4"
+          [style.display]="onlineMode === true ? 'block' : 'none'"
+        >
+          <div class="inputField">
+            <label for="sessionLink">Session link</label
+            ><span class="text-danger">*</span>
+            <input
+              type="text"
+              id="sessionLink"
+              placeholder="Session link"
+              formControlName="sessionLink"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('sessionLink')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && addDayWise.controls['sessionLink']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="addDayWise.controls['sessionLink']!.errors?.['required']"
+              >
+                Session Link is required
+              </div>
+              <div
+                *ngIf="addDayWise.controls['sessionLink']!.errors?.['pattern']"
+              >
+                Session Link should be valid link
+              </div>
+              <div
+                *ngIf="addDayWise.controls['sessionLink']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-4"
+          [style.display]="onlineMode === false ? 'block' : 'none'"
+        >
+          <div class="inputField">
+            <label for="Location">Location</label
+            ><span class="text-danger">*</span>
+            <input
+              type="text"
+              id="location"
+              #search
+              (change)="selectedLoc($event)"
+              placeholder="location"
+              formControlName="location"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('location')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && addDayWise.controls['location']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="addDayWise.controls['location']!.errors?.['required']"
+              >
+                Location is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="date">Date</label><span class="text-danger">*</span>
+            <input
+              type="date"
+              id="date"
+              min="{{ minDate }}"
+              placeholder="Date"
+              class="space form-control"
+              formControlName="start_date"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('start_date')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && addDayWise.controls['start_date']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="addDayWise.controls['start_date']!.errors?.['required']"
+              >
+                Date is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration">Session Duration</label
+            ><span class="text-danger">*</span>
+            <p class="hourduration">
+              <span>hour(s)</span>
+              <input
+                type="number"
+                id="sessionDuration"
+                formControlName="sessionDuration"
+                class="space form-control"
+                [ngClass]="{ 'is-invalid': submitted && addDayWise.get('sessionDuration')!.errors?.['required']}"
+                min="1"
+              />
+            </p>
+            <div
+              *ngIf="
+                submitted && addDayWise.controls['sessionDuration']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="addDayWise.controls['sessionDuration']!.errors?.['required']"
+              >
+                Session Duration is required
+              </div>
+              <div
+                *ngIf="addDayWise.controls['sessionDuration']!.errors?.['min']"
+              >
+                Session Duration should be greater than 0
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="time">Time</label><span class="text-danger">*</span>
+            <input
+              type="time"
+              id="time"
+              placeholder="Time"
+              formControlName="time"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('time')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && addDayWise.controls['time']!.errors"
+              class="invaliddiv"
+            >
+              <div *ngIf="addDayWise.controls['time']!.errors?.['required']">
+                Time is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="inputField">
+            <label for="sessionDescription">Session Description</label
+            ><span class="text-danger">*</span>
+            <textarea
+              type="text"
+              formControlName="description"
+              class="form-control"
+              id="sessionDescription"
+              rows="4"
+              placeholder="Session Description"
+              [ngClass]="{ 'is-invalid': submitted && addDayWise.get('description')!.errors?.['required']}"
+            >
+            </textarea>
+            <div
+              *ngIf="submitted && addDayWise.controls['description']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="addDayWise.controls['description']!.errors?.['required']"
+              >
+                Description is required
+              </div>
+              <div
+                *ngIf="addDayWise.controls['description']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row" *ngIf="!onlineMode">
+        <div class="col">
+          <!-- show map with markers start -->
+          <!-- <div class="container offlineoptions">
+
+  <h4>Mark a location for Map co-ordinates</h4>
+
+  <div class="form-group">
+    <label>Enter address</label>
+    <input type="text" class="form-control" (keydown.enter)="$event.preventDefault()" placeholder="Search Nearest Location" autocorrect="off" autocapitalize="off" spellcheck="off" type="text" #search>
+  </div>
+    <agm-map
+       [latitude]='lat'
+       [longitude]='lng'
+       [zoom]='zoom'
+       (mapClick)="addMarker($event)" style="height: 300px;"
+       >
+
+        <agm-marker *ngIf="latMarker"
+            [latitude]="latMarker"
+              [longitude]="lngMarker"
+              >
+        </agm-marker>
+
+    </agm-map>
+
+</div> -->
+          <!-- show map with markers end -->
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="buttons">
+            <button (click)="submit()" class="btn btn-main">Add Session</button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

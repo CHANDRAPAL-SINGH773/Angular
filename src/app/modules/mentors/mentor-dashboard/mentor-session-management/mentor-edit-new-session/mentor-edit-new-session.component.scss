@@ -1,0 +1,24 @@
+@import "/src/styles.scss";
+p.hourduration span {
+  position: absolute;
+  margin-left: 42px !important;
+  margin-top: 7px !important;
+}
+
+.uploadProfile {
+  label {
+    .profileImage {
+      position: relative;
+      .icon {
+        @include roundShape(30px, 30px, $primary);
+        position: absolute;
+        right: -10px;
+        bottom: -10px;
+        cursor: pointer;
+        i {
+          color: $light;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,105 @@
+<header class="header">
+  <div class="content">
+    <div class="heading">
+      <i class="fa-solid fa-bars d-block d-lg-none" (click)="trigermenu()"></i>
+      <!-- <h1>Dashboard</h1> -->
+    </div>
+    <div class="profile">
+      <div class="notification" (click)="notification = !notification">
+        <i class="fa-solid fa-bell"></i>
+        <i class="fa-solid fa-circle update" *ngIf="notificationsCount > 0">
+          <p>{{ notificationsCount }}</p>
+        <!-- <p>{{count}}</p>  -->
+        </i>
+      </div>
+      <div *ngIf="role !== 10">
+        <!-- <div class="notificationBox" *ngIf="notification == true">
+          <div class="notificationText" *ngFor="let notifyMessage of allNotifications">
+            <p class="mb-0" [routerLink]="['/mentor/mentor-dashboard/chat']">{{notifyMessage.message}}</p>
+            <i class="material-icons dp48" (click)="clearNotification(notifyMessage._id)">clear</i>
+            <small *ngFor="let notification of allNotifications" [class]="'notification-' + notification._id">
+            <input class="checkbox" type="checkbox" id="size_1" value="small" checked />
+            <label class="notification new" for="size_1">
+              <a class="cursor" (click)="clearNotification(notification._id)">{{
+                notification.message
+                ? notification.message
+                : "A new notification"
+                }}</a>
+             
+            </label>
+          </small> 
+
+          </div>
+        </div> -->
+        <div class="notificationBox" *ngIf="notification == true">
+          <div class="notificaionHeader">
+            <h4>Notifications</h4>
+            <div class="close" (click)="notification = !notification">
+              <i class="fa-solid fa-xmark"></i>
+            </div>
+          </div>
+          <div class="notificationList">
+            <div class="notificationText" *ngFor="let notifyMessage of allNotifications">
+              <p class="mb-0" [routerLink]="['/mentor/mentor-dashboard/chat']">
+                {{ notifyMessage.message }}
+                <!-- {{notifyMessage.message}} -->
+              </p>
+              <i class="material-icons dp48" (click)="updateNotification(notifyMessage._id)">clear</i>
+              <!-- <small *ngFor="let notification of allNotifications" [class]="'notification-' + notification._id">
+                <input class="checkbox" type="checkbox" id="size_1" value="small" checked />
+                <label class="notification new" for="size_1">
+                  <a class="cursor" (click)="clearNotification(notification._id)">{{
+                    notification.message
+                    ? notification.message
+                    : "A new notification"
+                    }}</a>
+                 
+                </label>
+              </small> -->
+            </div>
+          </div>
+          <div class="notificationFooter">
+            <button class="btn btn-main" (click)="clearAllNotifications()" >Clear All</button>
+          </div>
+        </div>
+      </div>
+      <div class="profileDetails">
+        <div *ngIf="role === 1" class="profileImage" [routerLink]="['/mentor/mentor-dashboard/profile']">
+          <img *ngIf="oneUserData?.image" [src]="showImage + oneUserData?.image" class="img-fluid" alt="" />
+          <img *ngIf="!oneUserData?.image" src="../../../../../assets/images/uploadProfile.png" class="img-fluid"
+            alt="" />
+        </div>
+        <div *ngIf="role === 2" class="profileImage" [routerLink]="['/mentee/mentee-dashboard/mentee-profile']">
+          <img *ngIf="oneUserData?.image" [src]="showImage + oneUserData?.image" class="img-fluid" alt="" />
+          <img *ngIf="!oneUserData?.image" src="../../../../../assets/images/uploadProfile.png" class="img-fluid"
+            alt="" />
+        </div>
+        <div class="profileText">
+          <div>
+            <p class="mb-0 smallText">
+              {{ oneUserData?.firstName ? oneUserData?.firstName : "-" }}
+              {{ oneUserData?.lastName ? oneUserData?.lastName : "-" }}
+            </p>
+            <p *ngIf="role === 1" class="category mb-0">Mentor</p>
+            <p *ngIf="role === 2" class="mb-0">Mentee</p>
+            <!-- <p *ngIf="role === 10" class="mb-0">Guest User</p> -->
+          </div>
+          <div class="dropdown">
+            <i class="fa-solid fa-angle-down cursor-pointer" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+            </i>
+
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a *ngIf="role === 1" class="dropdown-item"
+                [routerLink]="['/mentor/mentor-dashboard/profile']">Profile</a>
+              <a *ngIf="role === 2" class="dropdown-item"
+                [routerLink]="['/mentee/mentee-dashboard/mentee-profile']">Profile</a>
+
+              <a class="dropdown-item" (click)="logout()">Logout</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

@@ -1,0 +1,126 @@
+<app-admin-sidebar></app-admin-sidebar>
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+  <section class="container-fluid mb-4">
+    <h3>Content Management</h3>
+    <div class="card-container">
+      <div class="row">
+        <div class="col-4" *ngFor="let data of staticPageData">
+          <div class="card">
+            <img
+              src="../../../assets/images/currentsession3.png"
+              class="img-fluid"
+              alt=""
+            />
+            <div class="card-content">
+              <h2 class="card-title">{{ data?.heading }}</h2>
+              <p class="card-description">{{ data?.type }}</p>
+              <div class="card-actions">
+                <div class="action-row">
+                  <button
+                    class="btn btn-primary"
+                    id="preview"
+                    data-target="#report"
+                    data-toggle="modal"
+                    (click)="openPreviewModal()"
+                    (click)="getStaticPageDataById(data._id)"
+                  >
+                    Edit
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div
+  class="modal fade"
+  id="report"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Update Template</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <br />
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <form [formGroup]="staticPageEditForm">
+              <div class="form-group">
+                <label for="heading">Heading</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="heading"
+                  name="heading"
+                  formControlName="heading"
+                  [ngClass]="{ 'is-invalid': submitted && staticPageEditForm.get('heading')!.errors?.['required']}"
+                />
+              </div>
+              <div class="form-group">
+                <label for="type">Type</label>
+                <select class="form-control" id="type" name="type" formControlName="type" [ngClass]="{ 'is-invalid': submitted && staticPageEditForm.get('type')!.errors?.['required']}">
+                  <option value=""  selected>Type</option>
+                  <option value="Help/FAQ">Help/FAQ</option>
+                  <option value="Site Map">Site Map</option>
+                  <option value="Blog Page">Blog Page</option>
+                  <option value="About Us">About Us</option>
+                  <option value="Contact Us">Contact Us</option>
+                  <option value="Term and Condition">Term and Condition</option>
+                  <option value="Privacy Policy">Privacy Policy</option>
+                  <option value="TnC for Social Sharing">TnC for Social Sharing</option>
+
+                </select>
+                
+              </div>
+
+              <div class="form-group">
+                <label for="text">Text</label>
+                <ckeditor
+                  [(ngModel)]="editorContent"
+                  name="text"
+                  formControlName="text"
+                  [ngClass]="{ 'is-invalid': submitted && staticPageEditForm.get('text')!.errors?.['required']}"
+                ></ckeditor>
+              </div>
+
+              <div class="col-12 text-center">
+                <button
+                  type="button"
+                  class="btn btn-main"
+                  data-dismiss="modal"
+                  (click)="updateStaticPage()"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- (click)="updateTemplate()" -->
+<!-- [(ngModel)]="selectedTemplate.type" -->
+<!-- [(ngModel)]="selectedTemplate.text" -->
+
+<!-- [(ngModel)]="selectedTemplate.heading" -->

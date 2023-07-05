@@ -1,0 +1,102 @@
+<div class="sidebar" [ngClass]="{ sidebarCollapse: clicked }">
+  <div class="logo"> <img src="../../../assets/images/logo.png" alt="" /> <i class="fa-solid fa-bars d-block d-lg-none"
+      (click)="trigermenu()"></i> </div>
+  <ul>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"> <img src="../../../assets/images/icon/dashboard.svg" alt="" />
+      <span>Dashboard</span>
+    </li>
+    <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"> <img src="../../../assets/images/icon/dashboard.svg" alt="" />
+      <span>Dashboard</span>
+    </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/mentorship']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/mentorship.svg" alt="" /> <span>Mentorship Programs</span> </li>
+    <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/mentorship-programs']" routerLinkActive="active">
+      <img src="../../../assets/images/icon/mentorship.svg" alt="" /> <span>Mentorship Programs</span>
+    </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/session-management']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/sessionmanagement.svg" alt="" /> <span>Session Management</span> </li>
+    <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/session']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/sessionmanagement.svg" alt="" /> <span>Session Management</span> </li>
+    <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/mentors']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"> <img src="../../../assets/images/icon/Mentors.svg" alt="" />
+      <span>Mentors</span>
+    </li>
+    <li *ngIf="role == 1 || role == 0" [routerLink]="['/mentor/mentor-dashboard/chat']"
+      routerLinkActive="active"> <img src="../../../assets/images/icon/Chat.svg" alt="" /> <span>Chat</span> </li>
+      <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/chat']"
+      routerLinkActive="active"> <img src="../../../assets/images/icon/Chat.svg" alt="" /> <span>Chat</span> </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/payment']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/payment.svg" alt="" /> <span>Payments</span> </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/requested-program']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/postsocialmedia.svg" alt="" /> <span>Requested Program</span> </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/refer&earn']" routerLinkActive="active">
+      <img src="../../../assets/images/icon/referandearn.svg" alt="" /> <span>Refer and Earn</span>
+    </li>
+    <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/refer&earn']" routerLinkActive="active">
+      <img src="../../../assets/images/icon/referandearn.svg" alt="" /> <span>Refer and Earn</span>
+    </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/alldiputes']" routerLinkActive="active"> <img
+        src="../../../../../../assets/images/icon/dispute.svg" alt="" /> <span>Disputes</span> </li>
+        <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/dispute']" routerLinkActive="active"> <img
+          src="../../../../../../assets/images/icon/dispute.svg" alt="" /> <span>Dispute</span> </li>
+    <li *ngIf="role == 1 " [routerLink]="['/mentor/mentor-dashboard/post']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/postsocialmedia.svg" alt="" /> <span>Post on Social Media</span> </li>
+        <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/post']" routerLinkActive="active"> <img
+          src="../../../assets/images/icon/postsocialmedia.svg" alt="" /> <span>Post on Social Media</span> </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/ratedprograms']" routerLinkActive="active"> <img
+        src="../../../assets/images/icon/Star.svg" alt="" /> <span>Ratings</span> </li>
+    <li *ngIf="role == 1" [routerLink]="['/mentor/mentor-dashboard/help&support']"
+      routerLinkActive="active"> <img src="../../../assets/images/icon/help.svg" alt="" /> <span>Help & Support</span>
+    </li>
+    <li *ngIf="role == 2" [routerLink]="['/mentee/mentee-dashboard/help&support']"
+      routerLinkActive="active"> <img src="../../../assets/images/icon/help.svg" alt="" /> <span>Help & Support</span>
+    </li>
+    <li *ngIf="role == 1 " [routerLink]="['/mentor/mentor-dashboard/settings']" routerLinkActive="active">
+      <img src="../../../assets/images/icon/Setting.svg" alt="" /> <span>Settings</span>
+    </li>
+    <li *ngIf=" role == 2" [routerLink]="['/mentee/mentee-dashboard/settings']" routerLinkActive="active">
+      <img src="../../../assets/images/icon/Setting.svg" alt="" /> <span>Settings</span>
+    </li>
+  </ul>
+
+  <!-- here from routes for guest user -->
+
+  <ul>
+    <li *ngIf="role == 10" [routerLink]="['/mentee/mentee-dashboard']" routerLinkActive="active"
+      [routerLinkActiveOptions]="{ exact: true }"> <img src="../../../assets/images/icon/dashboard.svg" alt="" />
+      <span>Dashboard</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()">
+      <img src="../../../assets/images/icon/mentorship.svg" alt="" /> <span>Mentorship Programs</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()"> <img src="../../../assets/images/icon/sessionmanagement.svg"
+        alt="" /> <span>Session Management</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()"> <img src="../../../assets/images/icon/Mentors.svg" alt="" />
+      <span>Mentors</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()"> <img src="../../../assets/images/icon/Chat.svg" alt="" />
+      <span>Chat</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()"> <img src="../../../assets/images/icon/referandearn.svg" alt="" />
+      <span>Refer and Earn</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()"> <img src="../../../assets/images/icon/postsocialmedia.svg"
+        alt="" /> <span>Post on Social Media</span>
+    </li>
+
+    <li *ngIf="role ==  10" (click)="showMessage()"> <img src="../../../assets/images/icon/Setting.svg" alt="" />
+      <span>Settings</span>
+    </li>
+
+  </ul>
+</div>
+<div class="darkSpace" *ngIf="clicked" (click)="trigermenu()"></div>

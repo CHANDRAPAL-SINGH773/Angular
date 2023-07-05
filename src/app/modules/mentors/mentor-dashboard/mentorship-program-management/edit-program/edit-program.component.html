@@ -1,0 +1,528 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i
+              class="fa-solid fa-chevron-left"
+              [routerLink]="['/mentor/mentor-dashboard/session-detail']"
+              [queryParams]="{ _id: id, category: showheading }"
+            ></i>
+          </div>
+          <p class="mb-0">Edit Program</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <form [formGroup]="editprogramForm" action="addDayWise" class="form">
+      <div class="row">
+        <div class="col">
+          <div class="uploadProfile">
+            <label for="upload">
+              <div class="profileImage">
+                <!--  <span>
+                    <img width="200" height="200" class="rounded-circle" class="img-fluid" alt="">
+                  <img width="200" height="200" class="rounded-circle" 
+                      src="../../../../../assets/images/uploadProfile.png" class="img-fluid" alt=""> -->
+                <!-- </span>  -->
+
+                <span>
+                  <img [src]="imgsrc" class="img-fluid" alt="" />
+                  <!-- <img width="200" height="200" *ngIf="!oneProgramDetail?.image"
+                    src="../../../../../assets/images/uploadProfile.png" class="img-fluid" alt=""> -->
+                </span>
+              </div>
+              <input
+                (change)="handleimage($event, 'image')"
+                type="file"
+                class="d-none"
+                id="upload"
+                formControlName="image"
+                accept="image/x-png,image/jpg,image/jpeg"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionName">Program Name</label
+            ><span class="text-danger">*</span>
+            <input
+              type="text"
+              placeholder="Program Name"
+              id="sessionName"
+              formControlName="mentorship_name"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('mentorship_name')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['mentorship_name']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['mentorship_name']!.errors?.['required']"
+              >
+                Program Name is required
+              </div>
+              <div
+                *ngIf="editprogramForm.controls['mentorship_name']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+              <div
+                *ngIf="editprogramForm.controls['mentorship_name']!.errors?.['maxlength']"
+              >
+                Program Name should be at most 40 characters long.
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="selectProgram"> Program Category</label
+            ><span class="text-danger">*</span>
+            <select
+              id="selectProgram"
+              class="form-control"
+              formControlName="category_id"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('category_id')!.errors?.['required']}"
+            >
+              <option value="" selected>Select Category</option>
+              <option
+                *ngFor="let data of categoryData"
+                [value]="data._id"
+                default
+              >
+                {{ data.categoryName | titlecase }}
+              </option>
+
+              <!-- <option value="Female">Female</option>
+                <option value="Other">Other</option> -->
+            </select>
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['category_id']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['category_id']!.errors?.['required']"
+              >
+                Program Category is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <!-- (change)="showlocation($event)" -->
+            <label for="sessionLink">Mentorship Mode</label
+            ><span class="text-danger">*</span>
+            <select
+              id="selectProgram"
+              class="form-control"
+              formControlName="mentorship_mode"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('mentorship_mode')!.errors?.['required']}"
+            >
+              <option value="1" selected>Online</option>
+              <option value="0">Offline</option>
+            </select>
+
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['mentorship_mode']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['mentorship_mode']!.errors?.['required']"
+              >
+                Mentorship Mode is required
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="date">Years of Experience</label
+            ><span class="text-danger">*</span>
+            <select
+              id="selectProgram"
+              class="form-control"
+              formControlName="experience"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('experience')!.errors?.['required']}"
+            >
+              <option value="" selected>select experience</option>
+              <option value="0-6 month(s)">0 to 6 month(s)</option>
+              <option value="1 year">1 year</option>
+              <option value="2 years">2 years</option>
+              <option value="3 years">3 years</option>
+              <option value="4 years">4 years</option>
+              <option value="5 years">5 years</option>
+              <option value="5-10 years">5 to 10 years</option>
+              <option value="10-20 years">10 to 20 years</option>
+            </select>
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['experience']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['experience']!.errors?.['required']"
+              >
+                Experience is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration">Price</label
+            ><span class="text-danger">*</span>
+            <p class="dollarprice">
+              <span>$</span>
+              <input
+                type="number"
+                placeholder="price"
+                formControlName="price"
+                class="space price form-control"
+                [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('price')!.errors?.['required']}"
+                max="10000000"
+                min="1"
+              />
+            </p>
+            <div
+              *ngIf="submitted && editprogramForm.controls['price']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['price']!.errors?.['required']"
+              >
+                Price is required
+              </div>
+              <div *ngIf="editprogramForm.controls['price']!.errors?.['min']">
+                Minimum 1 can be set
+              </div>
+              <div *ngIf="editprogramForm.controls['price']!.errors?.['max']">
+                Maximum 7 figures allowed
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration">Mentee Allowed</label
+            ><span class="text-danger">*</span>
+            <input
+              type="number"
+              readonly
+              placeholder="Mentee Allowed"
+              formControlName="mentee_limit"
+              class="space form-control"
+              min="1"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('mentee_limit')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['mentee_limit']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['mentee_limit']!.errors?.['required']"
+              >
+                Number of Mentee is required
+              </div>
+              <div
+                *ngIf="editprogramForm.controls['mentee_limit']!.errors?.['min']"
+              >
+                Minimum 1 can be set
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration"> Start date</label
+            ><span class="text-danger">*</span>
+            <input
+              type="date"
+              placeholder="start date"
+              min="{{ minDate }}"
+              (change)="changeDate($event)"
+              formControlName="start_date"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('start_date')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['start_date']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['start_date']!.errors?.['required']"
+              >
+                Start date is required
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration"
+              >Availability From
+              <i class="bi bi-info-circle-fill hover-text"
+                ><span class="tooltip-text" id="bottom"
+                  >Please specify the time range during which you are available
+                  to mentor each day. This information helps mentees know when
+                  you are available to be reached via chat, ensuring a better
+                  experience for both parties. For example, if you are only
+                  available from 9am to 12pm daily, please enter '9:00 AM' in
+                  the 'Available From' field and '12:00 PM' in the 'Available
+                  To' field</span
+                ></i
+              >
+            </label>
+            <!-- <input type="text"  placeholder="Availability" formControlName="availibility" class="space form-control"/> -->
+            <input
+              type="time"
+              placeholder="Time"
+              formControlName="availibility_from"
+              class="space form-control"
+            />
+
+            <!-- <div *ngIf="submitted && addDayWise.controls['time']!.errors" class="invaliddiv">
+              <div *ngIf="addDayWise.controls['time']!.errors?.['required']">Time is required
+              </div>
+            </div> -->
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration"
+              >Availability To
+              <i class="bi bi-info-circle-fill hover-text"
+                ><span class="tooltip-text" id="left"
+                  >Please specify the time range during which you are available
+                  to mentor each day. This information helps mentees know when
+                  you are available to be reached via chat, ensuring a better
+                  experience for both parties. For example, if you are only
+                  available from 9am to 12pm daily, please enter '9:00 AM' in
+                  the 'Available From' field and '12:00 PM' in the 'Available
+                  To' field</span
+                ></i
+              >
+            </label>
+            <input
+              type="time"
+              id="time"
+              placeholder="Time"
+              formControlName="availibility_to"
+              class="space form-control"
+            />
+          </div>
+        </div>
+
+        <!-- *ngIf="showLocation"  -->
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionName">Platform/Location </label
+            ><span class="text-danger">*</span>
+            <input
+              type="text"
+              placeholder="Ex.If Online skype If offline Nagpur "
+              id="sessionName"
+              formControlName="location"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('location')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="submitted && editprogramForm.controls['location']!.errors"
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['location']!.errors?.['required']"
+              >
+                platform/Location is required
+              </div>
+              <div
+                *ngIf="editprogramForm.controls['location']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="inputField">
+            <label for="sessionDuration">Program expiry date</label
+            ><span class="text-danger">*</span>
+            <input
+              type="date"
+              min="{{ minimumExpiryDate }}"
+              readonly
+              placeholder="Date"
+              formControlName="expiry_date"
+              class="space form-control"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('expiry_date')!.errors?.['required']}"
+            />
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['expiry_date']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['expiry_date']!.errors?.['required']"
+              >
+                Program expiry date is required
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+            <!-- <img [src]="url"  height="50" alt=""> -->
+            <label for="Verification">Skill Certificate</label>
+            <label for="uploadFileVerification" class="uploadFile">
+              Skill Certificate
+              <input
+                type="file"
+                (change)="handleimage($event, 'skills')"
+                class="form-control d-none"
+                id="uploadFileVerification"
+                placeholder="Image"
+                formControlName="skills"
+                accept="image/*,application/pdf"
+              />
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            </label>
+          </div>
+        </div>
+        <!-- <div class="col-md-4" id="img-preview">
+          <div class="inputField">
+            <label for="Verification">Skill Certificate</label>
+            <div class="cursor ifreame-pdf">
+              <iframe class="cursor" type="image/*" [src]="verificationIdFiles | safe: 'resourceUrl'"></iframe>
+            </div>
+          </div>
+        </div> -->
+        <div class="col-md-4" *ngIf="verificationIdFiles">
+          <div class="inputField">
+            <label for="Verification">Skill Certificate</label>
+            <div class="cursor ifreame-pdf">
+              <button
+                class="btn btn-main"
+                data-toggle="modal"
+                data-target="#viewpdf"
+              >
+                View
+              </button>
+              <!-- <iframe class="cursor" type="application/pdf" [src]="verificationIdFiles | safe: 'resourceUrl'"></iframe> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div class="inputField">
+            <label for="sessionDescription">Program Description</label
+            ><span class="text-danger">*</span>
+            <textarea
+              type="text"
+              formControlName="description"
+              class="form-control"
+              id="sessionDescription"
+              rows="4"
+              placeholder="Program Description"
+              [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('description')!.errors?.['required']}"
+            >
+            </textarea>
+            <div
+              *ngIf="
+                submitted && editprogramForm.controls['description']!.errors
+              "
+              class="invaliddiv"
+            >
+              <div
+                *ngIf="editprogramForm.controls['description']!.errors?.['required']"
+              >
+                Program description is required
+              </div>
+              <div
+                *ngIf="editprogramForm.controls['description']!.errors?.['whitespace']"
+              >
+                Input must not contain only white spaces.
+              </div>
+              <div
+                *ngIf="editprogramForm.controls['description']!.errors?.['maxlength']"
+              >
+                Description should be at most 400 characters long.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="buttons">
+            <button (click)="editProgram()" class="btn btn-main">
+              Save Program
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="viewpdf"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View your document</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+          id="closeaddModal"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <iframe
+        class="cursor"
+        type="application/pdf"
+        [src]="verificationIdFiles | safe : 'resourceUrl'"
+      ></iframe>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,267 @@
+@import "/src/styles.scss";
+
+.tabButtons {
+  @include itemPosition(center, flex-start);
+  gap: 15px;
+  padding: 15px;
+
+  .btn-tab {
+    background-color: $secondary;
+    padding: 10px 20px;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    color: $dark;
+    font-weight: 700;
+    width: 150px;
+
+    &.active {
+      background-color: $primary;
+      color: $light;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+.sessionDescription {
+  overflow: hidden;
+  width: 330px;
+  text-overflow: ellipsis;
+}
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  width: 200px;
+  color: white;
+  font-size: 12px;
+  background-color: #192733;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+}
+
+.hover-text:hover .tooltip-text {
+  visibility: visible;
+}
+
+#left {
+  top: -16px;
+  right: 1%;
+}
+
+.sessionDetails {
+  padding: 7.5px;
+
+  .sessionContent {
+    background-color: #fcfcfc;
+    border: 1px solid rgba($color: $dark, $alpha: 0.02);
+    margin: 7.5px;
+    padding: 15px;
+    border-radius: 15px;
+    height: 100%;
+
+    .sessionProfile {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+
+      .image {
+        width: 110px;
+
+        img {
+          width: 100px;
+          height: 100px;
+          border-radius: 7px;
+        }
+      }
+
+      .text {
+        flex: 1;
+
+        h3 {
+          font-size: 18px;
+        }
+
+        p {
+          color: rgba($color: $dark, $alpha: 0.9);
+          font-size: 14px;
+        }
+      }
+    }
+
+    .sessionTime {
+      margin-top: 15px;
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+
+      p {
+        color: rgba($color: $dark, $alpha: 0.9);
+        font-size: 14px;
+      }
+
+      h4 {
+        font-size: 16px;
+      }
+    }
+  }
+}
+
+.profileContent .profile .image {
+  height: auto;
+}
+
+.moreDetails {
+  padding: 15px;
+
+  .moreContent {
+    h3 {
+      font-size: 18px;
+    }
+
+    p {
+      color: rgba($color: $dark, $alpha: 0.9);
+      font-size: 14px;
+    }
+
+    .moreData {
+      margin-top: 15px;
+      @include itemPosition(flex-start, flex-start);
+      flex-wrap: wrap;
+      gap: 15px;
+
+      p {
+        color: rgba($color: $dark, $alpha: 0.9);
+        font-size: 14px;
+      }
+
+      h4 {
+        font-size: 16px;
+      }
+    }
+
+    .offlineoptions {
+      @include itemPosition(center, flex-start);
+      margin-top: 15px;
+      gap: 20px;
+      flex-wrap: wrap;
+
+      .offlinepart {
+        border-radius: 8px;
+        min-width: 240px;
+        @include itemPosition(center, space-between);
+        background-color: $secondary;
+        padding: 10px;
+        color: $dark;
+        cursor: pointer;
+
+        .location {
+          gap: 10px;
+          @include itemPosition(center, flex-start);
+        }
+      }
+
+      p {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .sessionDetails {
+    padding: 5px;
+
+    .sessionContent {
+      margin: 5px;
+      padding: 10px;
+
+      .sessionProfile {
+        gap: 10px;
+      }
+
+      .sessionTime {
+        margin-top: 15px;
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+
+        p {
+          color: rgba($color: $dark, $alpha: 0.9);
+          font-size: 14px;
+        }
+
+        h4 {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .moreDetails {
+    padding: 15px;
+
+    .moreContent {
+      h3 {
+        font-size: 18px;
+      }
+
+      p {
+        color: rgba($color: $dark, $alpha: 0.9);
+        font-size: 14px;
+      }
+
+      .moreData {
+        margin-top: 15px;
+        flex-wrap: wrap;
+        gap: 15px;
+
+        p {
+          color: rgba($color: $dark, $alpha: 0.9);
+          font-size: 14px;
+        }
+
+        h4 {
+          font-size: 16px;
+        }
+      }
+
+      .offlineoptions {
+        @include itemPosition(center, flex-start);
+        margin-top: 15px;
+        gap: 20px;
+        flex-wrap: wrap;
+
+        .offlinepart {
+          border-radius: 8px;
+          min-width: 240px;
+          @include itemPosition(center, space-between);
+          background-color: $secondary;
+          padding: 10px;
+          color: $dark;
+          cursor: pointer;
+
+          .location {
+            gap: 10px;
+            @include itemPosition(center, flex-start);
+          }
+        }
+
+        p {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .tabButtons {
+    gap: 10px;
+    padding: 10px;
+
+    .btn-tab {
+      padding: 5px 10px;
+      height: 35px;
+    }
+  }
+}

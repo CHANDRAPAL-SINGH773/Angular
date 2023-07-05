@@ -1,0 +1,116 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-6 text-start">
+        <h4 class="fs-28 fw-bold">Payment List</h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select class="form-select me-3" (change)="selectOption($event)">
+            <option value="">All</option>
+            <option value="Pending">Pending</option>
+            <option value="Refund">Refund</option>
+            <option value="Release">Release</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0" placeholder="Search" style="font-size: 13px"
+              (keyup)="onKeyUpEvent($event)" />
+            <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="container-fluid">
+
+        <button class="btn btn-main mb-2" style="width: 170px;" [routerLink]="['/admin-paymentSettelment']">Payment
+          Settelment</button>
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>
+                    Program Name
+
+                    <!-- <i class="bi bi-arrow-up" (click)="sortingUp('asc', 'firstName')"></i>
+
+                                        <i class="bi bi-arrow-down" (click)="sortingUp('desc', 'firstName')"></i> -->
+                  </th>
+                  <th>Amount</th>
+                  <th>Mentee Name</th>
+                  <th>
+                    Mentor Name
+                    <!-- <i class="bi bi-arrow-up" (click)="sortingAge('asc', 'date_of_birth')"></i>
+
+                                        <i class="bi bi-arrow-down" (click)="sortingAge('desc', 'date_of_birth')"></i> -->
+                  </th>
+                  <th>Status</th>
+
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="let data of payementData  | paginate
+                : {
+                    itemsPerPage: 10,
+                    currentPage: payment_page,
+                    totalItems: totaldocs
+                  }
+          ">
+                  <td data-label=" mentorship_name">{{data.programData.mentorship_name}}</td>
+                  <td data-label="amount">{{data.amount}}</td>
+
+                  <td data-label="menteeName">{{data.menteeData.firstName}} {{data.menteeData.lastName}}</td>
+                  <td data-label="mentorName">{{data.mentorData.firstName}} {{data.menteeData.lastName}}</td>
+
+                  <td data-label="Status" [style.color]="
+                  data.status === 3
+                  ? 'green'
+                  : data.status === 1
+                  ? 'blue'
+                  : 'orange'
+                  ">
+
+                    {{
+                    data.status === 1
+                    ? "Pending"
+                    : data.status === 0
+                    ? "Refund"
+                    :data.status === 3
+                    ? "Release"
+                    :"-"
+                    }}
+                    <!-- </div> -->
+                  </td>
+
+                </tr>
+              </tbody>
+
+            </table>
+            <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+            <!-- <div class="check" *ngIf="patientList?.length === 0">
+                <h1 class="text-center w-100">
+                  {{ "Physician.pages.Patients.norecord" | translate }}
+                </h1>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

@@ -1,0 +1,139 @@
+@import "/src/styles.scss";
+
+.profileContent {
+  border-bottom: 1px solid $secondary;
+}
+
+.ratings {
+  border: 1px solid $secondary;
+  padding: 15px;
+  border-radius: 15px;
+  max-width: 275px;
+  margin: 15px;
+  h5 {
+    font-size: 18px;
+    color: #0c2f49;
+  }
+  .stars {
+    @include itemPosition(center, flex-start);
+    gap: 15px;
+    h1 {
+      color: #0c2f49;
+    }
+    h6 {
+      font-size: 16px;
+    }
+    .starBox {
+      @include itemPosition(center, space-between);
+      gap: 10px;
+      i {
+        color: $yellow;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.review {
+  border: 1px solid $secondary;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 15px;
+  .userRatings {
+    @include itemPosition(center, space-between);
+    flex-wrap: wrap;
+    .userProfile {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+    }
+    h5 {
+      font-size: 18px;
+      color: #0c2f49;
+    }
+    .stars {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+      h1 {
+        color: #0c2f49;
+      }
+      h6 {
+        font-size: 16px;
+      }
+      .starBox {
+        @include itemPosition(center, space-between);
+        gap: 5px;
+        i {
+          color: $yellow;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .dateofPost {
+    p {
+      font-weight: 500;
+    }
+  }
+}
+
+.btn-replay {
+  background-color: $secondary;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-weight: 500;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.ratingProgress {
+  padding: 0 15px;
+  border-radius: 15px;
+  margin: 15px;
+
+  i {
+    color: $yellow;
+  }
+  p {
+    font-weight: 500;
+  }
+  .progress {
+    .progress-bar {
+      background-color: $yellow;
+    }
+  }
+}
+.rateSession {
+  padding: 15px;
+  .reviewStars {
+    @include itemPosition(center, space-between);
+    gap: 10px;
+    max-width: 250px;
+    margin-top: 15px;
+    i {
+      color: rgba($color: $dark, $alpha: 0.2);
+      font-size: 30px;
+    }
+  }
+}
+.btnClass{
+  width:10% !important;
+}
+
+
+.userRatings .userProfile .image img.img-fluid {
+  height: 100% !important;
+  width: 100% !important;
+  border-radius: 100% !important;
+}
+
+.userRatings .userProfile .image  {
+  height: 50px;
+  width: 51px;
+}
+
+::ng-deep label.star{ padding: 0 5px !important; font-size: 20px !important; }
+
+.filled {
+  color: rgb(255, 217, 0);
+}

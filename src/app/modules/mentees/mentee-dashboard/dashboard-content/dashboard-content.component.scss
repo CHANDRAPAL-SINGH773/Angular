@@ -1,0 +1,300 @@
+@import "/src/styles.scss";
+
+.filterBar {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+  gap: 10px;
+
+  .calenderTabs {
+    display: flex;
+    gap: 10px;
+
+    .list {
+      @include itemPosition(center, center);
+      gap: 10px;
+
+      .icon {
+        gap: 10px;
+        color: $primary;
+        border: 1px solid $primary;
+        width: 40px;
+        height: 40px;
+        @include itemPosition(center, center);
+        cursor: pointer;
+        border-radius: 10px;
+        background-color: $light;
+
+        &:hover {
+          color: $light;
+          background-color: $primary;
+        }
+      }
+    }
+
+    .status {
+      @include itemPosition(center, center);
+      gap: 10px;
+      background-color: $secondary;
+      padding: 10px;
+      border-radius: 10px;
+
+      .online {
+        color: $dark;
+        border-radius: 6px;
+        padding: 5px 10px;
+        cursor: pointer;
+
+        &.active {
+          background-color: $dark;
+          color: $light;
+        }
+      }
+    }
+  }
+
+  .searchBox {
+    border: 1px solid $secondary;
+    max-width: 550px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    color: $dark;
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      @include itemPosition(center, center);
+    }
+
+    .searchBox {
+      flex: 1;
+      border: none;
+
+      input {
+        border: none;
+        outline: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.sessions {
+  .content {
+    background-color: $light;
+    border-radius: 15px;
+    padding: 7.5px;
+    margin: 15px;
+
+    .sessionTitle {
+      h4 {
+        color: $dark;
+        font-size: 20px;
+        margin: 7.5px;
+      }
+
+      p {
+        margin: 7.5px;
+      }
+    }
+
+    .sessionData {
+      background-color: $light;
+      border-radius: 15px;
+      margin: 20px 0 0 0;
+      border: 1.5px solid $secondary;
+      margin: 7.5px;
+      height: 100%;
+
+      .image {
+        background-color: #faf2ef;
+        border-radius: 15px 15px 0 0;
+        height: 130px;
+        width: 90%;
+        margin: 15px auto;
+
+        img {
+          border-radius: 15px 15px 0 0;
+          width: 100%;
+          height: 130px;
+        }
+
+        img.medal {
+          width: 25px;
+          position: absolute;
+          top: 35px;
+          right: 24px;
+          height: 20px;
+        }
+      }
+
+      .textData {
+        padding: 15px 15px 0;
+
+        .time {
+          color: rgba($color: $dark, $alpha: 0.8);
+          font-weight: 500;
+
+          i {
+            display: inline-block;
+            margin-right: 10px;
+          }
+        }
+
+        h6 {
+          color: $dark;
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        h5 {
+          color: $dark;
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+
+      .experence {
+        @include itemPosition(flex-start, space-between);
+        padding: 15px 5px;
+        border-top: 1px solid $secondary;
+
+        .profile {
+          @include itemPosition(flex-start, center);
+          gap: 5px;
+          .image2 {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            position: relative;
+            img {
+              height: 40px;
+              width: 40px;
+              border-radius: 50%;
+            }
+            img.verify {
+              position: absolute;
+              bottom: -14px;
+              right: 0;
+              width: 14px;
+            }
+          }
+          .text2 {
+            flex: 1;
+            h6 {
+              overflow-wrap: anywhere;
+            }
+          }
+        }
+
+        .right {
+          i {
+            color: $dark;
+            cursor: pointer;
+          }
+        }
+
+        .stars {
+          @include itemPosition(center, flex-start);
+          gap: 5px;
+          margin-right: 0.5rem;
+
+          i {
+            color: #e8a908;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .filterBar {
+    .searchBox {
+      .icon {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+
+  .sessions {
+    .content {
+      margin: 0 15px;
+
+      .sessionTitle {
+        h4 {
+          font-size: 14px;
+        }
+      }
+
+      .sessionData {
+        .textData {
+          .time {
+            font-size: 12px;
+
+            i {
+              font-size: 12px;
+            }
+          }
+
+          h6 {
+            font-size: 12px;
+          }
+
+          h5 {
+            font-size: 14px;
+          }
+
+          p {
+            font-size: 14px;
+          }
+
+          .ratings {
+            font-size: 14px;
+          }
+        }
+
+        .experence {
+          @include itemPosition(flex-start, space-between);
+          padding-top: 15px;
+          border-top: 1px solid $secondary;
+
+          .profile {
+            @include itemPosition(flex-start, center);
+            gap: 5px;
+          }
+
+          .right {
+            i {
+              color: $dark;
+              cursor: pointer;
+            }
+          }
+
+          .stars {
+            @include itemPosition(center, flex-start);
+            gap: 5px;
+            margin-right: 0.5rem;
+
+            i {
+              color: #e8a908;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.new {
+  background-color: rgb(0, 102, 255);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}

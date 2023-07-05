@@ -1,0 +1,16 @@
+@import "/src/styles.scss";
+
+.btn-main {
+  width: 200px;
+  margin: 0 7.5px 7.5px;
+}
+
+p.dollarprice span {
+  position: absolute;
+  margin-left: 5px !important;
+  margin-top: 8px !important;
+}
+
+p.dollarprice input.form-control {
+  padding: 0 17px !important;
+}

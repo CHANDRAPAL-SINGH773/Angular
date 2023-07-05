@@ -1,0 +1,463 @@
+@import "/src/styles.scss";
+
+.tabButtons {
+  @include itemPosition(center, flex-start);
+  flex-wrap: wrap;
+  gap: 15px;
+  padding: 15px;
+
+  .btn-tab {
+    background-color: $secondary;
+    padding: 10px 20px;
+    border-radius: 10px;
+    height: 50px;
+    width: 100%;
+    color: $dark;
+    font-weight: 700;
+    width: 165px;
+
+    &.active {
+      background-color: $primary;
+      color: $light;
+    }
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
+img.verify {
+  height: 13px !important;
+}
+
+.mentorContent .mentorProfile .image img {
+  height: 80px;
+}
+
+
+.tooltip-text {
+  visibility: hidden;
+  position: absolute;
+  z-index: 1;
+  width: 500px;
+  color: white;
+  font-size: 12px;
+  background-color: #192733;
+  border-radius: 10px;
+  padding: 10px 15px 10px 15px;
+}
+
+.hover-text:hover .tooltip-text {
+  visibility: visible;
+}
+
+.rightBtn {
+  text-align: center;
+  justify-content: center;
+  padding-left: 9px;
+}
+
+.location img {
+  height: 20px;
+  padding-right: 10px;
+}
+
+// #left {
+//   top: -8px;
+//   right: 120%;
+// }
+.tabContent {
+  padding: 7.5px;
+
+  .data {
+    font-weight: 500;
+
+    p {
+      font-size: 14px;
+    }
+
+    h4 {
+      font-size: 16px;
+    }
+  }
+
+  .content {
+    margin: 7.5px;
+    background-color: rgba($color: $secondary, $alpha: 0.2);
+    border: 1px solid $secondary;
+    padding: 7.5px;
+    border-radius: 15px;
+
+    .contentDetail {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+      margin: 7.5px;
+
+      .image {
+        width: 80px;
+        height: 80px;
+        border-radius: 8px;
+        // background-color: #ffe9e1;
+        @include itemPosition(center, center);
+
+        img {
+          width: 100%;
+          border-radius: 8px;
+          height: 51px;
+          width: 68px;
+        }
+
+        img.medal {
+          width: 25px;
+          position: absolute;
+          top: 35px;
+          right: 24px;
+          height: 20px;
+        }
+      }
+
+      .text {
+        flex: 1;
+
+        .time {
+          font-size: 12px;
+          font-weight: 500;
+          color: rgba($color: $dark, $alpha: 0.7);
+
+          span {
+            display: inline-block;
+            margin-left: 5px;
+          }
+        }
+
+        h5.title {
+          width: 200px;
+          font-size: 14px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+
+        h6.subtitle {
+          font-size: 16px;
+        }
+      }
+    }
+
+
+    .experence {
+      @include itemPosition(center, space-between);
+      padding-top: 15px;
+      border-top: 1px solid $secondary;
+
+      .profile {
+        @include itemPosition(center, center);
+        gap: 15px;
+      }
+
+      .right {
+        i {
+          color: $dark;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .programDetails {
+    padding: 7.5px 7.5px 25px;
+
+    h3 {
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    border-bottom: 1px solid $secondary;
+  }
+
+  .aboutMentor {
+    margin-top: 15px;
+    padding: 7.5px;
+
+    h3 {
+      font-size: 20px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+
+    .mentorContent {
+      @include itemPosition(center, space-between);
+      padding: 15px 0;
+      margin: 7.5px 0;
+      gap: 10px;
+
+      .mentorProfile {
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+
+        .image {
+          width: 80px;
+          height: 80px;
+          position: relative;
+
+          img.profile {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+          }
+
+          img.verify {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+          }
+        }
+
+        .aboutMentorProfile {
+          h3 {
+            font-size: 18px;
+          }
+        }
+      }
+
+      .heading {
+        @include itemPosition(center, space-between);
+
+        h3 {
+          font-size: 16px;
+        }
+
+        .stars {
+          i {
+            color: #e8a908;
+          }
+        }
+      }
+    }
+
+    .Biodata {
+      @include itemPosition(center, flex-start);
+      gap: 25px;
+      margin-top: 15px;
+    }
+  }
+}
+
+.mentorContent .heading {
+  flex: 1;
+}
+
+.modal-dialog {
+  .modal-content {
+    .modal-body {
+      .AmountBox {
+        padding: 25px;
+        background-color: rgba($color: $dark, $alpha: 0.02);
+        border-radius: 15px;
+        text-align: center;
+        margin: 25px;
+
+        h4 {
+          font-size: 18px;
+        }
+
+        h3 {
+          font-size: 25px;
+        }
+      }
+
+      .bankcard {
+        @include itemPosition(center, space-between);
+        background-color: rgba($color: $dark, $alpha: 0.02);
+        padding: 10px;
+        border-radius: 15px;
+        margin: 15px 0;
+        cursor: pointer;
+
+        .cardList {
+          @include itemPosition(center, space-between);
+          gap: 15px;
+
+          .bankIcon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: $light;
+
+            img {
+              width: 100%;
+            }
+          }
+        }
+
+        .nextArrow {
+          margin-right: 15px;
+        }
+      }
+
+      img {
+        width: 50%;
+        display: block;
+        margin: 20px auto;
+      }
+
+      h4 {
+        font-size: 17px;
+        text-align: center;
+        margin: 25px auto;
+        max-width: 250px;
+      }
+    }
+  }
+}
+
+// @import "/src/styles.scss";
+
+.bankHeader {
+  padding: 15px;
+
+  p {
+    font-weight: 500;
+  }
+}
+
+.bankPopup {
+  margin: auto;
+
+  .modal-content {
+    border-radius: 15px;
+    padding: 15px;
+
+    .modal-header {
+      border-bottom: none;
+    }
+
+    .modal-body {
+      img {
+        width: 50%;
+        display: block;
+        margin: 20px auto;
+      }
+
+      p {
+        font-weight: 500;
+        margin: 15px 0;
+
+        span {
+          font-weight: 600;
+        }
+      }
+
+      .form {
+        @include itemPosition(center, flex-start);
+        gap: 15px;
+        margin: 0;
+        padding: 0;
+
+        .inputField {
+          margin: 0;
+
+          input {
+            width: 46px;
+          }
+        }
+      }
+
+      h4 {
+        font-size: 17px;
+        text-align: center;
+        margin: 25px auto;
+      }
+    }
+  }
+}
+
+.couponsCards {
+  padding: 13px 0px;
+
+  .couponsImg img {
+    margin: 0 !important;
+  }
+
+  .coupons {
+    border-radius: 15px;
+    border: 1px solid #e6f1ff;
+    text-align: center;
+    padding: 5px;
+    margin: 0px;
+    background-color: #f4f9ff;
+    border: 1px solid #e6f1ff;
+
+    .couponsImg {
+      width: 150px;
+      position: relative;
+      margin: 5px auto;
+
+      img {
+        width: 100%;
+      }
+
+      p {
+        position: absolute;
+        left: 50%;
+        top: 36%;
+        font-weight: 500;
+        transform: translate(-50%);
+      }
+    }
+
+    h5 {
+      font-size: 14px;
+    }
+
+    h6 {
+      font-size: 12px;
+    }
+
+    &.bg-blue {
+      background-color: #f4f9ff;
+      border: 1px solid #e6f1ff;
+    }
+  }
+}
+
+.carousel-control-next-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000000'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+}
+
+.carousel-control-prev-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23000'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z'/%3e%3c/svg%3e");
+}
+
+.carousel-inner {
+  height: 135px;
+}
+
+.new {
+  background-color: rgb(0, 102, 255);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+img.medal {
+  height: 20px;
+  width: 25px;
+  position: relative;
+  top: -19px;
+}
+
+.bio {
+  overflow: hidden;
+    width: 100%;
+}

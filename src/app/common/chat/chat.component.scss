@@ -1,0 +1,438 @@
+@import "/src/styles.scss";
+
+.chatBox {
+  height: calc(100vh - 177px);
+  display: flex;
+
+  .chatlist {
+    width: 400px;
+    height: 100%;
+    border-right: 1px solid $secondary;
+    overflow: auto;
+    background-color: $light;
+    border-radius: 15px 0 0 15px;
+    position: relative;
+    overflow: auto;
+
+    .contact {
+      @include itemPosition(center, space-between);
+      flex-wrap: wrap;
+      background-color: $light;
+      padding: 10px;
+      border-bottom: 1px solid $secondary;
+
+      &:first-child {
+        border-radius: 15px 0 0 0;
+      }
+
+      cursor: pointer;
+
+      .profile {
+        @include itemPosition(center, flex-start);
+        gap: 10px;
+
+        .image {
+          width: 50px;
+          height: 50px;
+          position: relative;
+
+          img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+          }
+
+          i {
+            font-size: 12px;
+            color: #0ad164;
+            position: absolute;
+            bottom: 2px;
+            right: 1px;
+          }
+        }
+
+        .text {
+          h6 {
+            font-size: 16px;
+          }
+
+          p {
+            font-size: 14px;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+      }
+
+      .dateTime {
+        @include itemPosition(center, flex-end);
+        gap: 10px;
+
+        p {
+          font-size: 14px;
+          margin-bottom: 0;
+        }
+
+        i {
+          cursor: pointer;
+          color: $primary;
+          display: none;
+        }
+      }
+
+      &.active {
+        background-color: $secondary;
+      }
+
+      &:hover {
+        .dateTime {
+          i {
+            display: block;
+          }
+        }
+      }
+    }
+
+    i.fa-circle-xmark {
+      position: sticky;
+      top: 10px;
+      margin-right: 10px;
+      float: right;
+      color: $dark;
+      font-size: 20px;
+      cursor: pointer;
+      display: none !important;
+    }
+  }
+
+  .converstaion {
+    width: calc(100% - 400px);
+    border-radius: 0 15px 15px 0;
+    position: relative;
+
+    .profileTitle {
+      @include itemPosition(center, space-between);
+      padding: 15px;
+      border-bottom: 1px solid $secondary;
+
+      .profile {
+        @include itemPosition(center, flex-start);
+        gap: 10px;
+
+        .image {
+          width: 50px;
+          height: 50px;
+          position: relative;
+
+          img {
+            width: 100%;
+          }
+
+          i {
+            font-size: 12px;
+            color: #0ad164;
+            position: absolute;
+            bottom: 2px;
+            right: 1px;
+          }
+        }
+
+        .text {
+          h6 {
+            font-size: 16px;
+          }
+        }
+
+        i {
+          font-size: 40px;
+          cursor: pointer;
+          color: $primary;
+        }
+      }
+    }
+
+    .conversationBox {
+      display: flex;
+      flex-direction: column-reverse;
+      height: calc(100% - 150px);
+      overflow: auto;
+
+      .date {
+        font-size: 12px;
+        font-weight: 500;
+      }
+
+      .sendMessage {
+        text-align: end;
+        margin: 7.5px 15px;
+
+        .message {
+          padding: 15px;
+          border-radius: 15px;
+          background-color: #d6f0ff;
+          width: fit-content;
+          margin: auto 0 0 auto;
+          position: relative;
+
+          p {
+            font-size: 14px;
+          }
+
+          i {
+            position: absolute;
+            bottom: -18px;
+            right: -12px;
+            font-size: 50px;
+            color: #d6f0ff;
+          }
+        }
+      }
+
+      .receiveMessage {
+        text-align: start;
+        margin: 7.5px 15px;
+
+        .message {
+          padding: 15px;
+          border-radius: 15px;
+          background-color: #e3e5e8;
+          width: fit-content;
+          position: relative;
+
+          p {
+            font-size: 14px;
+          }
+
+          i {
+            position: absolute;
+            bottom: -18px;
+            left: -12px;
+            font-size: 50px;
+            color: #e3e5e8;
+          }
+        }
+      }
+    }
+
+    .typeBox {
+      @include itemPosition(center, space-between);
+      gap: 15px;
+      position: absolute;
+      bottom: 15px;
+      right: 15px;
+      width: calc(100% - 30px);
+
+      input {
+        flex: 1;
+        height: 50px;
+        padding: 7.5px 15px;
+        border-radius: 30px;
+        background-color: $secondary;
+        border: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+
+      .btn-main {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+        padding: 0;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.chatModel {
+  .checkBox {
+    @include itemPosition(center, space-between);
+    margin: 0px 0;
+
+    .profile {
+      @include itemPosition(center, flex-start);
+      gap: 10px;
+
+      .image {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+
+        img {
+          width: 100%;
+          border-radius: 50%;
+          height: 100%;
+        }
+      }
+
+      .text {
+        p {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+
+  .btnBox {
+    @include itemPosition(center, flex-end);
+    gap: 10px;
+
+    .btn {
+      width: 100px;
+    }
+  }
+
+  .scrollBox {
+    max-height: 210px;
+    overflow: auto;
+    margin: 8px 0;
+  }
+
+  input[type="checkBox"] {
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  .searchBox {
+    flex: 1;
+  }
+}
+
+.deleteModel {
+  .deleteIcon {
+    @include roundShape(80px, 80px, $secondary);
+    border: 2px solid $primary;
+    margin: 15px auto;
+
+    i {
+      font-size: 50px;
+    }
+  }
+
+  .btnBox {
+    @include itemPosition(center, center);
+    gap: 10px;
+
+    .btn {
+      width: 100px;
+    }
+  }
+}
+
+.unread-message-count {
+  display: inline-block;
+  width: 16px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  line-height: 20px;
+  background: #fe4d4d;
+  color: #fff;
+  right: 16px;
+  font-size: 10px;
+  text-align: center;
+}
+
+
+@media only screen and (max-width: 1400px) {
+  .chatBox {
+    .chatlist {
+      .contact {
+        .profile {
+          .image {
+            width: 35px;
+            height: 35px;
+
+            img {
+              width: 35px;
+              height: 35px;
+              border-radius: 50%;
+            }
+
+            i {
+              font-size: 8px;
+              color: #0ad164;
+              position: absolute;
+              bottom: 2px;
+              right: 1px;
+            }
+          }
+
+          .text {
+            h6 {
+              font-size: 14px;
+            }
+
+            p {
+              font-size: 12px;
+            }
+          }
+        }
+
+        .dateTime {
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .chatBox {
+    position: relative;
+
+    .chatlist {
+      transform: translateX(-415px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      transition: all 0.5s;
+      z-index: 3;
+    }
+
+    .chatlistOpen {
+      transform: translateX(0px);
+
+      i.fa-circle-xmark {
+        display: block !important;
+      }
+    }
+
+    .converstaion {
+      width: calc(100% - 0px);
+    }
+  }
+}
+
+@media only screen and (max-width: 502px) {
+  .chatBox {
+    position: relative;
+
+    .chatlist {
+      width: 300px;
+      transform: translateX(-315px);
+      position: absolute;
+      top: 0;
+      left: 0;
+      background-color: white;
+      transition: all 0.5s;
+      z-index: 3;
+    }
+
+    .chatlistOpen {
+      transform: translateX(0px);
+    }
+
+    .converstaion {
+      width: calc(100% - 0px);
+    }
+  }
+}

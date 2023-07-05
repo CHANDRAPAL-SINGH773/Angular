@@ -1,0 +1,170 @@
+@import "/src/styles.scss";
+
+.ratings {
+  border: 1px solid $secondary;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 15px;
+  h5 {
+    font-size: 18px;
+    color: #0c2f49;
+  }
+  .stars {
+    @include itemPosition(center, flex-start);
+    gap: 15px;
+    h1 {
+      color: #0c2f49;
+    }
+    h6 {
+      font-size: 16px;
+    }
+    .starBox {
+      @include itemPosition(center, space-between);
+      gap: 10px;
+      i {
+        color: $yellow;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.ratingProgress {
+  padding: 0 15px;
+  border-radius: 15px;
+  margin: 15px;
+
+  i {
+    color: $yellow;
+  }
+  p {
+    font-weight: 500;
+  }
+  .progress {
+    .progress-bar {
+      background-color: $yellow;
+    }
+  }
+}
+
+.disputes {
+  border: 1px solid $secondary;
+  padding: 15px 15px 0px;
+  border-radius: 15px;
+  margin: 15px;
+  background-color: $light;
+  .userRatings {
+    .userProfile {
+      .image {
+        width: 100%;
+        height: 200px;
+
+        img {
+          width: 100%;
+          height: 100%;
+          border-radius: 15px;
+        }
+      }
+      .text {
+        margin-top: 30px;
+        h3 {
+          font-size: 14px;
+          font-weight: 600;
+        }
+      }
+      // h5 {
+      //   font-size: 18px;
+      //   color: #0c2f49;
+      // }
+      .dateofPost {
+        p {
+          font-weight: 500;
+        }
+      }
+    }
+  }
+}
+
+.btn-replay {
+  background-color: $secondary;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-weight: 500;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+textarea {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba($color: $input, $alpha: 0.15);
+  font-weight: 500;
+  font-size: 12px;
+  margin-top: 15px;
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .ratings {
+    padding: 10px;
+    margin: 10px;
+    h5 {
+      font-size: 16px;
+    }
+    .stars {
+      gap: 10px;
+
+      h6 {
+        font-size: 14px;
+      }
+      .starBox {
+        i {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .btn-replay {
+    padding: 4px 30px;
+  }
+}
+.filterBar {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+  gap: 10px;
+
+  .searchBox {
+    border: 1px solid $secondary;
+    max-width: 550px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    color: $dark;
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      @include itemPosition(center, center);
+    }
+
+    .searchBox {
+      flex: 1;
+      border: none;
+
+      input {
+        border: none;
+        outline: none;
+        border-radius: 10px;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}

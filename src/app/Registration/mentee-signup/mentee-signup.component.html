@@ -1,0 +1,359 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6 sliderection">
+      <div class="sliderContainer sticky-top">
+        <div class="logo">
+          <img src="../../../assets/images/logo.png" alt="" />
+        </div>
+        <div class="sliderImg mt-5">
+          <img src="../../../assets/images/menteesignup.png" alt="" />
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="signForms">
+        <div class="tabsContainer">
+          <div
+            class="btn-group"
+            role="group"
+            aria-label="Basic mixed styles example"
+          >
+            <button
+              type="button"
+              class="btn btn-secondary btn-1"
+              [routerLink]="['/mentor-signup']"
+              [queryParams]="{ type: 'mentor' }"
+            >
+              Mentor
+            </button>
+            <button
+              type="button"
+              class="btn btn-dark btn-2"
+              [routerLink]="['/mentee-signup']"
+              [queryParams]="{ type: 'mentee' }"
+            >
+              Mentee
+            </button>
+          </div>
+        </div>
+        <div class="signUpMenor">
+          <div class="formContainer">
+            <h1>Sign up as a Mentee</h1>
+            <p>Hello, I guess you are new around here.</p>
+            <form [formGroup]="signupmenteeForm">
+              <div class="row">
+                <div class="col p-0">
+                  <label for="referral">Enter a referral code (Optional)</label>
+                  <div class="inputField">
+                    <input
+                      id="referral"
+                      type="text"
+                      placeholder="enter a referral code"
+                      class="form-control"
+                      formControlName="referralCode"
+                    />
+                    <img src="../../../assets/images/icon/copy.svg" alt="" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col p-0">
+                  <label for="email">Email Address</label
+                  ><span class="invaliddiv">*</span>
+                  <div class="inputField">
+                    <input
+                      id="email"
+                      type="text"
+                      placeholder="email"
+                      formControlName="email"
+                      class="form-control text-lowercase"
+                      [ngClass]="{ 'is-invalid': submitted && signupmenteeForm.get('email')!.errors?.['required']}"
+                    />
+                    <img src="../../../assets/images/icon/email.svg" alt="" />
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted && signupmenteeForm.controls['email']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="signupmenteeForm.controls['email']!.errors?.['required']"
+                    >
+                      Email is required
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['email']!.errors?.['email']"
+                    >
+                      Email must be a valid email address
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col p-0">
+                  <label for="fname">First Name</label
+                  ><span class="invaliddiv">*</span>
+                  <div class="inputField">
+                    <input
+                      id="fname"
+                      type="text"
+                      placeholder="first name"
+                      formControlName="firstName"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && signupmenteeForm.get('firstName')!.errors?.['required']}"
+                    />
+                    <img src="../../../assets/images/icon/user.svg" alt="" />
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted &&
+                      signupmenteeForm.controls['firstName']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="signupmenteeForm.controls['firstName']!.errors?.['required']"
+                    >
+                      First Name is required
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['firstName']!.errors?.['whitespace']"
+                    >
+                      Input must not contain only white spaces.
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['firstName']!.errors?.['maxlength']"
+                    >
+                      First Name should be at most 20 characters long.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col p-0">
+                  <label for="lname">Last Name</label
+                  ><span class="invaliddiv">*</span>
+                  <div class="inputField">
+                    <input
+                      id="lname"
+                      type="text"
+                      placeholder="last name"
+                      formControlName="lastName"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && signupmenteeForm.get('lastName')!.errors?.['required']}"
+                    />
+                    <img src="../../../assets/images/icon/user.svg" alt="" />
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted && signupmenteeForm.controls['lastName']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="signupmenteeForm.controls['lastName']!.errors?.['required']"
+                    >
+                      Last Name is required
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['lastName']!.errors?.['whitespace']"
+                    >
+                      Input must not contain only white spaces.
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['lastName']!.errors?.['maxlength']"
+                    >
+                      Last Name should be at most 20 characters long.
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col p-0">
+                  <label for="mobile">Mobile Number</label
+                  ><span class="invaliddiv">*</span>
+                  <div class="phoneNumber">
+                    <div class="inputField">
+                      <select
+                        class="form-control countryCode"
+                        formControlName="country_code"
+                      >
+                        <option value="+1 (Canada)" selected>
+                          +1 (Canada)
+                        </option>
+                        <option
+                          *ngFor="let countries of contactCountryCodes"
+                          [value]="countries.dial_code"
+                        >
+                          {{ countries.dial_code }} ({{ countries.country }})
+                        </option>
+                      </select>
+                    </div>
+                    <div class="inputField NumberField">
+                      <input
+                        id="mobile"
+                        type="number"
+                        placeholder="mobile number"
+                        formControlName="phone"
+                        class="form-control"
+                        [ngClass]="{ 'is-invalid': submitted && signupmenteeForm.get('phone')!.errors?.['required']}"
+                      />
+                      <img src="../../../assets/images/icon/phone.svg" alt="" />
+                    </div>
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted && signupmenteeForm.controls['phone']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="signupmenteeForm.controls['phone']!.errors?.['required']"
+                    >
+                      Mobile number is required
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['phone']!.errors?.['pattern']"
+                    >
+                      Mobile number should be 10 digits
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col p-0">
+                  <label for="password">Password</label
+                  ><span class="invaliddiv">*</span>
+                  <div class="inputField">
+                    <input
+                      id="password"
+                      [type]="password"
+                      placeholder="password"
+                      formControlName="password"
+                      class="form-control"
+                      [ngClass]="{ 'is-invalid': submitted && signupmenteeForm.get('password')!.errors?.['required']}"
+                    />
+
+                    <!-- <img src="../../../assets/images/icon/lock.svg" *ngIf="password === 'password'" alt=""
+                      (click)="togglePassword()" />
+                    <img src="../../../assets/images/icon/seePassword.svg" alt="" *ngIf="password === 'text'"
+                      (click)="togglePassword()" /> -->
+                    <span>
+                      <i
+                        class="bi bi-eye-slash"
+                        *ngIf="password === 'password'"
+                        alt=""
+                        (click)="togglePassword()"
+                      ></i>
+                      <i
+                        class="bi bi-eye-fill"
+                        alt=""
+                        *ngIf="password === 'text'"
+                        (click)="togglePassword()"
+                      ></i
+                    ></span>
+                  </div>
+                  <div
+                    *ngIf="
+                      submitted && signupmenteeForm.controls['password']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="signupmenteeForm.controls['password']!.errors?.['required']"
+                    >
+                      Password is required
+                    </div>
+                    <div
+                      *ngIf="signupmenteeForm.controls['password']!.errors?.['minlength']"
+                    >
+                      Password must be at least 6 characters
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row mt-3">
+                <div class="col">
+                  By signing up, you agree to our
+
+                  <a
+                    class="cursor-pointer"
+                    (click)="getStaticPages('Term and Condition')"
+                    data-target="#terms"
+                    data-toggle="modal"
+                    >Terms & Conditions</a
+                  >
+                  <span class="separator"> and </span>
+                  <a
+                    class="cursor-pointer"
+                    (click)="getStaticPages('Privacy Policy')"
+                    data-target="#terms"
+                    data-toggle="modal"
+                    >Privacy Policy</a
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-12 my-4">
+                  <button class="btn btn-main" (click)="SignUp()">
+                    Continue
+                  </button>
+                </div>
+                <div class="col-12 mt-4 text-center">
+                  <p>
+                    Joined us before?
+                    <a (click)="gotoLogin()"> Log in </a>
+                  </p>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="terms"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <h3>{{ this.content.heading ? this.content.heading : "-" }}</h3>
+          <p>
+            {{
+              this.content.text
+                ? stripTags(this.content.text)
+                : "Contact to Pxalm"
+            }}
+          </p>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button data-dismiss="modal" class="btn btn-main">Continue</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

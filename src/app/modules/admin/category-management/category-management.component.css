@@ -1,0 +1,13 @@
+.avtar_box {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+  display: flex;
+  align-items: center;
+}
+.img-fluid {
+  max-width: 100%;
+  height: auto;
+  border-radius: 50%;
+}

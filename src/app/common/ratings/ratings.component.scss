@@ -1,0 +1,177 @@
+@import "/src/styles.scss";
+
+.ratings {
+  border: 1px solid $secondary;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 15px;
+  h5 {
+    font-size: 18px;
+    color: #0c2f49;
+  }
+  .stars {
+    @include itemPosition(center, flex-start);
+    gap: 15px;
+    h1 {
+      color: #0c2f49;
+    }
+    h6 {
+      font-size: 16px;
+    }
+    .starBox {
+      @include itemPosition(center, space-between);
+      gap: 10px;
+      i {
+        color: $yellow;
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.ratingProgress {
+  padding: 0 15px;
+  border-radius: 15px;
+  margin: 15px;
+
+  i {
+    color: $yellow;
+  }
+  p {
+    font-weight: 500;
+  }
+  .progress {
+    .progress-bar {
+      background-color: $yellow;
+    }
+  }
+}
+
+.review {
+  border: 1px solid $secondary;
+  padding: 15px;
+  border-radius: 15px;
+  margin: 15px;
+  .userRatings {
+    @include itemPosition(center, space-between);
+    flex-wrap: wrap;
+    .userProfile {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+    }
+    h5 {
+      font-size: 18px;
+      color: #0c2f49;
+    }
+    .stars {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+      h1 {
+        color: #0c2f49;
+      }
+      h6 {
+        font-size: 16px;
+      }
+      .starBox {
+        @include itemPosition(center, space-between);
+        gap: 5px;
+        i {
+          color: $yellow;
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .dateofPost {
+    p {
+      font-weight: 500;
+    }
+  }
+}
+
+.btn-replay {
+  background-color: $secondary;
+  border-radius: 30px;
+  padding: 10px 30px;
+  font-weight: 500;
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .ratings {
+    padding: 10px;
+    margin: 10px;
+    h5 {
+      font-size: 16px;
+    }
+    .stars {
+      gap: 10px;
+
+      h6 {
+        font-size: 14px;
+      }
+      .starBox {
+        i {
+          font-size: 16px;
+        }
+      }
+    }
+  }
+
+  .ratingProgress {
+    padding: 0 10px;
+    margin: 10px;
+  }
+
+  .review {
+    padding: 10px;
+    margin: 10px;
+    .userRatings {
+      h5 {
+        font-size: 16px;
+      }
+      .stars {
+        h1 {
+          color: #0c2f49;
+        }
+        h6 {
+          font-size: 14px;
+        }
+        .starBox {
+          gap: 5px;
+          i {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+
+  .btn-replay {
+    padding: 4px 30px;
+  }
+
+  // .userRatings .userProfile .image img.img-fluid {
+  //   height: 100% !important;
+  //   width: 100% ;
+  //   border-radius: 100% !important;
+  // }
+  
+
+}
+
+.userProfile .image  {
+  height: 50px !important;
+  width: 51px !important;
+}
+.image img{
+  width: 100% !important;
+  border-radius: 50%;
+  height: 100%;
+}
+
+.reviewcontent .reply{
+  padding-right: 5rem;
+}

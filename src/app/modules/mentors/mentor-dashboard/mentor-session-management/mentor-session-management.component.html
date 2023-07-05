@@ -1,0 +1,303 @@
+<div class="container-fluid" >
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="calenderTabs">
+          <div class="status">
+            <div class="online" [class.active]="state === 'online'" (click)="changeState('online')">
+              <p class="mb-0" >Online</p>
+            </div>
+            <div class="online" [class.active]="state === 'offline'" (click)="changeState('offline')">
+              <p class="mb-0">Offline</p>
+            </div>
+          </div>
+        </div>
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <!-- <input type="text" class="form-control" (change)="onKeyUpEvent($event)" placeholder="Search" /> -->
+            <input type="text" class="form-control border-end-0 form-control-lg" placeholder="Search"
+              style="font-size: 13px" (keyup)="onKeyUpEvent($event)" />
+          </div>
+          <!-- <div class="icon">
+            <i class="fa-solid fa-filter"></i>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="state === 'online'">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="calenderTabs">
+          <div class="list">
+            <div class="icon" [class.active]="ids === 'list'" (click)="changeTab('list')">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div class="icon" [class.active]="ids === 'calender'" (click)="changeTab('calender')">
+              <i class="fa-solid fa-calendar-days"></i>
+            </div>
+          </div>
+        </div>
+        <div class="buttonBox">
+          <button class="btn btn-main" [routerLink]="['/mentor/mentor-dashboard/add-session']">
+            Add New Session
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab" *ngIf="ids === 'list'">
+    <div class="tabContent">
+      <div class="row">
+        <div class="col-xl-4 col-md-6" *ngFor="let data of onlineData">
+          <div class="content" [routerLink]="['/mentor/mentor-dashboard/session']" [queryParams]="{user_id:data._id,mode:1}">
+            <div class="contentDetail">
+              <div class="image">
+                <!-- <img
+                  src="../../../../assets/images/sessions.png"
+                  alt="" -->
+
+                <img *ngIf="data?.image" [src]="showImage+data.image" class="img-fluid" alt="Image">
+                <img *ngIf="!data?.image" src="../../../../assets/images/sessions.png" class="img-fluid" alt="">
+
+              </div>
+              <div class="text">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>{{data.start_date?(data.start_date | date:"mediumDate"):"-"}} </span>
+                  <!-- {{data.time?data.time :"-" }} -->
+                 | {{data.time?(convertTimeFormat(data.time)):"-"}}
+                </div>
+                <h6 class="subtitle" *ngFor="let categoryData of data.category_data">
+                  {{categoryData.categoryName?categoryData.categoryName:"-"}}</h6>
+                <h5 class="title">{{data.session_data.mentorship_name?data.session_data.mentorship_name:"-"}}</h5>
+                <h6 class="title">{{data.session_name?data.session_name:"-"}}</h6>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="check" *ngIf="onlineData?.length === 0">
+          <h3 *ngIf="loadData" class="text-center w-100">Sorry, there are no current or upcoming sessions available at this time</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab" *ngIf="ids === 'calender'">
+    <div class="tabContent">
+      <div class="row">
+        <div class="col">
+          <div class="demo-app">
+            <!-- <div class='demo-app-sidebar'>
+                <div class='demo-app-sidebar-section'>
+                  <h2>Instructions</h2>
+                  <ul>
+                    <li>Select dates and you will be prompted to create a new event</li>
+                    <li>Drag, drop, and resize events</li>
+                    <li>Click an event to delete it</li>
+                  </ul>
+                </div>
+                <div class='demo-app-sidebar-section'>
+                  <label>
+                    <input type='checkbox' [checked]='calendarVisible' (change)='handleCalendarToggle()' />
+                    toggle whole calendar
+                  </label>
+                </div>
+                <div class='demo-app-sidebar-section'>
+                  <label>
+                    <input type='checkbox' [checked]='calendarOptions.weekends' (change)='handleWeekendsToggle()' />
+                    toggle weekends
+                  </label>
+                </div>
+                <div class='demo-app-sidebar-section'>
+                  <h2>All Events ({{currentEvents.length}})</h2>
+                  <ul>
+                    <li *ngFor='let event of currentEvents'>
+                      <b>{{event.startStr}}</b>
+                      <i>{{event.title}}</i>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+
+            <div class='demo-app-main'>
+              <full-calendar  [options]='calendarOptions'>
+                <ng-template #eventContent let-arg>
+                  <div>
+                  <!-- <div [routerLink]="['/mentor/mentor-dashboard/session']"
+                    [queryParams]="{user_id:arg.event.extendedProps._id,mode:arg.event.extendedProps.mentorship_mode }"> -->
+                    <p class="calederText">{{ arg.event.title }}</p>
+                    <b>{{ convertTimeFormat(arg.event.extendedProps.time )}}</b>
+
+                  </div>
+                  <!-- <button class="btn btn-danger rounded-circle btn-rounded shadow m-2 text-white" data-toggle="modal"
+                    data-target="#showdetail">
+                    <i class="bi bi-trash" title="View" style="font-size:11px ;"></i>
+                  </button> -->
+                </ng-template>
+              </full-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="state === 'offline'">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="calenderTabs">
+          <div class="list">
+            <div class="icon" [class.active]="ids === 'list'" (click)="changeTab('list')">
+              <i class="fa-solid fa-list-check"></i>
+            </div>
+            <div class="icon" [class.active]="ids === 'calender'" (click)="changeTab('calender')">
+              <i class="fa-solid fa-calendar-days"></i>
+            </div>
+          </div>
+        </div>
+        <div class="buttonBox">
+          <button class="btn btn-main" [routerLink]="['/mentor/mentor-dashboard/add-session']">
+            Add New Session
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab" *ngIf="ids === 'list'">
+    <div class="tabContent">
+      <div class="row">
+        <div class="col-xl-4 col-md-6" *ngFor="let data of offlinData">
+          <div class="content" [routerLink]="['/mentor/mentor-dashboard/session']" [queryParams]="{user_id:data._id,mode:0}">
+            <div class="contentDetail">
+              <div class="image">
+                <!-- <img
+                  src="../../../../assets/images/sessions.png"
+                  alt="" -->
+
+                <img *ngIf="data?.image" [src]="showImage+data.image" class="img-fluid" alt="Image">
+                <img *ngIf="!data?.image" src="../../../../assets/images/sessions.png" class="img-fluid" alt="">
+
+              </div>
+              <div class="text">
+                <div class="time">
+                  <i class="fa-solid fa-calendar-days"></i>
+                  <span>{{data.start_date?(data.start_date | date:"mediumDate"):"-"}} </span>
+                 | {{data.time?convertTimeFormat(data.time):"-" }}
+                </div>
+                <h6 class="subtitle" *ngFor="let categoryData of data.category_data">
+                  {{categoryData.categoryName?categoryData.categoryName:"-"}}</h6>
+                <h5 class="title">{{data.session_data.mentorship_name?data.session_data.mentorship_name:"-"}}</h5>
+                <h6 class="title">{{data.session_name?data.session_name:"-"}}</h6>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="check" *ngIf="offlinData?.length === 0">
+          <h3 *ngIf="loadData" class="text-center w-100">Sorry, there are no current or upcoming sessions available at this time</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="tab" *ngIf="ids === 'calender'">
+    <div class="tabContent">
+      <div class="row">
+        <div class="col">
+          <div class="demo-app">
+            <!-- <div class='demo-app-sidebar'>
+                <div class='demo-app-sidebar-section'>
+                  <h2>Instructions</h2>
+                  <ul>
+                    <li>Select dates and you will be prompted to create a new event</li>
+                    <li>Drag, drop, and resize events</li>
+                    <li>Click an event to delete it</li>
+                  </ul>
+                </div>
+                <div class='demo-app-sidebar-section'>
+                  <label>
+                    <input type='checkbox' [checked]='calendarVisible' (change)='handleCalendarToggle()' />
+                    toggle whole calendar
+                  </label>
+                </div>
+                <div class='demo-app-sidebar-section'>
+                  <label>
+                    <input type='checkbox' [checked]='calendarOptions.weekends' (change)='handleWeekendsToggle()' />
+                    toggle weekends
+                  </label>
+                </div>
+                <div class='demo-app-sidebar-section'>
+                  <h2>All Events ({{currentEvents.length}})</h2>
+                  <ul>
+                    <li *ngFor='let event of currentEvents'>
+                      <b>{{event.startStr}}</b>
+                      <i>{{event.title}}</i>
+                    </li>
+                  </ul>
+                </div>
+              </div> -->
+
+            <div class='demo-app-main'>
+              <full-calendar  [options]='calendarOptionsOffline'>
+                <ng-template #eventContent let-arg>
+                  <div>
+                  <!-- <div [routerLink]="['/mentor/mentor-dashboard/session']"
+                    [queryParams]="{user_id:arg.event.extendedProps._id,mode:arg.event.session_data.mentorship_mode}"> -->
+                    <p class="calederText">{{ arg.event.title }}</p>
+                    <b>{{convertTimeFormat( arg.event.extendedProps.time )}}</b>
+
+                  </div>
+                  <!-- <button class="btn btn-danger rounded-circle btn-rounded shadow m-2 text-white" data-toggle="modal"
+                    data-target="#showdetail">
+                    <i class="bi bi-trash" title="View" style="font-size:11px ;"></i>
+                  </button> -->
+                </ng-template>
+              </full-calendar>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+
+
+<div class="modal fade" id="showdetail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+          id="closemodaledit">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- <form [formGroup]="editCategory">
+                <input type="file" (change)="handleimage($event,'image')" class="form-control"
+                    placeholder="Image" formControlName="image" accept="image/x-png,image/jpg,image/jpeg">
+
+                <input type="text" placeholder="Category Name" formControlName="categoryName" class="space"
+                    [ngClass]="{ 'is-invalid': submitted && editCategory.get('categoryName')!.errors?.['required']}" />
+                <div *ngIf="submitted && editCategory.controls['categoryName']!.errors" class="invaliddiv">
+                    <div *ngIf="editCategory.controls['categoryName']!.errors?.['required']">Category Name is
+                        required
+                    </div>
+                </div>
+            </form> -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,112 @@
+@import "/src/styles.scss";
+
+.sessionContent {
+  @include itemPosition(center, flex-start);
+  gap: 15px;
+  padding: 15px;
+  padding-bottom: 1px solid $secondary;
+
+  h3 {
+    font-size: 22px;
+  }
+
+  .sessionImage {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    @include itemPosition(center, center);
+    .img {
+      width: 100%;
+      border-radius: 8px;
+    }
+  }
+
+  .sessionText {
+    p {
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+
+  .sessionDescription {
+    p {
+      overflow-wrap: anywhere;
+    }
+  }
+}
+
+.sessionoptions {
+  @include itemPosition(center, flex-start);
+  gap: 25px;
+  padding: 15px;
+  flex-wrap: wrap;
+
+  .sessionpart {
+    p {
+      font-weight: 500;
+    }
+
+    h4 {
+      font-size: 20px;
+
+      a {
+        color: #006bb4;
+        display: inline-block;
+        margin-right: 15px;
+      }
+    }
+
+    .icon {
+      @include roundShape(40px, 40px, $primary);
+      border-radius: 10px;
+
+      i {
+        color: $light;
+      }
+    }
+  }
+}
+
+.offlineoptions {
+  @include itemPosition(center, flex-start);
+  gap: 20px;
+  flex-wrap: wrap;
+
+  .offlinepart {
+    border-radius: 8px;
+    min-width: 280px;
+    @include itemPosition(center, space-between);
+    background-color: $secondary;
+    padding: 10px;
+    color: $dark;
+
+    .location {
+      gap: 10px;
+      @include itemPosition(center, flex-start);
+    }
+  }
+
+  p {
+    font-weight: 500;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .sessionoptions {
+    .sessionpart {
+      h4 {
+        font-size: 20px;
+
+        a {
+          color: #006bb4;
+          display: inline-block;
+          margin-right: 15px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-width: 160px;
+        }
+      }
+    }
+  }
+}

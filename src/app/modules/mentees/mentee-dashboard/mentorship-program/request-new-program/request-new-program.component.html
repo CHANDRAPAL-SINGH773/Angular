@@ -1,0 +1,178 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div
+            class="icon"
+            [routerLink]="['/mentee/mentee-dashboard/mentorship-programs']"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </div>
+          <p class="mb-0">Programs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row p-3 pb-0">
+      <div class="col">
+        <h3>Request New Program</h3>
+        <p>Request your dream mentorship program today.</p>
+      </div>
+    </div>
+    <div class="form">
+      <div class="row">
+        <form [formGroup]="newMentorProgramForm">
+          <div class="row">
+            <div class="col-md-6">
+              <!-- <div class="inputField">
+              <label for="programType">Program Type</label>
+              <select name="" id="programType" class="form-control">
+                <option value="1">1</option>
+                <option value="1">1</option>
+                <option value="1">1</option>
+              </select>
+            </div> -->
+              <div class="inputField">
+                <label>Program Type</label>
+                <input
+                  type="text"
+                  placeholder="Program Type"
+                  formControlName="programType"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && newMentorProgramForm.get('programType')!.errors?.['required'] || newMentorProgramForm.get('programType')!.errors?.['pattern']}"
+                />
+                <div
+                  *ngIf="
+                    submitted &&
+                    newMentorProgramForm.controls['programType']!.errors
+                  "
+                  class="invaliddiv"
+                >
+                  <div
+                    *ngIf="newMentorProgramForm.controls['programType']!.errors?.['whitespace']"
+                  >
+                    Input must not contain only white spaces.
+                  </div>
+                  <div
+                    *ngIf="newMentorProgramForm.controls['programType']!.errors?.['required']"
+                  >
+                    Program type is required
+                  </div>
+                  <!-- <div
+                    *ngIf="newMentorProgramForm.controls['programType']!.errors?.['pattern']">
+                    Program Type must be a string
+                  </div> -->
+                  <div
+                    *ngIf="newMentorProgramForm.controls['programType']!.errors?.['maxlength']"
+                  >
+                    Program type should be at most 40 characters long.
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <!-- <div class="inputField">
+                <label for="amountPay">Amount you are willing to pay</label>
+                <input type="text" class="form-control" id="amountPay" placeholder="Amount you are willing to pay" />
+              </div> -->
+
+              <div class="inputField">
+                <label>Amount you are willing to pay</label>
+                <p class="dollarprice">
+                  <span>$</span>
+                  <input
+                    type="number"
+                    placeholder="Amount you are willing to pay"
+                    formControlName="amount"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && newMentorProgramForm.get('amount')!.errors?.['required']}"
+                    max="10000000"
+                    min="1"
+                  />
+                </p>
+                <div
+                  *ngIf="
+                    submitted && newMentorProgramForm.controls['amount']!.errors
+                  "
+                  class="invaliddiv"
+                >
+                  <div
+                    class="invaliddiv"
+                    *ngIf="newMentorProgramForm.controls['amount']!.errors?.['required']"
+                  >
+                    Amount you are willing to pay is required
+                  </div>
+                </div>
+                <div
+                  class="invaliddiv"
+                  *ngIf="newMentorProgramForm.controls['amount']!.errors?.['min']"
+                >
+                  Amount should be greater than 1
+                </div>
+                <div
+                  *ngIf="newMentorProgramForm.controls['amount']!.errors?.['max']"
+                  class="invaliddiv"
+                  [ngStyle]="{ color: 'red' }"
+                >
+                  Maximum 7 figures allowed
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12">
+            <!-- <div class="inputField">
+              <label for="description">Describe Program </label>
+              <textarea name="" id="description" cols="30" rows="6" class="form-control"></textarea>
+            </div> -->
+            <div class="inputField">
+              <label>Describe Program</label>
+              <textarea
+                type="text"
+                rows="5"
+                placeholder="Describe Program"
+                formControlName="description"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && newMentorProgramForm.get('description')!.errors?.['required'] || newMentorProgramForm.get('description')!.errors?.['pattern']}"
+              ></textarea>
+              <div
+                *ngIf="
+                  submitted &&
+                  newMentorProgramForm.controls['description']!.errors
+                "
+                class="invaliddiv"
+              >
+                <div
+                  *ngIf="newMentorProgramForm.controls['description']!.errors?.['required']"
+                >
+                Program description is required
+                </div>
+                <div
+                  *ngIf="newMentorProgramForm.controls['description']!.errors?.['whitespace']"
+                >
+                  Input must not contain only white spaces.
+                </div>
+                <!-- <div
+                  *ngIf="newMentorProgramForm.controls['description']!.errors?.['pattern']"
+                >
+                  Description must be a string
+                </div> -->
+                <div
+                  *ngIf="newMentorProgramForm.controls['description']!.errors?.['maxlength']"
+                >
+                  Description should be at most 400 characters long.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 text-end mt-3">
+            <button class="btn btn-main" (click)="createNewMentorshipProgram()">
+              Request Program
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

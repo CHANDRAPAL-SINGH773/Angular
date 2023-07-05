@@ -1,0 +1,47 @@
+<app-admin-sidebar></app-admin-sidebar>
+<main id="main" class="main">
+    <app-admin-header></app-admin-header>
+    <section class="content listing-page px-lg-5 py-lg-4 p-2">
+        <div class="header-wrap">
+            <h1 class="fs-28 m-0">Static Templates</h1>
+        </div>
+
+        <div class="card border-0">
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="d-lg-block-thead">
+                            <tr>
+                                <th>Name</th>
+                                <!-- <th>Html</th> -->
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Name">
+                                    fdsdf
+                                </td>
+                                <!-- <td data-label="Text">
+                                    <div [innerHtml]="condition.html"></div>
+                                </td> -->
+
+                                <td data-label="Action">
+                                    <div class="d-flex justify-content-end justify-content-lg-start">
+                                        <button class="main-round-btn" data-toggle="modal"
+                                            data-target="#editCategoryModal">
+                                            <i class="bi bi-pencil" title="Edit"></i>
+                                        </button>
+                                        <button class="grey-round-btn" data-toggle="modal"
+                                            data-target="#deleteCategory">
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>

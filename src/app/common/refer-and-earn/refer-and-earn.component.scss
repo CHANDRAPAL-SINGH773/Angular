@@ -1,0 +1,94 @@
+@import "/src/styles.scss";
+
+.referContent {
+  background-color: $light;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 15px;
+  height: 100%;
+  .customWidth {
+    max-width: 450px;
+    margin: auto;
+    text-align: center;
+    p {
+      font-weight: 500;
+    }
+    .form {
+      text-align: start;
+      label {
+        margin-bottom: 0;
+      }
+      .inputField {
+        margin: 7.5px 0;
+      }
+    }
+    .inviteButtons {
+      @include itemPosition(center, center);
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+  }
+}
+
+.savedAmount {
+  background-color: $light;
+  padding: 15px;
+  margin: 15px;
+  border-radius: 15px;
+  height: 100%;
+  img {
+    width: 75%;
+    display: block;
+    margin: auto;
+  }
+  .amountPlate {
+    @include itemPosition(center, space-between);
+    max-width: 250px;
+    margin: 10px auto;
+    p {
+      font-weight: 500;
+    }
+    background-color: #effffb;
+    border-radius: 15px;
+    padding: 15px;
+  }
+}
+
+.couponsCards {
+  padding: 7.5px;
+
+  .coupons {
+    border-radius: 15px;
+    border: 1px solid #e6f1ff;
+    text-align: center;
+    padding: 20px;
+    margin: 7.5px;
+    background-color: #f4f9ff;
+    border: 1px solid #e6f1ff;
+    .couponsImg {
+      width: 150px;
+      position: relative;
+      margin: 25px auto;
+      img {
+        width: 100%;
+      }
+      p {
+        position: absolute;
+        left: 50%;
+        top: 36%;
+        font-weight: 500;
+        transform: translate(-50%);
+      }
+    }
+    h5 {
+      font-size: 14px;
+    }
+    h6 {
+      font-size: 12px;
+    }
+    &.bg-blue {
+      background-color: #f4f9ff;
+      border: 1px solid #e6f1ff;
+    }
+  }
+}

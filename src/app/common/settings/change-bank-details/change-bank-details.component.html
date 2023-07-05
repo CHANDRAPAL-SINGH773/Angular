@@ -1,0 +1,93 @@
+<div class="row p-3">
+  <div class="col-6">
+    <h4 class="textLarge">Bank Details</h4>
+  </div>
+</div>
+<div class="primaryLayout">
+  <div class="row bankInfo">
+    <div class="col-12 mt-3">
+      <h4 class="mediumText">Bank
+        account should belong to</h4>
+      <h5 class="smallText">{{getLocalStorageByName()}}</h5>
+    </div>
+    <div class="col-12 mt-3">
+      <form [formGroup]="bankDetailsForm" (keyup)="validateForm()">
+        <div class="col-md-6">
+          <label for="number" class="px-2 pt-2">Enter Account Number</label>
+          <div class="inputField">
+            <input type="text" placeholder="Number" class="form-control text-lowercase" formControlName="accountNumber"
+              [ngClass]="{ 'is-invalid': submitted && bankDetailsForm.get('accountNumber')!.errors?.['required']}" />
+            <div *ngIf="submitted && bankDetailsForm.controls['accountNumber']!.errors" class="invaliddiv">
+              <div *ngIf="bankDetailsForm.controls['accountNumber']!.errors?.['required']">
+                Account Number is required
+              </div>
+              <div *ngIf="bankDetailsForm.controls['accountNumber']!.errors?.['min']">
+                Account Number should not be 11 digits
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="number" class="px-2 pt-2">Confirm Account Number</label>
+          <div class="inputField">
+            <input type="text" placeholder="Number" class="form-control text-lowercase"
+              formControlName="accountNumberConfirm"
+              [ngClass]="{ 'is-invalid': submitted && bankDetailsForm.get('accountNumberConfirm')!.errors?.['required']}" />
+            <div *ngIf="submitted && bankDetailsForm.controls['accountNumberConfirm']!.errors" class="invaliddiv">
+              <div *ngIf="bankDetailsForm.controls['accountNumberConfirm']!.errors?.['required']">
+                Confirm Account Number is required
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="bankDetailsForm.controls['accountNumberConfirm']!.errors?.['minlength']">
+              Minimum 12 digits
+            </div>
+            <div *ngIf="showNotMatchedMessage">
+              <small class="text-danger">
+                {{ notMatchedMessage }}
+              </small>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <label for="number" class="px-2 pt-2">Enter Routing Number</label>
+          <div class="inputField">
+            <input type="text" placeholder="Number" class="form-control text-lowercase"
+              formControlName="rountingNumber"
+              [ngClass]="{ 'is-invalid': submitted && bankDetailsForm.get('rountingNumber')!.errors?.['required']}" />
+            <div *ngIf="submitted && bankDetailsForm.controls['rountingNumber']!.errors" class="invaliddiv">
+              <div *ngIf="bankDetailsForm.controls['rountingNumber']!.errors?.['required']">
+                Routing Number is required </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6">
+          <div class="inputField">
+            <label for="currency" class="px-2 pt-2">Currency</label>
+            <select name="" id="currencyType" class="form-control" formControlName="currency">
+              <option value="CAD" default>CAD</option>
+              <option value="USD">USD</option>
+              <option value="INR">INR</option>
+            </select>
+          </div>
+        </div>
+        
+
+        <div class="row mt-2 settingBankDetails">
+          <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+        </div>
+
+        <!-- <label for="currency" class="px-2 pt-2">Cards Details</label> -->
+        <div class="row p-3">
+          <div class="buttonBox"> <button class="btn btn-main" (click)="submit()">Save Bank Account</button> </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- width: 50%;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 10px; -->

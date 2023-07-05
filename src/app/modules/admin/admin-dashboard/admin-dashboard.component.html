@@ -1,0 +1,140 @@
+<app-admin-sidebar></app-admin-sidebar>
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+  <section class="dashboard_section">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="box nurshing">
+          <div class="circle"></div>
+          <div class="lBox">
+            <h5>Total Mentor & Mentees</h5>
+            <p>{{ totalmentormentees }}</p>
+          </div>
+          <div class="rBox">
+            <img src="../../assets/images/nurshing_card.png" class="img-fluid" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="box nurse">
+          <div class="circle"></div>
+          <div class="lBox">
+            <h5>Top Selling Mentor</h5>
+            <p>{{dashboardDetails.fullName}}</p>
+          </div>
+          <div class="rBox">
+            <img src="../../assets/images/nurshing_card.png" class="img-fluid" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="box physician">
+          <div class="circle"></div>
+          <div class="lBox">
+            <h5>Top Selling Category & Path</h5>
+            <p>{{dashboardDetails.categoryName}} {{dashboardDetails.ProgramName}}</p>
+          </div>
+          <div class="rBox">
+            <img src="../../assets/images/doc_card.png" class="img-fluid" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-3">
+        <div class="box nurse">
+          <div class="circle"></div>
+          <div class="lBox">
+            <h5>Total Revenue</h5>
+            <p>{{dashboardDetails.transferPaymentRevenue}}</p>
+          </div>
+          <div class="rBox">
+            <img src="../../assets/images/nurse_card.png" class="img-fluid" alt="" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-md-6 p-2">
+        <div class="title">
+          <h4>Mentor</h4>
+          <a href="admin-user-management">View All</a>
+        </div>
+        <div class="physician_box">
+          <div class="table-responsive border-1 dashboard_physicain_table">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Contact No.</th>
+                </tr>
+              </thead>
+              <tbody
+                *ngFor="let data of mentorData | paginate : { itemsPerPage: 5,currentPage: usersPage, totalItems: totaldocs}">
+                <tr *ngIf="data.status == 1">
+                  <td>
+                    <div class="imgBox">
+                      <img *ngIf="data?.image" [src]="showImage + data.image" class="img-fluid" alt="Image" />
+                      <img *ngIf="!data?.image" src="../../../../assets/images/currentsession1.png" class="img-fluid"
+                        alt="" />
+                      <span>{{ data.firstName ? data.firstName : "-" }} {{ data.lastName ? data.lastName : "-" }}</span>
+                    </div>
+                  </td>
+                  <td>{{ data.email ? data.email : "-" }}</td>
+                  <td> {{ data.phone ? data.phone : "-" }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 p-2">
+        <!-- <div class="title">
+                    <div class="lBox">
+                        <a href=""><span class="chat_status"></span> Text Messages</a>
+                        <a href="" class="fax_btn"><span class="fax_status"></span> Fax</a>
+                    </div>
+                    <div class="rBox">
+                        <a href="">D</a>
+                        <a href="">W</a>
+                        <a href="" style="border-color: #64BD05; color: #64BD05;">M</a>
+                    </div>
+                </div> -->
+
+        <div class="title">
+          <h4>Mentees</h4>
+          <a href="admin-user-management">View All</a>
+        </div>
+
+        <div class="table-responsive border-1 dashboard_nurse_table">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact No.</th>
+              </tr>
+            </thead>
+            <tbody
+              *ngFor="let data of menteeList | paginate : { itemsPerPage: 5,currentPage: usersPage, totalItems: totaldocs}">
+              <tr *ngIf="data.status == 1">
+                <td>
+                  <div class="imgBox">
+                    <img *ngIf="data?.image" [src]="showImage + data.image" class="img-fluid" alt="Image" />
+                    <img *ngIf="!data?.image" src="../../../../assets/images/currentsession1.png" class="img-fluid"
+                      alt="" />
+                    <span>{{ data.firstName ? data.firstName : "-" }} {{ data.lastName ? data.lastName : "-" }}</span>
+                  </div>
+                </td>
+                <td>{{ data.email ? data.email : "-" }}</td>
+                <td> {{ data.phone ? data.phone : "-" }}</td>
+              </tr>
+            </tbody>
+
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>

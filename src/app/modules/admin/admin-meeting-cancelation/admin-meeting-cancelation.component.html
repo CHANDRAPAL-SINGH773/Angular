@@ -1,0 +1,95 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+    <app-admin-header></app-admin-header>
+    <div class="container-fluid mb-4">
+        <div class="row adminStyle">
+            <div class="col-12 col-md-5 col-lg-9 text-start">
+                <h4 class="fs-28 fw-bold">Meeting Cancellation List</h4>
+            </div>
+
+            <!-- filter -->
+            <!-- <div class="col-12 col-md-5 col-lg-3">
+                <div class="inputField">
+                    <select class="form-select me-3">
+                        <option value="">All</option>
+                        <option value="false">Immigration</option>
+                        <option value="true">Career Consultancy</option>
+                        <option value="true">Education</option>
+                        <option value="true">Business/Investment</option>
+                    </select>
+                </div>
+            </div> -->
+
+            <div class="col-12 col-md-7 col-lg-3 text-end">
+                <div class="inputField">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0" placeholder="Search"
+                            style="font-size: 13px" (keyup)="onKeyUpEvent($event)" />
+                        <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card border-0">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table">
+                            <thead class="d-lg-block-thead">
+                                <tr>
+                                    <th>Mentor Name</th>
+                                    <th>Program name</th>
+                                    <th>Email Id</th>
+
+                                    <!-- <th>Rating</th> -->
+                                    <!-- <th>Action</th> -->
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let data of cancelationData   | paginate
+                                : {
+                                    itemsPerPage: 5,
+                                    currentPage: cancellation_page,
+                                    totalItems: totaldocs
+                                  }
+                          ">
+                                    <td data-label=" Mentor Name">
+                                        {{data.users_data.firstName}} {{data.users_data.lastName}}
+                                        <!-- {{ data.mentorship_name ? data.mentorship_name : "-" }} -->
+                                    </td>
+                                    <td data-label="Program Name">
+                                        {{data.mentorship_name}}
+                                        <!-- {{
+                                        data.categories_data[0]?.categoryName
+                                        ? data.categories_data[0]?.categoryName
+                                        : "-"
+                                        }} -->
+                                    </td>
+                                    <td data-label="mentor Email">
+                                        {{ data.users_data.email}}
+                                    </td>
+                                    <!-- <td data-label="rating">
+                                        {{data.averageRating ? data.averageRating :'0'}}
+                                    </td> -->
+
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="cancellation_page = $event"></pagination-controls>
+                        <div class="check" *ngIf="cancelationData?.length === 0">
+                            <h3 class="text-center w-100">No record found</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</main>

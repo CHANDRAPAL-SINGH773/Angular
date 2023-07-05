@@ -1,0 +1,217 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-4 text-start">
+        <h4 class="fs-28 fw-bold">Cancel Meeting List</h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select class="form-select me-3">
+            <option value="">All</option>
+            <option value="false">Pending</option>
+            <option value="true">Approved</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control border-end-0"
+              placeholder="Search"
+              style="font-size: 13px"
+            />
+            <span class="input-group-text border-start-0"
+              ><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-5 col-lg-2 text-start centerMid">
+        <button
+          data-bs-toggle="modal"
+          data-bs-target="#selfAssessment"
+          class="btn btn-main"
+        >
+          <i class="fas fa-plus"></i>Add Category
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0 rounded">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>Mentor Name</th>
+                  <th>Cancel Rating</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr>
+                  <td data-label="First Name">Immigration</td>
+                  <td>5%</td>
+
+                  <td data-label="Status">
+                    <div
+                      class="form-check form-switch d-flex align-items-center"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p
+                      class="d-flex justify-content-end justify-content-lg-start"
+                    >
+                      <button
+                        class="main-round-btn"
+                        [routerLink]="['/add-patient']"
+                      >
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button
+                        class="secondary-round-btn"
+                        [routerLink]="['/admin-user-profile']"
+                      >
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="First Name">Career Consultancy</td>
+                  <td>5%</td>
+
+                  <td data-label="Status">
+                    <div
+                      class="form-check form-switch d-flex align-items-center"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p
+                      class="d-flex justify-content-end justify-content-lg-start"
+                    >
+                      <button
+                        class="main-round-btn"
+                        [routerLink]="['/add-patient']"
+                      >
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button
+                        class="secondary-round-btn"
+                        [routerLink]="['/admin-user-profile']"
+                      >
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="First Name">Education</td>
+
+                  <td>5%</td>
+
+                  <td data-label="Status">
+                    <div
+                      class="form-check form-switch d-flex align-items-center"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p
+                      class="d-flex justify-content-end justify-content-lg-start"
+                    >
+                      <button
+                        class="main-round-btn"
+                        [routerLink]="['/add-patient']"
+                      >
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button
+                        class="secondary-round-btn"
+                        [routerLink]="['/admin-user-profile']"
+                      >
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td data-label="First Name">Business/Investment</td>
+
+                  <td>5%</td>
+                  <td data-label="Status">
+                    <div
+                      class="form-check form-switch d-flex align-items-center"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        id="flexSwitchCheckChecked"
+                        disabled
+                      />
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p
+                      class="d-flex justify-content-end justify-content-lg-start"
+                    >
+                      <button
+                        class="main-round-btn"
+                        [routerLink]="['/add-patient']"
+                      >
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button
+                        class="secondary-round-btn"
+                        [routerLink]="['/admin-user-profile']"
+                      >
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

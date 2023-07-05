@@ -1,0 +1,221 @@
+<div class="container-fluid">
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="ratings">
+          <h5>Average Rating</h5>
+          <div class="stars">
+            <h1>{{ sessionAverageRating }}</h1>
+            <div class="starBox">
+              <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                <ng-container *ngIf="i < sessionAverageRating">
+                  <ng-container *ngIf="sessionAverageRating - i < 1">
+                    <i class="fa-solid fa-star-half-stroke"></i>
+                  </ng-container>
+                  <ng-container *ngIf="sessionAverageRating - i >= 1">
+                    <i class="fa-solid fa-star"></i>
+                  </ng-container>
+                </ng-container>
+                <ng-container *ngIf="i >= sessionAverageRating">
+                  <i class="fa-regular fa-star"></i> </ng-container
+              ></ng-container>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <!-- <div class="ratings"> -->
+          <!-- <h5>Cancellation Rating</h5> -->
+          <!-- <div class="stars">
+            <h1>4.5</h1>
+            <div class="starBox">
+              <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+              ><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i
+              ><i class="fa-solid fa-star-half-stroke"></i>
+            </div>
+          </div> -->
+        <!-- </div> -->
+      </div>
+      <div class="col-md-4">       
+        <div class="ratingProgress">
+          <div class="row align-items-center" *ngFor="let ratingCount of ratingCounts">
+            <div class="col-2">
+              <p class="mb-0">
+                <i class="fa-solid fa-star"></i> {{ ratingCount.rating }}
+              </p>
+             
+            </div>
+            <div class="col-7">
+              <div class="progress" style="height: 6px">
+                <div
+                  class="progress-bar"
+                  role="progressbar"
+                  [attr.aria-valuenow]="ratingCount.count"
+                  aria-valuemin="0"
+                  [attr.aria-valuemax]="maxCount"
+                  [style.width.%]="getPercentage(ratingCount.count)"
+                >
+                  <span class="sr-only">{{ getPercentage(ratingCount.count) }}% Complete</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-3">
+              <p class="mb-0 ms-3">{{ ratingCount.count }}</p>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12" *ngFor="let data of ratingData">
+        <div class="review">
+          <div class="userRatings">
+            <div class="userProfile">
+              <div class="image">
+                <img
+                  *ngIf="data?.Userimage"
+                  height="60px"
+                  width="60px"
+                  [src]="showImage + data.Userimage"
+                  alt="Image"
+                />
+                <img
+                  *ngIf="!data?.Userimage"
+                  src="../../../../../../../assets/images/user.png"
+                  alt=""
+                />
+                <!-- <img src="../../../../../../../assets/images/review.png" alt="" /> -->
+              </div>
+              <div class="text">
+                <h6>
+                  {{ data.firstName ? data.firstName : "-" }}
+                  {{ data.lastName ? data.lastName : "-" }}
+                </h6>
+                <div class="stars">
+                  <h6>{{ data.rating ? data.rating : "-" }}</h6>
+                  <div class="starBox">
+                    <ng-container
+                      *ngFor="let star of [1, 2, 3, 4, 5]; let i = index"
+                    >
+                      <i class="fa-solid fa-star" *ngIf="i < data.rating"></i>
+                      <i
+                        class="fa-solid fa-star-half-stroke"
+                        *ngIf="i == data.rating - 0.5"
+                      ></i>
+                      <i
+                        class="fa-regular fa-star"
+                        *ngIf="i >= data.rating"
+                      ></i>
+                    </ng-container>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="dateofPost">
+              <p>
+                {{
+                  data.createdAt ? (data.createdAt | date : "mediumDate") : "-"
+                }}
+                {{ data.createdAt ? (data.createdAt | date : "HH:mm") : "-" }}
+              </p>
+            </div>
+          </div>
+          <div class="reviewContent">
+            <div class="row">
+              <div class="col-md-10">
+                <p>
+                  {{ data.comment ? data.comment : "-" }}
+                </p>
+              </div>
+              <div
+                *ngIf="data.commentReply; else next"
+                class="col-md-2 text-end mt-3"
+              >
+                <p class="reply">{{ data.commentReply ? data.commentReply : "-" }}</p>
+              </div>
+              <ng-template #next>
+                <div class="col-md-2 text-end mt-3">
+                  <button
+                    class="btn btn-replay"
+                    (click)="getId(data._id)"
+                    data-toggle="modal"
+                    data-target="#reply"
+                  >
+                    Reply
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="check" *ngIf="ratingData?.length === 0">
+        No Ratings Found Yet
+      </div>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="reply"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reply to Comment</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="replyForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+              <textarea
+                name=""
+                id=""
+                formControlName="reply"
+                cols="30"
+                rows="6"
+                class="form-control"
+                [ngClass]="{ 'is-invalid': submitted && replyForm.get('reply')!.errors?.['required']}"
+              >
+              </textarea>
+              <div
+                *ngIf="submitted && replyForm.controls['reply']!.errors"
+                class="invaliddiv"
+              >
+                <div *ngIf="replyForm.controls['reply']!.errors?.['required']">
+                  Reply is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 text-center my-4"></div>
+            <div class="col-12">
+              <button
+                (click)="reply()"
+                data-dismiss="modal"
+                class="btn btn-main"
+                [disabled]="!replyForm.valid"
+              >
+                Submit Response
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

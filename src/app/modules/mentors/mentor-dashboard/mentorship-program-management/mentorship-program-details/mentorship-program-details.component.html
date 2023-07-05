@@ -1,0 +1,109 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i class="fa-solid fa-chevron-left" [routerLink]="['/mentor/mentor-dashboard/mentorship']"></i>
+          </div>
+          <!-- {{oneUserData[0].category_id[0].categoryName | json}} -->
+          <p class="mb-0">{{ showHeading }}</p>
+        </div>
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <div class="col-12">
+              <div class="input-group">
+                <input type="text" class="form-control border-end-0 form-control-lg" placeholder="Search"
+                  style="font-size: 13px" (keyup)="onKeyUpEvent($event)" />
+                <span class="input-group-text bg-white border-start-0"> </span>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="icon">
+            <i class="fa-solid fa-filter"></i>
+          </div> -->
+        </div>
+      </div>
+      <div class="tab">
+        <div class="tabContent">
+          <div class="row">
+            <div class="col">
+              <div class="layoutHeader">
+                <div class="imageBox">
+                  <div class="image">
+                    <!-- <span>
+                      <img width="200" height="200" class="rounded-circle" *ngIf="details?.image"
+                        [src]="showImage+details?.image" class="img-fluid" alt=""> -->
+                    <!-- <img width="200" height="200" class="rounded-circle"
+                      src="../../../../../assets/images/uploadProfile.png" class="img-fluid" alt=""> -->
+                    <!-- </span> -->
+                    <div class="text">
+                      <h4 class="mediumText">{{ showHeading }}</h4>
+                      <p class="smallText">
+                        Total Program(s) - {{ count.totalDocs }}
+                      </p>
+                    </div>
+                  </div>
+                  <!-- <div class="buttonBox">
+                    <button class="btn btn-main" (click)="addnewProgram()">Add New Program</button>
+                  </div> -->
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-xl-4 col-md-6" *ngFor="let details of oneUserData| paginate : {
+                      itemsPerPage: 10,
+                      currentPage: mentorship_page,
+                      totalItems: totaldocs }">
+                <div class="content" [routerLink]="['/mentor/mentor-dashboard/session-detail']"
+                  [queryParams]="{ _id:details._id,category:showHeading}">
+                  <div class="image">
+                    <span>
+                      <img *ngIf="details?.image" [src]="showImage + details.image" alt="Image" />
+                      <img *ngIf="!details?.image" src="../../../assets/images/sessions.png" alt="" />
+                    </span>
+                  </div>
+                  <div class="text">
+                    <h5 class="title">{{ details.mentorship_name }}</h5>
+                    <div class="time">
+                      <i class="fa-solid fa-calendar-days"></i>
+                      <span>{{ details.start_date | date : "mediumDate" }}
+                      </span>
+                    </div>
+                    <div class="price">
+                      <div class="row">
+                        <div class="col-5">
+                          <p>Price</p>
+                        </div>
+                        <div class="col-7">
+                          <p>Total Sessions</p>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-5">
+                          <h5>${{ details.price }}</h5>
+                        </div>
+                        <div class="col-7">
+                          <h5>{{details?.totalSessions ? details?.totalSessions :"0"}}</h5>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tabFilter">
+              <div class="pagination">
+                <pagination-controls (pageChange)="pageChange($event)">
+                </pagination-controls>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

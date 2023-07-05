@@ -1,0 +1,607 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-6 text-start">
+        <h4 class="fs-28 fw-bold">Category Path List</h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select class="form-select me-3" (change)="sortRoles($event)">
+            <option value="">All</option>
+            <option value="{{ data.categoryName }}" *ngFor="let data of categoryData">
+              {{ data.categoryName }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0" placeholder="Search" style="font-size: 13px"
+              (keyup)="onKeyUpEvent($event)" />
+            <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>Category Path Name </th>
+                  <th>Category name</th>
+                  <th>Mentor Name</th>
+                  <th>Status</th>
+                  <th>Rating</th>
+                  <th>Action </th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="
+                    let data of mentorshipData
+                      | paginate
+                        : { itemsPerPage: 10, currentPage: categorypath_page, totalItems: totaldocs }
+                  ">
+                  <td data-label="Category Path Name">
+                    {{ data.mentorship_name ? data.mentorship_name : "-" }}
+                  </td>
+                  <td data-label="Category Name">
+                    {{
+                    data.categories_data[0]?.categoryName
+                    ? data.categories_data[0]?.categoryName
+                    : "-"
+                    }}
+                  </td>
+                  <td data-label="Mentor Name">
+                    {{
+                    data.user_data[0]?.firstName
+                    }}
+                  </td>
+                  <td data-label="Status">
+                    <div class="form-check form-switch d-flex align-items-center">
+                      <input class="form-check-input" type="checkbox" role="switch"
+                        (click)="changePathStatus($event, data._id)" [checked]="data.status === 1 ? true : false"
+                        id="flexSwitchCheckChecked" />
+                    </div>
+                  </td>
+
+                  <td>
+                    <div class="stars">
+                      <div class="starBox">
+                        <ng-container *ngFor="let star of [1, 2, 3, 4, 5]; let i = index">
+                          <ng-container *ngIf="i < data?.averageRating">
+                            <ng-container *ngIf="data?.averageRating - i < 1">
+                              <i class="fa-solid fa-star-half-stroke"></i>
+                            </ng-container>
+                            <ng-container *ngIf="data?.averageRating - i >= 1">
+                              <i class="fa-solid fa-star"></i>
+                            </ng-container>
+                          </ng-container>
+                          <ng-container *ngIf="i >= data?.averageRating">
+                            <i class="fa-regular fa-star"></i>
+                          </ng-container>
+                          <ng-container *ngIf="!data?.averageRating">
+                            <span></span>
+                          </ng-container>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p class="d-flex justify-content-end justify-content-lg-start">
+                      <button class="main-round-btn" (click)="getId(data._id)" data-toggle="modal"
+                        data-target="#editCategoryPath">
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button class="grey-round-btn" (click)="getId(data._id)" data-toggle="modal"
+                        data-target="#deleteCategoryPath">
+                        <i class="bi bi-trash" title="delete"></i>
+                      </button>
+
+                      <button class="secondary-round-btn" (click)="getId(data._id)" data-toggle="modal"
+                        data-target="#viewCategoryPath">
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                      <!-- <button class="btn btn-success rounded-circle btn-rounded shadow me-2"
+                                                data-bs-toggle="modal" data-bs-target="#userApproval">
+                                                <i class="bi bi-plus" title="Add"></i>
+                                            </button>
+                                            <button
+                                                class="btn btn-warning rounded-circle btn-rounded shadow me-2 text-white"
+                                                routerLink="/physician-report">
+                                                <i class="bi bi-graph-up-arrow" title="Report"></i>
+                                            </button> -->
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageChange($event)"
+              (pageChange)="categorypath_page = $event"></pagination-controls>
+            <div class="check" *ngIf="mentorshipData?.length === 0">
+              <h3 class="text-center w-100">No record found</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Categorypath  Modal ----- Start -->
+  <div class="modal fade" id="editCategoryPath" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit Mentorship</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body p-0">
+          <form [formGroup]="catPathForm" class="form">
+            <div class="row">
+              <div class="col-md-9">
+                <div class="uploadProfile">
+                  <label for="upload">
+                    <div class="profileImage">
+                      <span>
+                        <img width="100" height="100" *ngIf="singlementorshipData?.image" [src]="imgsrc"
+                          class="img-fluid" alt="" />
+                        <img width="100" height="100" *ngIf="!singlementorshipData?.image"
+                          src="../../../../../assets/images/uploadProfile.png" class="img-fluid" alt="" />
+                      </span>
+                    </div>
+                    <input (change)="handleimage($event, 'image')" type="file" class="d-none" id="upload"
+                      formControlName="image" accept="image/x-png,image/jpg,image/jpeg" />
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-3">
+                <label for="Verified Badge">Verified Badge</label>
+                <div class="form-check form-switch d-flex align-items-center">
+                  <input class="form-check-input" type="checkbox" role="switch"
+                    (change)="changeVerifyBadgeStatus($event)" [checked]="statusData" />
+                </div>
+              </div>
+
+            </div>
+            <div class="row">
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Mentorship Name</label>
+                  <input type="text" placeholder="Mentorship Name" formControlName="mentorship_name"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('mentorship_name')!.errors?.['required']}" />
+                  <div *ngIf="
+                      submitted &&
+                      catPathForm.controls['mentorship_name']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['mentorship_name']!.errors?.['required']">
+                      Mentorship Name is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Mentorship Mode</label>
+                  <select id="selectProgram" class="form-control" (change)="showlocation($event)"
+                    formControlName="mentorship_mode"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('mentorship_mode')!.errors?.['required']}">
+                    <option value="1" selected>Online</option>
+                    <option value="0">Offline</option>
+                  </select>
+                  <div *ngIf="
+                      submitted &&
+                      catPathForm.controls['mentorship_mode']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['mentorship_mode']!.errors?.['required']">
+                      Mentorship Mode is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Description</label>
+                  <input type="text" placeholder="Mentorship Name" formControlName="description" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Start date</label><span class="text-danger">*</span>
+                  <input type="date" placeholder="start_date" min="{{ minDate }}" (change)="changeDate($event)"
+                    formControlName="start_date" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('start_date')!.errors?.['required']}" />
+                  <div *ngIf="
+                      submitted && catPathForm.controls['start_date']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['start_date']!.errors?.['required']">
+                      Start date is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Availibility from</label>
+                  <input type="time" placeholder="availibility_from" formControlName="availibility_from"
+                    class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Availibility to</label>
+                  <input type="time" placeholder="availibility_to" formControlName="availibility_to"
+                    class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label for="sessionDuration">Price</label><span class="text-danger">*</span>
+                  <p class="dollarprice">
+                    <span>$</span>
+                    <input type="number" placeholder="Price" formControlName="price" class="price form-control"
+                      [ngClass]="{ 'is-invalid': submitted && catPathForm.get('price')!.errors?.['required']}" />
+                  </p>
+                  <div *ngIf="submitted && catPathForm.controls['price']!.errors" class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['price']!.errors?.['required']">
+                      Price is required
+                    </div>
+                    <div *ngIf="catPathForm.controls['price']!.errors?.['min']">
+                      Minimum 1 can be set
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Experience</label><span class="text-danger">*</span>
+                  <select id="selectProgram" class="form-control" formControlName="experience"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('experience')!.errors?.['required']}">
+                    <option value="" selected>select experience</option>
+                    <option value="0-6 month(s)">0 to 6 month(s)</option>
+                    <option value="1 year">1 year</option>
+                    <option value="2 years">2 years</option>
+                    <option value="3 years">3 years</option>
+                    <option value="4 years">4 years</option>
+                    <option value="5 years">5 years</option>
+                    <option value="5-10 years">5 to 10 years</option>
+                    <option value="10-20 years">10 to 20 years</option>
+                  </select>
+                  <div *ngIf="
+                      submitted && catPathForm.controls['experience']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['experience']!.errors?.['required']">
+                      Experience is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Mentee Limit</label>
+                  <input type="number" placeholder="Mentee Limit" formControlName="mentee_limit" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('mentee_limit')!.errors?.['required']}" />
+                  <div *ngIf="
+                      submitted && catPathForm.controls['mentee_limit']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['mentee_limit']!.errors?.['required']">
+                      Number of Mentee is required
+                    </div>
+                    <div *ngIf="catPathForm.controls['mentee_limit']!.errors?.['min']">
+                      Minimum 1 can be set
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Expiry Date</label> <span class="text-danger">*</span>
+                  <input type="date" placeholder="expiry date" min="{{ minimumExpiryDate }}"
+                    formControlName="expiry_date" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('expiry_date')!.errors?.['required']}" />
+                  <div *ngIf="
+                      submitted && catPathForm.controls['expiry_date']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['expiry_date']!.errors?.['required']">
+                      Program expiry date is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="inputField" *ngIf="preview">
+                  <label for="Verification">Skill Certificate</label>
+                  <div class="cursor ifreame-pdf">
+                    <button class="btn btn-main" data-toggle="modal" data-target="#viewpdf">
+                      View
+                    </button>
+                  </div>
+                </div>
+
+                <div class="inputField">
+                  <label for="Verification">Skill Certificate</label>
+                  <label for="uploadFileVerification" class="uploadFile">
+                    Certificate
+                    <input type="file" (change)="handleimage($event, 'skills')" class="form-control d-none"
+                      id="uploadFileVerification" placeholder="Image" formControlName="skills"
+                      accept="image/*,application/pdf" /><br />
+                    <!-- <input type="file" id="uploadFileVerification" class="form-control d-none" /> -->
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4 px-0" *ngIf="showLocation">
+                <div class="inputField">
+                  <label>Location</label>
+                  <input type="text" placeholder="location" formControlName="location" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Select Category</label><span class="text-danger">*</span>
+                  <select id="selectProgram" class="form-control" formControlName="category_id"
+                    [ngClass]="{ 'is-invalid': submitted && catPathForm.get('category_id')!.errors?.['required']}">
+                    <option value="" selected>Select Category</option>
+                    <option *ngFor="let data of categoryData" [value]="data._id" default>
+                      {{ data.categoryName | titlecase }}
+                    </option>
+                  </select>
+                  <div *ngIf="
+                      submitted && catPathForm.controls['category_id']!.errors
+                    " class="invaliddiv">
+                    <div *ngIf="catPathForm.controls['category_id']!.errors?.['required']">
+                      Category is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="buttonsPairAllignment">
+          <button type="button" class="btn btn-grey" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="editpath()" class="btn btn-main">
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit Categorypath Modal ----- End -->
+  <!-- Delete Category Modal ----- Start -->
+  <div class="modal fade" id="deleteCategoryPath" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center p-4">
+          <h3>Are you sure to delete this category?</h3>
+        </div>
+        <!-- <div class="modal-body">
+                    <input type="text" placeholder="Category Name" [(ngModel)]="categoryName" value = {{categoryName}} class="space"><br>
+                </div> -->
+        <div class="deletePairAllignments">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" data-dismiss="modal" aria-label="Close" (click)="deletecategoryPath()"
+            class="btn btn-main">
+            Sure
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete Category Modal ----- End -->
+
+  <!-- view category Modal start -->
+
+  <div class="modal fade" id="viewCategoryPath" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            View Mentorship Path
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="catPathForm" class="form">
+            <div class="uploadProfile">
+              <label for="upload">
+                <div class="profileImage">
+                  <span>
+                    <img width="100" height="100" *ngIf="singlementorshipData?.image" [src]="imgsrc" class="img-fluid"
+                      alt="" />
+                    <img width="100" height="100" *ngIf="!singlementorshipData?.image"
+                      src="../../../../../assets/images/uploadProfile.png" class="img-fluid" alt="" />
+                  </span>
+                </div>
+                <input (change)="handleimage($event, 'image')" type="file" class="d-none" id="upload"
+                  formControlName="image" accept="image/x-png,image/jpg,image/jpeg" />
+              </label>
+            </div>
+            <div class="row">
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Mentorship Name</label>
+                  <input type="text" placeholder="Mentorship Name" formControlName="mentorship_name"
+                    class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Mentorship Mode</label>
+                  <select id="selectProgram" class="form-control" (change)="showlocation($event)"
+                    formControlName="mentorship_mode">
+                    <option value="1" selected>Online</option>
+                    <option value="0">Offline</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Description</label>
+                  <input type="text" placeholder="Mentorship Name" formControlName="description" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Start date</label>
+                  <input type="date" placeholder="start_date" formControlName="start_date" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Availibility from</label>
+                  <input type="time" placeholder="availibility_from" formControlName="availibility_from"
+                    class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Availibility to</label>
+                  <input type="time" placeholder="availibility_to" formControlName="availibility_to"
+                    class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Price</label>
+                  <input type="number" placeholder="Price" formControlName="price" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Experience</label>
+                  <select id="selectProgram" class="form-control" formControlName="experience">
+                    <option value="" selected>select experience</option>
+                    <option value="0-6 month(s)">0 to 6 month(s)</option>
+                    <option value="1 year">1 year</option>
+                    <option value="2 years">2 years</option>
+                    <option value="3 years">3 years</option>
+                    <option value="4 years">4 years</option>
+                    <option value="5 years">5 years</option>
+                    <option value="5-10 years">5 to 10 years</option>
+                    <option value="10-20 years">10 to 20 years</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Mentee Limit</label>
+                  <input type="number" placeholder="Mentee Limit" formControlName="mentee_limit" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Expiry Date</label>
+                  <input type="date" placeholder="expiry date" formControlName="expiry_date" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="inputField" *ngIf="preview">
+                  <label for="Verification">Skill Certificate</label>
+                  <div class="cursor ifreame-pdf">
+                    <button class="btn btn-main" data-toggle="modal" data-target="#viewpdf">
+                      View
+                    </button>
+                  </div>
+                </div>
+
+                <!-- <div class="inputField">
+                  <label for="Verification">Skill Certificate</label>
+                  <label for="uploadFileVerification" class="uploadFile">
+                     Certificate
+                    <input type="file" (change)="handleimage($event,'skills')" class="form-control d-none"
+                      id="uploadFileVerification" placeholder="Image" formControlName="skills"
+                      accept="image/*,application/pdf"><br>
+                   
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                  </label>
+                </div> -->
+              </div>
+              <div class="col-md-4 px-0" *ngIf="showLocation">
+                <div class="inputField">
+                  <label>Location</label>
+                  <input type="text" placeholder="location" formControlName="location" class="form-control" />
+                </div>
+              </div>
+              <div class="col-md-4 px-0">
+                <div class="inputField">
+                  <label>Select Category</label>
+                  <select id="selectProgram" class="form-control" formControlName="category_id">
+                    <option value="" selected>Select Category</option>
+                    <option *ngFor="let data of categoryData" [value]="data._id" default>
+                      {{ data.categoryName | titlecase }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- view category modal end -->
+
+  <!-- pdf/img show modal starts -->
+  <div class="modal fade" id="viewpdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">View your document</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <iframe class="cursor" type="application/pdf" [src]="preview | safe : 'resourceUrl'"></iframe>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- pdf/img show modal Ends -->
+</main>

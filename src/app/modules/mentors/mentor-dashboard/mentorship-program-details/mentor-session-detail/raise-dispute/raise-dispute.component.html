@@ -1,0 +1,83 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon" (click)="back()">
+            <!-- [routerLink]="['/mentor/mentor-dashboard/session-detail']" -->
+            <i class="fa-solid fa-chevron-left"></i>
+          </div>
+          <p class="mb-0">Raise a Dispute</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row p-3 pb-0">
+      <div class="col">
+        <h5 class="mb-0">Select Session</h5>
+      </div>
+    </div>
+    <div class="row completedSessions">
+      <div class="col-lg-6" *ngFor="let sessions of myArray
+      | paginate : {
+        itemsPerPage: 10,
+        currentPage: detailPage,
+        totalItems: totaldocs }; let i = index">
+        <div
+          class="menteesContent"
+          [routerLink]="['/mentor/mentor-dashboard/dispute-session']" [queryParams]="{ _id: sessions._id,program_id:sessions.program_id}">
+          <div class="menteeProfile">
+            <div class="image">
+              <span>
+                <img class="rounded-circle" *ngIf="sessions?.image" [src]="showImage + sessions?.image" class="img-fluid"
+                  alt="" />
+                <img class="rounded-circle" *ngIf="!sessions?.image"
+                src="../../../../../../../assets/images/sessions.png" class="img-fluid" alt="" />
+              </span>
+            </div>
+            <div class="text">
+              <h3>{{i + 1}}.  {{sessions.session_name?(sessions.session_name):"-" }}</h3>
+              <p>
+                {{sessions.description?(sessions.description):"-" }}
+                
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="myArray.length==0" class="text-center">
+        <p>No session available</p>
+      </div>
+    </div>
+    <div class="tabFilter">
+      <div class="pagination">
+        <pagination-controls (pageChange)="pageChange($event)">
+        </pagination-controls>
+      </div>
+    </div>
+    <!-- <div class="row p-3 pb-0 mt-3">
+      <div class="col">
+        <div class="tabFilter">
+          <div class="pageNuber">
+            <label for="">Show Entries:</label>
+            <select name="" id="" class="form-control">
+              <option value="">1</option>
+              <option value="">2</option>
+              <option value="">3</option>
+            </select>
+          </div>
+          <div class="pagination">
+            <span>1 - 08 of 50</span>
+            <div class="icon">
+              <i class="fa-solid fa-chevron-left"></i>
+            </div>
+            <div class="icon">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+  </div>
+</div>

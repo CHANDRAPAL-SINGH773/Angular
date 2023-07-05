@@ -1,0 +1,273 @@
+@import "../../../styles.scss";
+
+.container-fluid {
+  .sliderection {
+    background-image: url("../../../assets/images/authBg.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+
+    .sliderContainer {
+      width: -webkit-fill-available;
+      position: sticky;
+      top: 0;
+
+      .logo {
+        img {
+          display: inline-block;
+          margin: 30px;
+          width: 150px;
+        }
+      }
+
+      .sliderImg {
+        text-align: center;
+
+        img {
+          width: 60%;
+          display: block;
+          margin: auto;
+        }
+        p {
+          font-size: 12px;
+          max-width: 470px;
+          margin: auto;
+        }
+        h1 {
+          font-size: 28px;
+        }
+      }
+    }
+  }
+
+  .formContainer {
+    max-width: 400px;
+    width: -webkit-fill-available;
+    padding: 15px;
+
+    .logoIcon {
+      @include roundShape(80px, 80px, $secondary);
+      border: 1px solid rgba($color: $dark, $alpha: 0.07);
+      margin-bottom: 20px;
+
+      img {
+        width: 70%;
+      }
+    }
+
+    h1 {
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 30px;
+    }
+
+    p {
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 490px;
+      color: $dark;
+
+      label {
+        margin: 15px 0 10px;
+        font-weight: 600;
+      }
+
+      .inputField {
+        position: relative;
+
+        input {
+          height: 46px;
+          border-radius: 10px;
+          padding: 10px;
+          background-color: rgba($color: $input, $alpha: 0.15);
+
+          &:focus {
+            box-shadow: none;
+          }
+        }
+
+        img {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 15px;
+        }
+
+        i {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          right: 15px;
+        }
+      }
+
+      .form-check {
+        margin-left: 25px;
+        @include itemPosition(center, flex-start);
+
+        label {
+          margin-bottom: 0;
+          font-weight: 400;
+        }
+      }
+
+      a {
+        text-decoration: none;
+        color: $dark;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .phoneNumber {
+        display: flex;
+        gap: 10px;
+
+        .countryCode {
+          width: 60px;
+          text-align: center;
+        }
+
+        .NumberField {
+          flex: 1;
+        }
+      }
+    }
+  }
+  .signForms {
+    max-width: 400px;
+    margin: auto;
+  }
+
+  .tabsContainer {
+    margin: 40px 15px 20px;
+
+    button {
+      padding: 13px 30px;
+      font-weight: 600;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      &.btn-secondary {
+        background: rgba($color: $dark, $alpha: 0.1);
+        color: $dark;
+        border: 1px solid rgba($color: $dark, $alpha: 0.1);
+      }
+
+      &.btn-1 {
+        border-radius: 30px 0 0 30px;
+      }
+
+      &.btn-2 {
+        border-radius: 0 30px 30px 0;
+      }
+    }
+  }
+}
+
+//css added by tanay
+.invaliddiv {
+  color: red;
+}
+
+@media only screen and (max-width: 1400px) {
+  .container-fluid {
+    .sliderection {
+      .sliderContainer {
+        .logo {
+          img {
+            width: 120px;
+          }
+        }
+
+        .sliderImg {
+          img {
+            width: 60%;
+          }
+
+          h1 {
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+    .formContainer {
+      .logoIcon {
+        @include roundShape(60px, 60px, $secondary);
+        img {
+          width: 70%;
+        }
+      }
+
+      h1 {
+        font-size: 20px;
+      }
+      label {
+        margin: 15px 0 4px !important;
+        font-weight: 600;
+        font-size: 12px;
+      }
+      form {
+        .inputField {
+          input {
+            height: 35px;
+            padding: 10px;
+          }
+          i {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: 15px;
+            font-size: 14px;
+          }
+          img {
+            width: 14px;
+          }
+        }
+
+        a {
+          font-size: 14px;
+          margin-top: 14px;
+        }
+
+        .phoneNumber {
+          .countryCode {
+            width: 45px;
+          }
+        }
+      }
+    }
+
+    .tabsContainer {
+      button {
+        padding: 5px 30px;
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .container-fluid {
+    .sliderection {
+      display: none;
+    }
+
+    .tabsContainer {
+      padding: 40px 15px 0;
+      text-align: center;
+
+      button {
+        padding: 8px 20px;
+      }
+    }
+
+    .formContainer {
+      padding: 15px 15px 40px;
+    }
+  }
+}

@@ -1,0 +1,172 @@
+@import "/src/styles.scss";
+
+.statistics {
+  .content {
+    background-color: $light;
+    border-radius: 15px;
+    display: flex;
+    align-items: flex-end;
+    gap: 15px;
+    margin: 15px;
+    padding: 15px;
+
+    .icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 10px;
+      background-color: rgba($color: $primary, $alpha: 0.1);
+      @include itemPosition(center, center);
+    }
+
+    .text {
+      font-weight: 500;
+      flex: 1;
+
+      .dataItems {
+        display: flex;
+        align-items: flex-end;
+        gap: 15px;
+        flex-wrap: wrap;
+
+        .data {
+          display: flex;
+          align-items: flex-end;
+        }
+      }
+    }
+  }
+}
+
+.graphs {
+  .content {
+    background-color: $light;
+    border-radius: 15px;
+    margin: 15px;
+    padding: 15px;
+    height: 100%;
+
+    h4 {
+      color: $dark;
+      font-size: 20px;
+    }
+  }
+}
+
+.sessions {
+  .content {
+    background-color: $light;
+    border-radius: 15px;
+    padding: 15px;
+    margin: 15px;
+
+    h4 {
+      color: $dark;
+      font-size: 20px;
+    }
+
+    .sessionData {
+      background-color: $light;
+      border-radius: 15px;
+      margin: 20px 0 0 0;
+      border: 1.5px solid $secondary;
+      margin: 15px;
+      height: 100%;
+
+      .image {
+        background-color: #faf2ef;
+        border-radius: 15px 15px 0 0;
+        height: 120px;
+
+        img {
+          width: 100%;
+          height: 120px;
+          border-radius: 15px 15px 0 0;
+        }
+      }
+
+      .textData {
+        padding: 15px 15px 0;
+
+        .time {
+          color: rgba($color: $dark, $alpha: 0.8);
+          font-weight: 500;
+
+          i {
+            display: inline-block;
+            margin-right: 10px;
+          }
+        }
+
+        h6 {
+          color: dark;
+          font-weight: 500;
+          font-size: 14px;
+        }
+
+        h5 {
+          color: dark;
+          font-weight: 600;
+          font-size: 16px;
+        }
+      }
+    }
+  }
+}
+
+.d-flex.chartPieData {
+  padding-top: 20px;
+  justify-content: space-around;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1400px) {
+  .statistics {
+    .content {
+      gap: 10px;
+      padding: 10px;
+
+      .icon {
+        width: 50px;
+        height: 50px;
+
+        img {
+          width: 35px;
+        }
+      }
+    }
+  }
+
+  .graphs {
+    .content {
+      h4 {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .sessions {
+    .content {
+      padding: 7.5px;
+
+      h4 {
+        font-size: 16px;
+        padding: 7.5px;
+      }
+
+      .sessionData {
+        margin: 7.5px;
+
+        .textData {
+          padding: 10px 10px 0;
+          h6 {
+            font-size: 12px;
+          }
+
+          h5 {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+  }
+}

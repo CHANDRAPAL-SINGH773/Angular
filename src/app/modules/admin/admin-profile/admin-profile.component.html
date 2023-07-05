@@ -1,0 +1,507 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+  <div class="container-fluid">
+    <div class="col-12 col-md-5 col-lg-6 text-start">
+      <h4 class="fs-28 fw-bold">Profile</h4>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <form [formGroup]="adminprofileForm" class="form">
+          <div class="row">
+            <div class="col">
+              <div class="uploadProfile">
+                <label for="upload">
+                  <div class="profileImage">
+                    <img
+                      class="rounded-circle"
+                      *ngIf="oneUserData?.image"
+                      [src]="imgsrc"
+                      class="img-fluid"
+                      alt="image"
+                    />
+                    <img
+                      class="rounded-circle"
+                      *ngIf="!oneUserData?.image"
+                      src="../../../../../assets/images/uploadProfile.png"
+                      class="img-fluid"
+                      alt="image"
+                    />
+                  </div>
+                  <input
+                    type="file"
+                    (change)="handleimage($event, 'image')"
+                    class="d-none"
+                    id="upload"
+                    placeholder="Image"
+                    formControlName="image"
+                    accept="image/x-png,image/jpg,image/jpeg"
+                  /><br />
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="firstName">First Name</label
+                ><span class="invaliddiv">*</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="firstName"
+                  placeholder="First Name"
+                  formControlName="firstName"
+                  (keypress)="onlyLettersAndSpace($event)"
+                  [ngClass]="{ 'is-invalid': submitted && adminprofileForm.get('firstName')!.errors?.['required']}"
+                />
+                <div
+                  *ngIf="
+                    submitted && adminprofileForm.controls['firstName']!.errors
+                  "
+                  class="invaliddiv"
+                >
+                  <div
+                    *ngIf="adminprofileForm.controls['firstName']!.errors?.['required']"
+                  >
+                    First Name is required
+                  </div>
+                </div>
+                <div
+                  *ngIf="adminprofileForm.controls['firstName']!.errors?.['whitespace']"
+                >
+                  Input must not contain only white spaces.
+                </div>
+                <div
+                  *ngIf="adminprofileForm.controls['firstName']!.errors?.['maxlength']"
+                >
+                  First Name should be at most 50 characters long.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="lastName">Last Name</label
+                ><span class="invaliddiv">*</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="lastName"
+                  placeholder="Last Name"
+                  formControlName="lastName"
+                  (keypress)="onlyLettersAndSpace($event)"
+                  [ngClass]="{ 'is-invalid': submitted && adminprofileForm.get('lastName')!.errors?.['required']}"
+                />
+                <div
+                  *ngIf="
+                    submitted && adminprofileForm.controls['lastName']!.errors
+                  "
+                  class="invaliddiv"
+                >
+                  <div
+                    *ngIf="adminprofileForm.controls['lastName']!.errors?.['required']"
+                  >
+                    Last Name is required
+                  </div>
+                </div>
+                <div
+                  *ngIf="adminprofileForm.controls['lastName']!.errors?.['whitespace']"
+                >
+                  Input must not contain only white spaces.
+                </div>
+                <div
+                  *ngIf="adminprofileForm.controls['lastName']!.errors?.['maxlength']"
+                >
+                  Last Name should be at most 50 characters long.
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="Gender">Gender</label>
+                <select
+                  id="Gender"
+                  formControlName="gender"
+                  class="form-control"
+                >
+                  <option value="Male" default>Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="dob">Date of Birth</label>
+
+                <input
+                  type="date"
+                  class="form-control"
+                  formControlName="date_of_birth"
+                  id="dob"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="mobile">Mobile No.</label
+                ><span class="invaliddiv">*</span>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="mobile"
+                  placeholder="Mobile No."
+                  formControlName="phone"
+                  (keypress)="onlyNumbers($event)"
+                  [ngClass]="{ 'is-invalid': submitted && adminprofileForm.get('phone')!.errors?.['required']}"
+                />
+                <div
+                  *ngIf="
+                    submitted && adminprofileForm.controls['phone']!.errors
+                  "
+                  class="invaliddiv"
+                >
+                  <div
+                    *ngIf="adminprofileForm.controls['phone']!.errors?.['required']"
+                  >
+                    Mobile number is required
+                  </div>
+                  <div
+                    *ngIf="adminprofileForm.controls['phone']!.errors?.['pattern']"
+                  >
+                    Mobile number should be 10 digits
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="Country">Country</label>
+
+                <select
+                  class="form-control"
+                  placeholder="Country"
+                  formControlName="country"
+                >
+                  <option
+                    *ngFor="let country of countryCodes"
+                    [value]="country.code"
+                  >
+                    {{ country.name }} ({{ country.code }})
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="Language">Language</label>
+                <select
+                  class="form-control"
+                  placeholder="Language"
+                  formControlName="language"
+                >
+                  <option
+                    *ngFor="let languages of languages"
+                    [value]="languages.name"
+                  >
+                    {{ languages.name }}
+                  </option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="City">City</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="City"
+                  placeholder="City"
+                  formControlName="city"
+                  (keypress)="onlyLettersAndSpace($event)"
+                />
+              </div>
+            </div>
+
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="Address">Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Address"
+                  placeholder="Address"
+                  formControlName="address"
+                  (keypress)="onlyAlphaNumeric($event)"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="Province">State/Province</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Province"
+                  placeholder="Province"
+                  formControlName="province"
+                  (keypress)="onlyLettersAndSpace($event)"
+                />
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="inputField">
+                <label for="Province">Support Mail ID</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="Province"
+                  placeholder="helpSupportEmail"
+                  formControlName="helpSupportEmail"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="inputField">
+                <label for="PostalCode">Postal Code/Zip Code</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="PostalCode"
+                  placeholder="Postal Code"
+                  formControlName="postalcode"
+                  (keypress)="onlyAlphaNumeric($event)"
+                />
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div class="inputField">
+                <label for="Bio">Bio</label>
+                <textarea
+                  type="text"
+                  class="form-control"
+                  id="Bio"
+                  rows="4"
+                  placeholder="Bio"
+                  formControlName="bio"
+                >
+                </textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <div class="inputField"></div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col d-flex">
+              <div class="buttons">
+                <button class="btn btn-main-outline" (click)="save()">
+                  Save
+                </button>
+              </div>
+              <div class="buttons">
+                <button
+                  class="btn btn-main"
+                  data-target="#passwordReset"
+                  data-toggle="modal"
+                >
+                  Reset Password
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="modal fade"
+    id="passwordReset"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="exampleModalCenterTitle"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reset Password</h5>
+          <button
+            type="button"
+            class="close"
+            data-dismiss="modal"
+            aria-label="Close"
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form [formGroup]="resetPasswordForm">
+          <div class="modal-body">
+            <div class="row">
+              <div class="col text-left">
+                <label for="currentpassword" class="px-2 pt-2"
+                  >Current Password </label
+                ><span class="invaliddiv">*</span>
+                <div class="inputField">
+                  <input
+                    id="currentpassword"
+                    [type]="password"
+                    formControlName="oldPassword"
+                    placeholder="Current Password"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && resetPasswordForm.get('oldPassword')!.errors?.['required']}"
+                  />
+
+                  <i
+                    class="bi bi-eye-slash"
+                    *ngIf="password === 'password'"
+                    alt=""
+                    (click)="togglePassword()"
+                  ></i>
+                  <i
+                    class="bi bi-eye-fill"
+                    alt=""
+                    *ngIf="password === 'text'"
+                    (click)="togglePassword()"
+                  ></i>
+                  <div
+                    *ngIf="
+                      submitted &&
+                      resetPasswordForm.controls['oldPassword']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="resetPasswordForm.controls['oldPassword']!.errors?.['required']"
+                    >
+                      Current Password is required
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-left">
+                <label for="currentpassword" class="px-2 pt-2"
+                  >New Password </label
+                ><span class="invaliddiv">*</span>
+                <div class="inputField">
+                  <input
+                    id="newpassword"
+                    [type]="newPass"
+                    placeholder="New Password"
+                    formControlName="newPassword"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && resetPasswordForm.get('newPassword')!.errors?.['required']}"
+                  />
+                  <div
+                    *ngIf="
+                      submitted &&
+                      resetPasswordForm.controls['newPassword']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="resetPasswordForm.controls['newPassword']!.errors?.['required']"
+                    >
+                      New Password is required
+                    </div>
+                    <div
+                      *ngIf="resetPasswordForm.controls['newPassword']!.errors?.['minlength']"
+                    >
+                      Password must be at least 6 characters
+                    </div>
+                  </div>
+                  <span>
+                    <i
+                      class="bi bi-eye-slash"
+                      *ngIf="newPass === 'password'"
+                      alt=""
+                      (click)="togglePassword2()"
+                    ></i>
+                    <i
+                      class="bi bi-eye-fill"
+                      alt=""
+                      *ngIf="newPass === 'text'"
+                      (click)="togglePassword2()"
+                    ></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col text-left">
+                <label for="currentpassword" class="px-2 pt-2"
+                  >Confirm Password</label
+                ><span class="invaliddiv">*</span>
+                <div class="inputField">
+                  <input
+                    id="confirmpassword"
+                    [type]="conf"
+                    placeholder="Confirm Password"
+                    formControlName="confirmpassword"
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && resetPasswordForm.get('confirmpassword')!.errors?.['required']}"
+                  />
+                  <div
+                    *ngIf="
+                      submitted &&
+                      resetPasswordForm.controls['confirmpassword']!.errors
+                    "
+                    class="invaliddiv"
+                  >
+                    <div
+                      *ngIf="resetPasswordForm.controls['confirmpassword']!.errors?.['required']"
+                    >
+                      Confirm Password is required
+                    </div>
+                  </div>
+                  <span>
+                    <i
+                      class="bi bi-eye-slash"
+                      *ngIf="conf === 'password'"
+                      alt=""
+                      (click)="togglePassword1()"
+                    ></i>
+                    <i
+                      class="bi bi-eye-fill"
+                      alt=""
+                      *ngIf="conf === 'text'"
+                      (click)="togglePassword1()"
+                    ></i
+                  ></span>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mt-2">
+                <button (click)="passwordReset()" class="btn btn-main">
+                  Submit Response
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- [disabled]="resetPasswordForm.invalid" -->
+</main>

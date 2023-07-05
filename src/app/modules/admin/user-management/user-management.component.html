@@ -1,0 +1,287 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-6 text-start">
+        <h4 class="fs-28 fw-bold">User List</h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select (change)="sortRoles($event)" class="form-select me-3">
+            <option value="">All</option>
+            <option value="mentor">Mentor</option>
+            <option value="mentee">Mentee</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input type="text" class="form-control border-end-0" placeholder="Search" (keyup)="onKeyUpEvent($event)" />
+            <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Phone Number</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <tr *ngFor="
+                    let data of UserData
+                      | paginate
+                        : {
+                            itemsPerPage: 10,
+                            currentPage: usersPage,
+                            totalItems: totaldocs
+                          }
+                  ">
+                  <td data-label="First Name">
+                    {{ data.firstName ? data.firstName : "-" }}
+                  </td>
+                  <td data-label="Last Name">
+                    {{ data.lastName ? data.lastName : "-" }}
+                  </td>
+
+                  <td data-label="Contact No.">
+                    {{ data.phone ? data.phone : "-" }}
+                  </td>
+                  <td data-label="Email">
+                    {{ data.email ? data.email : "-" }}
+                  </td>
+                  <td data-label="Role">
+                    {{
+                    data.role ? (data.role === 1 ? "Mentor" : "Mentee") : "-"
+                    }}
+                  </td>
+                  <td data-label="Status">
+                    <div class="form-check form-switch d-flex align-items-center">
+                      <input class="form-check-input" type="checkbox" role="switch"
+                        [checked]="data.status === 1 ? true : false" (click)="changeuserStatus($event, data._id)"
+                        id="flexSwitchCheckChecked" />
+                    </div>
+                  </td>
+                  <td data-label="Action">
+                    <p class="d-flex justify-content-end justify-content-lg-start">
+                      <button class="main-round-btn" (click)="getId(data._id)" data-toggle="modal"
+                        data-controls-modal="editUser" data-backdrop="static" data-keyboard="false"
+                        data-target="#editUser">
+                        <i class="bi bi-pencil" title="Edit"></i>
+                      </button>
+                      <button class="secondary-round-btn" [routerLink]="['/admin-user-profile']"
+                        [queryParams]="{ user_id: data._id }">
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                      <button class="grey-round-btn" (click)="getidForDelete(data._id)" data-toggle="modal"
+                        data-target="#deleteUser">
+                        <i class="bi bi-trash" title="delete"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageChange($event)" (pageChange)="usersPage = $event">
+            </pagination-controls>
+            <div class="check" *ngIf="UserData?.length === 0">
+              <h3 class="text-center w-100">No record found</h3>
+            </div>
+            <!-- <div class="check" *ngIf="patientList?.length === 0">
+                <h1 class="text-center w-100">
+                  {{ "Physician.pages.Patients.norecord" | translate }}
+                </h1>
+              </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit User  Modal ----- Start -->
+  <div class="modal fade" id="editUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Edit</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="usereditForm">
+            <div class="row">
+              <div class="col-12 my-1 px-0">
+                <div class="inputField">
+                  <input type="text" placeholder="First Name" formControlName="firstName" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && usereditForm.get('firstName')!.errors?.['required']}" />
+                </div>
+                <div *ngIf="
+                    submitted && usereditForm.controls['firstName']!.errors
+                  " class="invaliddiv">
+                  <div *ngIf="usereditForm.controls['firstName']!.errors?.['required']">
+                    First Name is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 my-1 px-0">
+                <div class="inputField">
+                  <input type="text" placeholder="Last Name" formControlName="lastName" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && usereditForm.get('lastName')!.errors?.['required']}" />
+                </div>
+
+                <div *ngIf="submitted && usereditForm.controls['lastName']!.errors" class="invaliddiv">
+                  <div *ngIf="usereditForm.controls['lastName']!.errors?.['required']">
+                    Last Name is required
+                  </div>
+                </div>
+              </div>
+              <div class="col-12 my-1 px-0">
+                <div class="inputField">
+                  <input type="text" placeholder="Email" readonly formControlName="email" class="form-control" />
+                </div>
+              </div>
+              <div class="col-12 my-1 px-0">
+                <div class="inputField">
+                  <input type="number" placeholder="Phone" formControlName="phone" class="form-control"
+                    [ngClass]="{ 'is-invalid': submitted && usereditForm.get('phone')!.errors?.['required']}" />
+                </div>
+                <div *ngIf="submitted && usereditForm.controls['phone']!.errors" class="invaliddiv">
+                  <div *ngIf="usereditForm.controls['phone']!.errors?.['required']">
+                    Phone Number is required
+                  </div>
+                </div>
+              </div>
+
+              <!--  -->
+              <div class="row">
+                <div class="col-md-6 p-0">
+                  <div class="inputField" *ngIf="preview">
+                    <label for="Verification">Verification Id</label>
+                    <div class="cursor ifreame-pdf">
+                      <button class="btn btn-main" data-toggle="modal" data-target="#viewpdf">
+                        View
+                      </button>
+
+                    </div>
+                  </div>
+
+
+                  <!-- <div class="inputField">
+                    <label for="Verification">Skill Certificate</label>
+                    <label for="uploadFileVerification" class="uploadFile">
+                      Certificate
+                      <input type="file" (change)="handleimage($event, 'skills')" class="form-control d-none"
+                        id="uploadFileVerification" placeholder="Image" formControlName="skills"
+                        accept="image/*,application/pdf" />
+                      
+                      <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                    </label>
+                  </div> -->
+                </div>
+                <div class="col-md-6" *ngIf="oneUserData?.validationid">
+                  <label for="Verified Badge">Verified Badge</label>
+                  <div class="form-check form-switch d-flex align-items-center">
+
+                    <input class="form-check-input" type="checkbox" role="switch"  (click)="changePathStatus($event)"
+                      [checked]="oneUserData?.verified_badge" />
+                  </div>
+                </div>
+              </div>
+              <!--  -->
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <div class="d-flex">
+            <button type="button" class="btn btn-secondary auto-width me-3" data-dismiss="modal">
+              Close
+            </button>
+            <button type="button" (click)="updateUser()" class="btn btn-main auto-width">
+              Save changes
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Edit User  Modal ----- End -->
+  <!-- Delete user Modal ----- Start -->
+  <div class="modal fade" id="deleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closemodal()"
+            id="closemodaldelete">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body text-center p-4">
+          <h3>Are you sure to delete this User?</h3>
+        </div>
+        <!-- <div class="modal-body">
+                   <input type="text" placeholder="Category Name" [(ngModel)]="categoryName" value = {{categoryName}} class="form-control"><br>
+               </div> -->
+        <div class="deletePairAllignments">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+          <button type="button" (click)="deleteUser()" class="btn btn-main">
+            Sure
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Delete user Modal ----- End -->
+
+
+  <!-- pdf/img show modal starts -->
+  <div class="modal fade" id="viewpdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">
+            View your document
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeaddModal">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <iframe class="cursor" type="application/pdf" [src]="preview | safe: 'resourceUrl'"></iframe>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">
+            Close
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- pdf/img show modal Ends -->
+</main>

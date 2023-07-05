@@ -1,0 +1,177 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <h1 class="text-center mt-3">All Disputes</h1>
+      <div class="filterBar">
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <input
+              type="text"
+              class="form-control"
+              (keyup)="onKeyUpEvent($event)"
+              placeholder="Search"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="col-md-4 mt-3"
+      *ngFor="
+        let data of disputeList
+          | paginate
+            : { itemsPerPage: 10, currentPage: pages, totalItems: totaldocs }
+      "
+    >
+      <div class="disputes" >
+        <div class="userRatings">
+          <div class="userProfile">
+            <div class="image">
+              <img
+                *ngIf="data?.image"
+                [src]="showImage + data.image"
+                alt="Image"
+              />
+              <img *ngIf="!data?.image" src="../../../assets/images/sessions.png"
+              alt="Image" />
+              <h4
+                class="evidence m-0 text-center"
+                [ngStyle]="{ 'padding-top': !data?.image ? '0.1rem' : '0' }"
+              >
+                {{ data?.image ? "Evidence" : "Evidence not uploaded" }}
+              </h4>
+            </div>
+            <div class="text">
+              <h3>
+                Raised By:
+                {{ data.firstName ? data.firstName : "-" }}
+                {{ data.lastName ? data.lastName : "-" }}
+              </h3>
+              <h3><span>Program Name:</span> {{ data.programName }}</h3>
+              <h3>
+                Session Name:
+                {{ data.session_name ? data.session_name : "-" }}
+              </h3>
+              <h3>
+                Comments:
+                <span> {{ data.comment ? data.comment : "-" }}</span>
+              </h3>
+            </div>
+            <div class="dateofPost">
+              <p>
+                {{
+                  data.updatedAt ? (data.updatedAt | date : "mediumDate") : "-"
+                }}
+                {{ data.updatedAt ? (data.updatedAt | date : "HH:mm") : "-" }}
+              </p>
+              <div *ngIf="data.commentReply; else next" class="mt-3">
+                <p>
+                  Your Response:
+                  {{ data.commentReply ? data.commentReply : "-" }}
+                </p>
+              </div>
+              <div class="mt-3">
+                <p>Admin Reply: {{data.adminReply ? data.adminReply : "Not reply yet"}}</p>
+              </div>
+              <ng-template #next>
+                <div class="text-end mt-3">
+                  <button
+                    class="btn btn-main"
+                    data-toggle="modal"
+                    (click)="getId(data._id)"
+                    data-target="#reply"
+                  >
+                    Reply
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="reviewContent">
+          <div class="row">
+            <div class="col-md-10"></div>
+
+           
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <div class="check text-center" *ngIf="disputeList?.length === 0">
+      No disputes Found Yet
+    </div>
+    <pagination-controls
+      class="mt-5"
+      (pageChange)="pageChange($event)"
+    ></pagination-controls>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="reply"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reply to Comment</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="replyForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+              <div class="inputField">
+                <textarea
+                  name=""
+                  id=""
+                  formControlName="reply"
+                  cols="30"
+                  rows="6"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && replyForm.get('reply')!.errors?.['required']}"
+                >
+                </textarea>
+              </div>
+              <div
+                *ngIf="submitted && replyForm.controls['reply']!.errors"
+                class="invaliddiv"
+              >
+                <div *ngIf="replyForm.controls['reply']!.errors?.['required']">
+                  Reply is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mt-3">
+              <button
+                (click)="reply()"
+                data-dismiss="modal"
+                class="btn btn-main"
+              >
+                Submit Response
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

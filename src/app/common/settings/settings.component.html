@@ -1,0 +1,328 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="tabButtons">
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'account'"
+          (click)="changeTab('account')"
+        >
+          My Account
+        </button>
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'bankDetails'"
+          (click)="changeTab('bankDetails')"
+          *ngIf ="role !== 2"
+        >
+          Bank Details
+        </button>
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'password'"
+          (click)="changeTab('password')"
+        >
+          Change Password
+        </button>
+        <!-- <button
+          class="btn btn-grey"
+          [class.active]="ids === 'notification'"
+          (click)="changeTab('notification')"
+        >
+          Notification Settings
+        </button> -->
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'termsCondition'"
+          (click)="changeTab('termsCondition')"
+        >
+          Terms & Conditions
+        </button>
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'siteMap'"
+          (click)="changeTab('siteMap')"
+        >
+          Site Map
+        </button>
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'blogPage'"
+          (click)="changeTab('blogPage')"
+        >
+          Blog Page
+        </button>
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'aboutUs'"
+          (click)="changeTab('aboutUs')"
+        >
+          About Us
+        </button>
+        <button
+          class="btn btn-grey"
+          [class.active]="ids === 'contactUs'"
+          (click)="changeTab('contactUs')"
+        >
+          Contact Us
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'account'">
+    <div class="col">
+      <div class="row p-3 align-items-center">
+        <div class="col-6">
+          <h4>My Account</h4>
+        </div>
+        <!-- <div class="col-6 text-end">
+          <button class="btn btn-main btn-edit">Edit Profile</button>
+        </div> -->
+      </div>
+      <div class="primaryLayout">
+        <div class="row p-3">
+          <div class="profileImage">
+            <div class="image">
+              <img
+                class="rounded-circle"
+                *ngIf="oneUserData?.image"
+                [src]="imgsrc"
+                class="img-fluid"
+                alt="image"
+              />
+              <img
+                class="rounded-circle"
+                *ngIf="!oneUserData?.image"
+                src="../../../../../assets/images/uploadProfile.png"
+                [src]="imgsrc"
+                class="img-fluid"
+                alt="image"
+              />
+              <!-- <img src="../../../assets/images/mentorImage.png" alt="" /> -->
+            </div>
+          </div>
+        </div>
+        <div class="row px-3 pb-3">
+          <div class="col personalInfo">
+            <div class="row pb-3">
+              <div class="col">
+                <h5>Personal Info</h5>
+              </div>
+            </div>
+            <div class="row justify-content-between pb-3">
+              <div class="col-lg-2 col-md-3 col-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">First Name</p>
+                  <h4>
+                    {{ oneUserData?.firstName ? oneUserData?.firstName : "-" }}
+                  </h4>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-3 col-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Last Name</p>
+                  <h4>
+                    {{ oneUserData?.lastName ? oneUserData?.lastName : "-" }}
+                  </h4>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-3 col-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Gender</p>
+                  <h4>{{ oneUserData?.gender ? oneUserData?.gender : "-" }}</h4>
+                </div>
+              </div>
+              <div class="col-lg-2 col-md-3 col-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Date of Birth</p>
+                  <h4>
+                    {{
+                      oneUserData?.date_of_birth
+                        ? oneUserData?.date_of_birth
+                        : "-"
+                    }}
+                  </h4>
+                </div>
+              </div>
+              <!-- <div class="col-lg-2 col-md-3 col-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Age</p>
+                  <h4>{{ oneUserData?.age ? oneUserData?.age : "-" }}</h4>
+                </div>
+              </div> -->
+            </div>
+            <div class="row justify-content-start pb-3">
+              <div class="col-lg-3 col-sm-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Mobile No.</p>
+                  <h4>{{ oneUserData?.phone ? oneUserData?.phone : "-" }}</h4>
+                </div>
+              </div>
+              <div class="col-lg-3 col-sm-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Language</p>
+                  <h4>
+                    {{ oneUserData?.language ? oneUserData?.language : "-" }}
+                  </h4>
+                </div>
+              </div>
+              <div class="col-lg-6 mt-2 mt-lg-0">
+                <div class="data">
+                  <p class="label">Address</p>
+                  <h4>
+                    {{ oneUserData?.address ? oneUserData?.address : "-" }}
+                  </h4>
+                </div>
+              </div>
+            </div>
+            <div class="row pb-3">
+              <div class="col">
+                <div class="data">
+                  <p class="label">Bio</p>
+                  <h4 class="smallText">
+                    {{ oneUserData?.bio ? oneUserData?.bio : "-" }}
+                  </h4>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <div class="data">
+                  <p>Verification ID</p>
+                  <div class="profileImage">
+                    <img
+                      *ngIf="oneUserData?.validationid"
+                      [src]="verificationIdFiles"
+                      class="img-fluid"
+                      alt="image"
+                    />
+                    <img
+                      *ngIf="!oneUserData?.validationid"
+                      src="../../../assets/images/document.png"
+                      [src]="verificationIdFiles"
+                      class="img-fluid"
+                      alt="image"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row px-3 pb-3">
+          <div class="col certifications">
+            <div class="row pb-3">
+              <div class="col">
+                <h5 class="largeText">Skill Certification Info</h5>
+              </div>
+            </div>
+            <div
+              class="row justify-content-between pb-3"
+              *ngFor="let skill of skills"
+            >
+              <div class="col-xl-6">
+                <div class="row">
+                  <div class="col-sm-6 mt-2 mt-sm-0" *ngFor="let category of gotCategories">
+                    <div class="data">
+                      <p class="label">Skill Type</p>
+                      <h4>{{category?.categoryName}}</h4>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mt-2 mt-sm-0">
+                    <div class="data">
+                      <p class="label">Skill Name</p>
+                      <h4>{{ skill.skillName }}</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <div class="data">
+                      <p>Verification ID</p>
+                      <img src="../../../assets/images/document.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- <div class="col-xl-6">
+                <div class="row">
+                  <div class="col-sm-6 mt-2 mt-sm-0">
+                    <div class="data">
+                      <p class="label">Skill Type</p>
+                      <h4>Investment or Business</h4>
+                    </div>
+                  </div>
+                  <div class="col-sm-6 mt-2 mt-sm-0">
+                    <div class="data">
+                      <p class="label">Skill Name</p>
+                      <h4>Investment or Business</h4>
+                    </div>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <div class="col">
+                    <div class="data">
+                      <p>Verification ID</p>
+                      <img src="../../../assets/images/document.png" alt="" />
+                    </div>
+                  </div>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row p-3">
+          <div class="buttonBox">
+            <button class="btn btn-grey" (click)="logOut()">
+              <i class="fa-solid fa-arrow-right-from-bracket" ></i> Log Out
+            </button>
+            <!-- <div class="accountUpdate">
+              <button class="btn btn-plane">Delete Account</button>
+              <button class="btn btn-main">Add Skills</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'bankDetails' ">
+    <div class="col">
+      <app-change-bank-details></app-change-bank-details>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'password'">
+    <div class="col">
+      <app-change-password></app-change-password>
+    </div>
+  </div>
+  <!-- <div class="row" *ngIf="ids === 'notification'">
+    <div class="col">
+      <app-notification-settings></app-notification-settings>
+    </div>
+  </div> -->
+  <div class="row" *ngIf="ids === 'termsCondition'">
+    <div class="col">
+      <app-terms-conditions></app-terms-conditions>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'siteMap'">
+    <div class="col">
+      <app-site-map></app-site-map>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'blogPage'">
+    <div class="col">
+      <app-blog-page></app-blog-page>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'aboutUs'">
+    <div class="col">
+      <app-about-us></app-about-us>
+    </div>
+  </div>
+  <div class="row" *ngIf="ids === 'contactUs'">
+    <div class="col">
+      <app-contact-us></app-contact-us>
+    </div>
+  </div>
+</div>

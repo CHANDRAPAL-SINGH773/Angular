@@ -1,0 +1,71 @@
+<div class="container-fluid">
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col-12 centerMid">
+        <div class="content mt-3">
+          <img src="../.../../../../assets/images/postOn SocialMdia.png" alt="" class="w-50 d-block" />
+          <h3 class="mediumText">Post on Social Media and Get 5% Off</h3>
+          <p class="smallText">on Your Next Mentorship Program Payment.</p>
+          <form [formGroup]="socialMediaForm">
+            <div class="form">
+              <!-- <div class="inputField">
+                <label for="postLink" class="smallText">
+                  Paste Your Post Link</label>
+                <input type="text" class="form-control" id="postLink" />
+                <img src="../../../assets/images/icon/copyLink.svg" alt="" />
+              </div> -->
+
+              <div class="inputField">
+                <label for="postLink" class="smallText">
+                  Paste Your Post Link</label>
+                <input id="postLink" type="text" placeholder="Paste Your Post Link" class="form-control"
+                  formControlName="media_post"
+                  [ngClass]="{ 'is-invalid': submitted && socialMediaForm.get('media_post')!.errors?.['required']}" />
+                <img src="../../../assets/images/icon/copyLink.svg" alt="" />
+              </div>
+              <div *ngIf="
+                  submitted && socialMediaForm.controls['media_post']!.errors
+                " class="invaliddiv">
+                <div *ngIf="socialMediaForm.controls['media_post']!.errors?.['required']">
+                  Post Link is Required
+                </div>
+              </div>
+              <p class="terms">
+                <a class="cursor-pointer" (click)="getStaticPages()" data-target="#terms" data-toggle="modal">Terms and Conditions for Social Sharing:</a> How It Will Be Applied to the Next Payment 
+              </p>
+            </div>
+            <button class="btn btn-main" (click)="submit()">Post Now</button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="terms" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title"></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <h3> {{ this.content.heading?( this.content.heading ):"-" }}</h3>
+         <p> {{ this.content.text? stripTags( this.content.text ):"Contact to Pxalm" }}</p>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <button  data-dismiss="modal" class="btn btn-main">
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

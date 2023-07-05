@@ -1,0 +1,17 @@
+.space {
+    margin: 10px;
+
+}
+
+label.uploadFile {
+    height: 30px;
+    padding: 3px 15px;
+    font-size: 12px;
+    display: block;
+    width: 100%;
+    border: 1px solid #ced4da;
+    position: relative;
+    padding: 4px 25px 4px 10px;
+    height: 35px;
+    border-radius: 8px
+}

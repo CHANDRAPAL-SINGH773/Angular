@@ -1,0 +1,213 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-6 text-start">
+        <h4 class="fs-28 fw-bold">Dispute List</h4>
+      </div>
+
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <div class="row">
+            <div class="col-md-6">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="startDate"
+                (change)="onFilterChange()"
+                name="startDate"
+              />
+            </div>
+            <div class="col-md-6">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="endDate"
+                (change)="onFilterChange()"
+                name="endDate"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="filterBar">
+          <button
+            class="btn btn-grey mt-4"
+            id="search"
+            (change)="onFilterChange()"
+          >
+            Search
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="col-6"
+      *ngFor="
+        let data of disputeList
+          | paginate
+            : { itemsPerPage: 10, currentPage: pages, totalItems: totaldocs }
+      "
+    >
+      <div class="disputes">
+        <div class="userRatings">
+          <div class="userProfile">
+            <div class="text">
+              <h2>
+                <span>Program Name -</span>
+                {{ data.programData?.mentorship_name }}
+              </h2>
+              <h4>
+                <small> Session Name -</small>
+                {{ data.session_id.name ? data.session_id.name : "-" }}
+              </h4>
+              <h6>
+                <small>Raised By -</small>
+                {{
+                  data.raisedById.firstName ? data.raisedById.firstName : "-"
+                }}
+                {{ data.raisedById.lastName ? data.raisedById.lastName : "-" }}
+                ({{
+                  data.raisedById.role === 1
+                    ? "Mentor"
+                    : data.raisedById.role === 2
+                    ? "Mentee"
+                    : "-"
+                }})
+              </h6>
+
+              <p>
+                <small>Comments -</small>
+                <span> {{ data.comment ? data.comment : "-" }}</span>
+              </p>
+            </div>
+          </div>
+          <div class="image">
+            <img
+              *ngIf="data?.image"
+              [src]="showImage + data.image"
+              alt="Image"
+            />
+            <h4
+              class="evidence m-0 text-center"
+              [ngStyle]="{ 'padding-top': !data?.image ? '5rem' : '0' }"
+            >
+              {{ data?.image ? "Evidence" : "Evidence not uploaded" }}
+            </h4>
+          </div>
+          <div class="dateofPost">
+            <p>
+              {{
+                data.updatedAt ? (data.updatedAt | date : "mediumDate") : "-"
+              }}
+              {{ data.updatedAt ? (data.updatedAt | date : "HH:mm") : "-" }}
+            </p>
+            <div *ngIf="data.adminReply; else next" class="text-end mt-3">
+              <p>
+                Your response : {{ data.adminReply ? data.adminReply : "-" }}
+              </p>
+            </div>
+            <br />
+
+            <div class="form-check form-switch d-flex align-items-center">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                role="switch"
+                [checked]="data.resolved === 'resolved'"
+                (change)="changeReplyStatus($event, data._id)"
+                id="flexSwitchCheckChecked"
+              />
+              <label class="form-check-label" for="flexSwitchCheckChecked">
+                <span *ngIf="data.resolved === 'resolved'">
+                  <span>Resolve</span>
+                </span>
+              </label>
+            </div>
+            <ng-template #next>
+              <div class="text-end mt-3">
+                <button
+                  class="btn btn-main"
+                  data-toggle="modal"
+                  (click)="getId(data._id)"
+                  data-target="#reply"
+                >
+                  Reply
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="pageChange($event)"></pagination-controls>
+</main>
+
+<div
+  class="modal fade"
+  id="reply"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reply to Comment</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form [formGroup]="replyForm">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col text-center">
+              <div class="inputField">
+                <textarea
+                  name=""
+                  id=""
+                  formControlName="adminReply"
+                  cols="30"
+                  rows="6"
+                  class="form-control"
+                  [ngClass]="{ 'is-invalid': submitted && replyForm.get('adminReply')!.errors?.['required']}"
+                >
+                </textarea>
+              </div>
+              <div
+                *ngIf="submitted && replyForm.controls['adminReply']!.errors"
+                class="invaliddiv"
+              >
+                <div
+                  *ngIf="replyForm.controls['adminReply']!.errors?.['required']"
+                >
+                  Reply is required
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 mt-3">
+              <button (click)="reply()" class="btn btn-main" data-dismiss="modal">
+                Submit Response
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

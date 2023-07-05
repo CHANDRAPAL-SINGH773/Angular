@@ -1,0 +1,148 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon" (click)="goBack()">
+            <i class="fa-solid fa-chevron-left"></i>
+          </div>
+          <p class="mb-0">Raise a Dispute</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row p-3 pb-0">
+      <div class="col">
+        <h5 class="mb-0">Selected Session</h5>
+      </div>
+    </div>
+    <div class="row completedSessions">
+      <div class="col-lg-6">
+        <div class="menteesContent">
+          <div class="menteeProfile">
+            <div class="image">
+              <img *ngIf="allData?.image&&isloading" [src]="showImage+allData.image" class="img-fluid" alt="Image">
+              <img *ngIf="!allData?.image&&isloading" src="../../../../../../../assets/images/sessions.png" class="img-fluid"
+                alt="">
+
+            </div>
+            <div class="text">
+              <h3>{{allData.session_name?(allData.session_name):"-"}}</h3>
+              <p>
+                {{allData.description?(allData.description):"-"}}
+              </p>
+            </div>
+          </div>
+          <!-- <img
+            src="../../../../../../../../assets/images/icon/close.svg"
+            alt=""
+            class="close"
+          /> -->
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="menteesContent">
+          <div class="menteeProfile">
+            <div class="image">
+              <img *ngIf="allData?.userimage&&isloading" [src]="showImage+allData.userimage" class="img-fluid" alt="Image">
+              <img *ngIf="!allData?.userimage&&isloading" src="../../../../../../../assets/images/sessions.png"
+                class="img-fluid" alt="">
+            </div>
+            <div class="text">
+              <h3>{{allData.firstName?(allData.firstName):"-"}} {{allData.lastName?(allData.lastName):"-"}}</h3>
+              <p>{{allData.bio?(allData.bio):"-"}} </p>
+            </div>
+          </div>
+          <!-- <img
+            src="../../../../../../../../assets/images/icon/close.svg"
+            alt=""
+            class="close"
+          /> -->
+        </div>
+      </div>
+    </div>
+    <div class="form">
+      <form [formGroup]="addDispute">
+      <div class="row">
+        <div class="col-12">
+          <div class="inputField">
+            <label for="comment">Add Comment</label>
+            <textarea name="" class="form-control" formControlName="comment" id="comment" cols="30" rows="6"
+            [ngClass]="{ 'is-invalid': submitted && addDispute.get('comment')!.errors?.['required']}">
+          </textarea>
+              <div *ngIf="submitted && addDispute.controls['comment']!.errors" class="invaliddiv">
+                <div *ngIf="addDispute.controls['comment']!.errors?.['required']"> Comment is required
+                </div>
+              </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="inputField">
+           
+            <label for="Verification">Upload Evidence</label>
+            <label for="uploadFileVerification" class="uploadFile">
+              Upload Evidence
+              <input type="file" (change)="handleimage($event,'image')" class="form-control d-none"
+                id="uploadFileVerification" placeholder="Image" formControlName="image"
+                accept="image/*">
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            </label>
+          </div>
+         
+        </div>
+        <div class="col-md-2" *ngIf="imgsrc">
+          <div class="inputField">
+            <label for="Verification">Evidence </label>
+            <div class="cursor ifreame-pdf">
+              <button class="btn btn-main"  data-toggle="modal"
+                data-target="#viewpdf">View</button>
+              <!-- <iframe class="cursor" type="application/pdf" [src]="verificationIdFiles | safe: 'resourceUrl'"></iframe> -->
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-md-4">
+          <div class="inputField">
+            <label for="Evidence">Upload Evidence</label>
+            <label for="UploadCertificate" class="uploadFile">
+              Upload Certificate
+              <input type="file" id="Evidence" class="form-control d-none" />
+              <i class="fa-solid fa-arrow-up-from-bracket"></i>
+            </label>
+          </div>
+        </div> -->
+      </div>
+   
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="buttonsPairAllignment">
+            <button class="btn btn-main" (click)="raiseDisput()">Raise Dispute</button>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="viewpdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+          View your document
+        </h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeaddModal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <iframe class="cursor" type="application/pdf" [src]="imgsrc | safe: 'resourceUrl'"></iframe>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,195 @@
+@import "/src/styles.scss";
+
+.sessionContent {
+  @include itemPosition(center, flex-start);
+  gap: 15px;
+  padding: 15px;
+  padding-bottom: 1px solid $secondary;
+  h3 {
+    font-size: 22px;
+  }
+  .sessionImage {
+    width: 130px;
+    height: 130px;
+    border-radius: 15px;
+
+    img {
+      width: 100%;
+      border-radius: 8px;
+      height: 100%;
+    }
+
+    img .img-fluid {
+      width: 100%;
+      border-radius: 10px;
+      height: auto;
+    }
+  }
+  .sessionText {
+    p {
+      span {
+        font-weight: 500;
+      }
+    }
+  }
+  .sessionDescription {
+    p {
+      overflow-wrap: anywhere;
+    }
+  }
+}
+.sessionoptions {
+  @include itemPosition(center, flex-start);
+  gap: 25px;
+  padding: 15px;
+  flex-wrap: wrap;
+
+  .sessionpart {
+    p {
+      font-weight: 500;
+    }
+    h4 {
+      font-size: 20px;
+      a {
+        color: #006bb4;
+        display: inline-block;
+        margin-right: 15px;
+      }
+    }
+    .icon {
+      @include roundShape(40px, 40px, $primary);
+      border-radius: 10px;
+      i {
+        color: $light;
+      }
+    }
+  }
+}
+
+.offlineoptions {
+  @include itemPosition(center, flex-start);
+  gap: 20px;
+  flex-wrap: wrap;
+  padding: 15px;
+  .offlinepart {
+    cursor: pointer;
+    border-radius: 8px;
+    min-width: 280px;
+    @include itemPosition(center, space-between);
+    background-color: $secondary;
+    padding: 10px;
+    color: $dark;
+    .location {
+      gap: 10px;
+      @include itemPosition(center, flex-start);
+    }
+  }
+  p {
+    font-weight: 500;
+  }
+}
+
+.buttonsPairAllignments {
+  @include itemPosition(center, flex-end);
+  margin: 15px 7.5px;
+  gap: 15px;
+  flex-wrap: wrap;
+
+  .btn {
+    width: 200px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .sessionoptions {
+    .sessionpart {
+      h4 {
+        font-size: 20px;
+        a {
+          color: #006bb4;
+          display: inline-block;
+          margin-right: 15px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          max-width: 160px;
+        }
+      }
+    }
+  }
+  .buttonsPairAllignments {
+    @include itemPosition(center, center);
+  }
+}
+
+.modal-dialog {
+  .modal-content {
+    .modal-body {
+      .AmountBox {
+        padding: 25px;
+        background-color: rgba($color: $dark, $alpha: 0.02);
+        border-radius: 15px;
+        text-align: center;
+        margin: 25px;
+
+        h4 {
+          font-size: 18px;
+        }
+
+        h3 {
+          font-size: 25px;
+        }
+      }
+
+      .bankcard {
+        @include itemPosition(center, space-between);
+        background-color: rgba($color: $dark, $alpha: 0.02);
+        padding: 10px;
+        border-radius: 15px;
+        margin: 15px 0;
+        cursor: pointer;
+
+        .cardList {
+          @include itemPosition(center, space-between);
+          gap: 15px;
+
+          .bankIcon {
+            width: 50px;
+            height: 50px;
+            border-radius: 8px;
+            padding: 10px;
+            background-color: $light;
+
+            img {
+              width: 100%;
+            }
+          }
+        }
+
+        .nextArrow {
+          margin-right: 15px;
+        }
+      }
+
+      img {
+        width: 50%;
+        display: block;
+        margin: 20px auto;
+      }
+
+      h4 {
+        font-size: 17px;
+        text-align: center;
+        margin: 25px auto;
+        max-width: 250px;
+      }
+    }
+  }
+}
+p.dollarprice span {
+  position: absolute;
+  margin-left:  -178px !important;
+  margin-top: 13px !important;
+}
+
+p.dollarprice input.form-control {
+  padding: 0 17px !important;
+}

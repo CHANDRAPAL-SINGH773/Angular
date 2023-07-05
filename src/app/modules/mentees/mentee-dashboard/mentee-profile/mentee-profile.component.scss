@@ -1,0 +1,21 @@
+@import "/src/styles.scss";
+
+.uploadAddbtn {
+  @include itemPosition(flex-end, center);
+
+  .inputField {
+    flex: 1;
+  }
+
+  .btn-main {
+    margin-bottom: 17.5px;
+  }
+}
+.profileImage {
+  height: 150px !important;
+}
+
+.profileImage img.img-fluid {
+  height: 150px !important;
+  width: 150px !important;
+}

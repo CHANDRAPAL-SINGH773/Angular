@@ -1,0 +1,97 @@
+@import "../../../styles.scss";
+.filterBar {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+  .searchBox {
+    border: 1px solid $secondary;
+    max-width: 550px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    color: $dark;
+    .icon {
+      width: 50px;
+      height: 50px;
+      @include itemPosition(center, center);
+    }
+    .searchBox {
+      flex: 1;
+      border: none;
+      input {
+        border: none;
+        outline: none;
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.tab {
+  background-color: $light;
+  border-radius: 15px;
+  margin: 15px;
+  .tabHeader {
+    @include itemPosition(center, space-between);
+    border-bottom: 1px solid $secondary;
+    padding: 15px;
+    .tabTitle {
+      max-width: 350px;
+      @include itemPosition(center, space-between);
+      gap: 15px;
+      .image {
+        width: 70px;
+        height: 70px;
+        img {
+          width: 100%;
+          border-radius: 10px;
+        }
+      }
+    }
+    .controller {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      span {
+        font-weight: 500;
+        color: $primary;
+      }
+    }
+  }
+  .tabContent {
+    padding: 7.5px;
+    .content {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+      background-color: rgba($color: $secondary, $alpha: 0.2);
+      padding: 15px;
+      border-radius: 15px;
+      border: 1px solid $secondary;
+      margin: 7.5px;
+      .text {
+        flex: 1;
+        h5.title {
+          width: 190px;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          white-space: nowrap;
+        }
+        .time {
+          color: rgba($color: $dark, $alpha: 0.8);
+          font-weight: 500;
+          font-size: 14px;
+          i {
+            display: inline-block;
+            margin-right: 10px;
+          }
+        }
+        .price {
+          p {
+            font-weight: 500;
+          }
+        }
+      }
+    }
+  }
+}

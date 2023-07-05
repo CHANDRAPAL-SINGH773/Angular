@@ -1,0 +1,46 @@
+@import "/src/styles.scss";
+.sidebar {
+  padding: 15px;
+  i.toggler {
+    position: absolute;
+    top: 25px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 20px;
+  }
+}
+
+.toggleSidebar {
+  transform: translateX(0px) !important;
+}
+
+@media only screen and (max-width: 1400px) {
+  .sidebar {
+    .title {
+      text-align: center;
+      a {
+        img {
+          width: 150px;
+          margin: auto;
+        }
+      }
+    }
+    ul.sidebar-nav {
+      li.nav-item {
+        a {
+          font-size: 12px;
+
+          img {
+            width: 14px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1200px) {
+  .sidebar {
+    transform: translateX(-265px);
+  }
+}

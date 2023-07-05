@@ -1,0 +1,234 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <i class="fa-solid fa-chevron-left" [routerLink]="['/mentee/mentee-dashboard/mentor-programs-details']"
+              [queryParams]="{ id:idforback,user_id: id}"> </i>
+            <!-- [routerLink]="['/mentor/mentor-dashboard/mentorshipDetails']" -->
+          </div>
+          <p class="mb-0">Programs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col">
+        <div class="profileContent">
+          <div class="profile">
+            <div class="image">
+              <span>
+                <img width="100" height="100" *ngIf="singleData?.image" [src]="showImage+(singleData?.image)"
+                  class="img-fluid" alt="">
+                <img width="100" height="100" *ngIf="!(singleData?.image)"
+                  src="../../../../../assets/images/sessions.png" class="img-fluid" alt="">
+                <img class="medal" *ngIf="singleData?.verify_badge" src="../../../../../assets/images/medal.png"
+                  alt="" />
+              </span>
+              <!-- <img src="../../../../../assets/images/tabImage1.png" alt="" /> -->
+            </div>
+            <div class="text2">
+              <h5 class="title">{{catName}}</h5>
+              <h6 class="subtitle">{{singleData?.mentorship_name}}</h6>
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>&nbsp;
+                <span>{{singleData?.start_date?(singleData?.start_date | date:"mediumDate"):"-" }} </span>&nbsp;
+                <i class="fa-solid fa-clock"></i>&nbsp;<span> {{startTime | timeFormat}}</span>
+              </div>
+              <div class="price">
+                <div class="row">
+                  <div class="col-5">
+                    <h5>{{singleData?.price?(singleData?.price | currency):'-'}}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="chat">
+            <div class="chatIcon" (click)="createGroupFuntion()">
+              <img src="../.../../../../../../../assets/images/icon/ChatIcon.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="tabButtons">
+          <button class="btn btn-tab" [class.active]="ids === 'program'" (click)="changeTab('program')">
+            Program Details
+          </button>
+          <button class="btn btn-tab" [class.active]="ids === 'sessions'" (click)="changeTab('sessions')">
+            Session Details
+          </button>
+          <button class=" btn btn-tab icon" [class.active]="ids === 'calender'" (click)="changeTab('calender')">
+            <i class="fa-solid fa-calendar-days"></i>
+          </button>
+          <button class="btn btn-main auto-width d-block" [routerLink]="['/mentee/mentee-dashboard/programs']"
+            [queryParams]="{ programid: programid}"> Book Program</button>
+        </div>
+      </div>
+    </div>
+    <div class="row tabContent" *ngIf="ids === 'program'">
+      <div class="col-12 programDetails">
+        <h3>Program Description</h3>
+        <p>
+          {{singleData.description?(singleData?.description):"-"}}
+        </p>
+        <div class="row mt-4">
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Mentorship Mode</p>
+              <h4 *ngIf="singleData?.mentorship_mode === 1">Online</h4>
+              <h4 *ngIf="singleData?.mentorship_mode === 0">Offline</h4>
+            </div>
+          </div>
+          <div *ngIf="singleData?.mentorship_mode === 0" class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Location</p>
+              <h4>{{singleData.location?(singleData.location):"-"}}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Mentee allowed</p>
+              <h4>{{singleData?.mentee_limit}}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Registered Mentees</p>
+              <h4>{{registerMetees}}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Available Slots</p>
+              <h4>{{availableSlots}}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Mentor Availability</p>
+              <h4>{{singleData.availibility_from?(singleData.availibility_from | timeFormat):"-"}} to
+                {{singleData.availibility_to?(singleData.availibility_to | timeFormat):"-"}}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 aboutMentor" *ngIf="aboutMentor">
+        <h3>About Mentor</h3>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="mentorContent">
+              <div class="mentorProfile">
+                <div class="image">
+                  <img class="profile" src="../../../../../assets/images/mentorImage.png" alt="" />
+                  <img src="../../../../../assets/images/icon/verify.svg" alt="" class="verify" />
+                </div>
+                <div class="aboutMentorProfile">
+                  <h3>Ronald Richards</h3>
+                  <p>10 Years Experience</p>
+                </div>
+              </div>
+              <div class="heading">
+                <div class="stars">
+                  <i class="fa-solid fa-star"></i> <span> 4.5</span>
+                </div>
+              </div>
+            </div>
+            <p>
+              I have been working for the last 10+ years in the industry, I have
+              a great experience with Amet minim mollit non deserunt ullamco est
+              sit aliqua dolor do amet sint. Velit officia consequat duis enim
+              velit mollit. Exercitation veniam consequat sunt nostrud amet Amet
+              minim mollit.
+            </p>
+            <div class="Biodata">
+              <div class="data">
+                <p>Language</p>
+                <h4>Language</h4>
+              </div>
+              <div class="data">
+                <p>Past Programs</p>
+                <h4>240</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row tabContent" *ngIf="ids === 'sessions'">
+      <div class="col-md-6" *ngFor="let field of allData   | paginate
+      : {
+          itemsPerPage: 10,
+          currentPage: detailPage,
+          totalItems: totaldocs
+        }; let i = index
+      
+     
+">
+        <div class="content">
+          <div class="contentDetail">
+            <div class="image">
+              <span class="programIMg">
+                <img width="100" height="100" class="rounded-circle programImage" *ngIf="field?.image"
+                  [src]="showImage+field?.image" class="img-fluid" alt="">
+                <img width="100" height="100" class="rounded-circle programImage" *ngIf="!field?.image"
+                  src="../../../../../../assets/images/sessionDetails.png" class="img-fluid" alt="">
+              </span>
+              <!-- <img src="../../../../assets/images/currentsession1.png" alt="" /> -->
+            </div>
+            <div class="text">
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>{{field.start_date?(field.start_date | date:"mediumDate"):"-"}} | {{field.time?(field.time |
+                  timeFormat):"-"}}
+                </span>
+              </div>
+              <h6 class="subtitle">
+                {{field.session_name?field.session_name:"-"}}
+              </h6>
+              <h5 class="title">Session duration</h5>
+              <h6 class="title">{{field.session_duration?field.session_duration :"-"}} hour(s)</h6>
+            </div>
+          </div>
+        </div>
+       
+      </div>
+      <div *ngIf="allData.length ==0">
+        <p class="text-center"> No session found for this program.</p>
+      </div>
+      <pagination-controls (pageChange)="pageChange($event)" (pageChange)="detailPage = $event">
+      </pagination-controls>
+    </div>
+
+  </div>
+</div>
+
+<div class="tab" *ngIf="ids === 'calender'">
+  <div class="tabContent">
+    <div class="row">
+      <div class="col">
+        <div class="demo-app">
+
+
+          <div class='demo-app-main'>
+            <full-calendar *ngIf='calendarVisible' [options]='calendarOptions'>
+              <ng-template #eventContent let-arg>
+                <div [routerLink]="['/mentee/mentee-dashboard/added-sessions']"
+                  [queryParams]="{session_id:arg.event.extendedProps._id}">
+                  <p class="calederText">{{ arg.event.title }}</p>
+                  <b>{{ arg.event.extendedProps.time | timeFormat }}</b>
+
+                </div>
+              </ng-template>
+            </full-calendar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

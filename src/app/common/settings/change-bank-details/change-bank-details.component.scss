@@ -1,0 +1,62 @@
+@import "/src/styles.scss";
+
+.bankInfo {
+  padding: 0 15px 0;
+
+  .data {
+    color: rgba($color: $dark, $alpha: 0.8);
+
+    p {
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    h4 {
+      font-size: 18px;
+    }
+  }
+}
+
+.buttonBox {
+  text-align: end;
+
+  .btn {
+    width: 250px;
+  }
+}
+
+.inputField {
+  position: relative;
+
+  input {
+    height: 46px;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba($color: $input, $alpha: 0.15);
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+
+  img {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+  }
+
+  i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 15px;
+  }
+}
+
+.settingBankDetails {
+  width: 50%;
+  border: 1px solid #eee;
+  padding: 10px;
+  border-radius: 10px;
+}

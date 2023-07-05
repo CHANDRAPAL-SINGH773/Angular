@@ -1,0 +1,145 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="filterBar">
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search"
+              (keyup)="onKeyUpEvent($event)"
+            />
+          </div>
+        </div>
+        <div class="addProgram">
+          <button
+            class="btn btn-main"
+            [routerLink]="['/mentor/mentor-dashboard/add-newprogram']"
+          >
+            Add New Program
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="tab" *ngFor="let value of oneUserData; let i = index">
+        <div class="tabHeader">
+          <div class="tabTitle">
+            <!-- *ngFor="let data of value.docs" -->
+            <div class="icon">
+              <!-- {{data.category.image | json}} -->
+              <!-- <img src="../../../assets/images/icon/Immigration.svg" alt="" /> -->
+              <img
+                *ngIf="value.docs[0]?.category?.image"
+                [src]="showImage + value.docs[0]?.category?.image"
+                alt="Image"
+              />
+              <img
+                *ngIf="!value.docs[0]?.category?.image"
+                src="../../../assets/images/icon/sessions.svg"
+                alt=""
+              />
+            </div>
+            <div class="text">
+              <h5 class="">{{ value._id }}</h5>
+              <p class="mb-0">{{ value.docs.length }} Program(s)</p>
+            </div>
+          </div>
+          <div class="controller">
+            <span
+              [routerLink]="['/mentor/mentor-dashboard/mentorshipDetails']"
+              [queryParams]="{ _id: value.docs[0].category._id }"
+              class="cursor-pointer"
+              >View All</span
+            >
+            <!-- <i class="fa-solid cursor-pointer" (click)="tabCollapse = !tabCollapse"
+              [ngClass]="tabCollapse == true ? 'fa-angle-up' : 'fa-angle-down'"></i> -->
+            <i
+              class="fa-solid cursor-pointer"
+              (click)="openTab(value._id)"
+              [ngClass]="
+                tabsOpen === value._id ? 'fa-angle-up' : 'fa-angle-down'
+              "
+            ></i>
+            <!-- <i class="fa-solid cursor-pointer" (click)="tabs(i + 1)"
+              [ngClass]="tabCollapse == true ? 'fa-angle-up' : 'fa-angle-down'"></i> -->
+          </div>
+        </div>
+        <div
+          class="tabContent"
+          [ngClass]="tabsOpen === value._id ? 'd-block' : 'd-none'"
+        >
+          <div class="row">
+            <div
+              class="col-xl-4 col-md-6"
+              *ngFor="
+                let data of value.docs
+                  | paginate
+                    : {
+                        itemsPerPage: 6,
+                        currentPage: mentorship_page,
+                        totalItems: totaldocs
+                      }
+              "
+            >
+              <div class="content">
+                <div class="image">
+                  <!-- <img src="../../../assets/images/tabImage1.png" alt="" /> -->
+                  <img
+                    *ngIf="data?.image"
+                    [src]="showImage + data.image"
+                    class="img-fluid"
+                    alt="Image"
+                  />
+                  <img
+                    *ngIf="!data?.image"
+                    src="../../../assets/images/sessions.png"
+                    class="img-fluid"
+                    alt=""
+                  />
+                </div>
+                <div class="text">
+                  <h5 class="title">{{ data.mentorship_name }}</h5>
+                  <div class="time">
+                    Start Date
+                    <i class="fa-solid fa-calendar-days"></i>
+                    <span>{{ data.start_date | date : "mediumDate" }} </span>
+                  </div>
+                  <div class="price">
+                    <div class="row">
+                      <div class="col-5">
+                        <p>Price</p>
+                      </div>
+                      <div class="col-7">
+                        <!-- <p>Total Sessions</p> -->
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-5">
+                        <h5 class="mediumText">{{data.price?(data.price | currency):"-"}}</h5>
+                      </div>
+                      <div class="col-7">
+                        <h5 class="mediumText">{{ data.length }}</h5>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          
+            <!-- <pagination-controls (pageChange)="pageChange($event)"></pagination-controls> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="oneUserData.length <= 0 && show">
+      <p class="text-center">Please add a program.</p>
+    </div>
+  </div>
+</div>

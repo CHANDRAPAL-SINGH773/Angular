@@ -1,0 +1,85 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+    <app-admin-header></app-admin-header>
+    <div class="container-fluid mb-4">
+        <div class="row adminStyle">
+            <div class="col-12 col-md-5 col-lg-9 text-start">
+                <h4 class="fs-28 fw-bold">Referal List</h4>
+            </div>
+
+            <div class="col-12 col-md-7 col-lg-3 text-end">
+                <div class="inputField">
+                    <div class="input-group">
+                        <input type="text" class="form-control border-end-0" placeholder="Search"
+                            style="font-size: 13px" (keyup)="onKeyUpEvent($event)" />
+                        <span class="input-group-text border-start-0"><i class="bi bi-search curser"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="card border-0">
+        <div class="card-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12 table-responsive">
+                        <table class="table">
+                            <thead class="d-lg-block-thead">
+                                <tr>
+                                    <th>User Name</th>
+                                    <th>Referal Type</th>
+                                    <th>Percentage Off</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="
+                            let data of oneUserData
+                              | paginate
+                                : { itemsPerPage: 10, currentPage: newMentorshipPage ,
+                                    totalItems: totaldocs}
+                          ">
+                                    <td data-label="User Name">
+                                        {{ data.Userinfo[0].firstName ? data.Userinfo[0].firstName : "-" }}
+                                        {{ data.Userinfo[0].lastName ? data.Userinfo[0].lastName : "-" }}
+                                    </td>
+                                    <td data-label="Referal Type">
+                                        {{ data.type ? data.type : "-" }}
+                                    </td>
+
+                                    <td data-label="Percentage Off">
+                                        {{ data.percentOff ? data.percentOff : "-" }}%
+                                    </td>
+
+                                    <td data-label="Description">
+                                        {{ data.description ? data.description : "-" }}
+                                    </td>
+                                    <!-- <td data-label="Action"> -->
+                                    <!-- <p class="d-flex justify-content-center">
+                                        <button class="btn btn-main" style="width: 150px;"
+                                            [routerLink]="['/mentor/mentor-dashboard/add-newprogram']"
+                                            [queryParams]="{ _id: data._id }">Add Program</button>
+                                    </p> -->
+                                    <!-- </td> -->
+                                </tr>
+                            </tbody>
+                        </table>
+                        <pagination-controls (pageChange)="pageChange($event)"
+                            (pageChange)="newMentorshipPage = $event">
+                        </pagination-controls>
+                        <div class="check" *ngIf="oneUserData?.length === 0">
+                            <h1 class="text-center w-100">
+                                No record Found
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>

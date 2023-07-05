@@ -1,0 +1,42 @@
+@import "/src/styles.scss";
+.completedSessions {
+  padding: 7.5px;
+  .menteesContent {
+    @include itemPosition(center, space-between);
+    padding: 15px;
+    gap: 15px;
+    border: 1.2px solid $secondary;
+    border-radius: 15px;
+    margin: 7.5px;
+    position: relative;
+    img.close {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+    cursor: pointer;
+    .menteeProfile {
+      @include itemPosition(center, flex-start);
+      gap: 15px;
+      flex-wrap: wrap;
+      .image {
+        width: 100px;
+        height: 100px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .text {
+        flex: 1;
+        h3 {
+          font-size: 16px;
+        }
+        p {
+          font-size: 14px;
+          overflow-wrap: anywhere;
+        }
+      }
+    }
+  }
+}

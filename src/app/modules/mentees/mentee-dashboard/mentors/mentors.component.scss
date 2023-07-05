@@ -1,0 +1,183 @@
+@import "/src/styles.scss";
+
+.filterBar {
+  @include itemPosition(center, space-between);
+  margin: 15px;
+  gap: 10px;
+
+  .searchBox {
+    border: 1px solid $secondary;
+    max-width: 550px;
+    display: flex;
+    background-color: white;
+    border-radius: 10px;
+    color: $dark;
+
+    .icon {
+      width: 50px;
+      height: 50px;
+      @include itemPosition(center, center);
+    }
+
+    .searchBox {
+      flex: 1;
+      border: none;
+
+      input {
+        border: none;
+        outline: none;
+
+        &:focus {
+          box-shadow: none;
+        }
+      }
+    }
+  }
+}
+
+.mentorsList {
+  margin: 15px;
+  padding: 7.5px;
+  background-color: $light;
+  border-radius: 15px;
+
+  .content {
+    @include itemPosition(flex-start, space-between);
+    border-radius: 15px;
+    padding: 15px;
+    margin: 7.5px;
+    border: 1px solid $secondary;
+    gap: 10px;
+
+    .image {
+      width: 80px;
+      height: 80px;
+      position: relative;
+      @include itemPosition(center, center);
+
+      img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        height: 100px;
+      }
+
+      img.verify {
+        position: absolute;
+        bottom: -7px;
+        right: -7px;
+      }
+    }
+
+    .text {
+      flex: 1;
+
+      .heading {
+        @include itemPosition(center, space-between);
+
+        h3 {
+          font-size: 16px;
+        }
+
+        .stars {
+          i {
+            color: #e8a908;
+          }
+        }
+      }
+
+      .paragraph {
+        p {
+          max-width: 240px;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          overflow: hidden;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 1400px) {
+  .filterBar {
+    margin: 10px;
+
+    .searchBox {
+      .icon {
+        width: 35px;
+        height: 35px;
+      }
+    }
+  }
+
+  .mentorsList {
+    margin: 10px;
+    padding: 5px;
+
+    .content {
+      padding: 10px;
+      margin: 5px 7px;
+
+      .image {
+        width: 65px;
+        height: 65px;
+
+        img {
+          width: 100%;
+          border-radius: 10px;
+          height: 65px;
+        }
+
+        img.verify {
+          position: absolute;
+          bottom: -30px;
+          right: -8px;
+          width: 15px;
+        }
+      }
+
+      .text {
+        .heading {
+          @include itemPosition(center, space-between);
+
+          h3 {
+            font-size: 14px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+
+          .stars {
+            @include itemPosition(center, flex-end);
+            gap: 5px;
+
+            i {
+              color: #e8a908;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.mentorsList .content {
+  justify-content: start !important;
+}
+
+.new {
+  background-color: rgb(0, 102, 255);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.bio {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  width: 160px;
+}

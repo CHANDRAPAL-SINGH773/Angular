@@ -1,0 +1,158 @@
+<app-admin-sidebar></app-admin-sidebar>
+
+<main id="main" class="main">
+  <app-admin-header></app-admin-header>
+
+  <div class="container-fluid mb-4">
+    <div class="row adminStyle">
+      <div class="col-12 col-md-5 col-lg-3 text-start">
+        <h4 class="fs-28 fw-bold">Sessions List </h4>
+      </div>
+
+      <!-- filter -->
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <!-- <select class="form-select me-3" (change)="sortByDate($event)">
+            <option value="">All</option>
+            <option value="past">Past</option>
+            <option value="current">Current</option>
+            <option value="upcoming">Upcoming</option>
+          </select> -->
+        </div>
+      </div>
+
+      <div class="col-12 col-md-5 col-lg-3">
+        <div class="inputField">
+          <select class="form-select me-3" (change)="sortByMode($event)">
+            <option value="">All</option>
+            <option value="1">Online</option>
+            <option value="0">Offline</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="col-12 col-md-7 col-lg-3 text-end">
+        <div class="inputField">
+          <div class="input-group">
+            <input
+              type="text"
+              class="form-control border-end-0"
+              placeholder="Search"
+              (keyup)="onKeyUpEvent($event)"
+              style="font-size: 13px"
+            />
+            <span class="input-group-text border-start-0"
+              ><i class="bi bi-search curser"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card border-0">
+    <div class="card-body">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-12 table-responsive">
+            <table class="table">
+              <thead class="d-lg-block-thead">
+                <tr>
+                  <th>Session Name</th>
+                  <th>Program Name</th>
+                  <th>Program Date</th>
+                  <th>Status</th>
+                  <th>Session Type</th>
+                  <th>Track Trip</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+
+              <tbody
+                *ngFor="
+                  let data of sessionData
+                    | paginate
+                      : {
+                          itemsPerPage: 10,
+                          currentPage: sessionPage,
+                          totalItems: totaldocs
+                        }
+                "
+              >
+                <tr>
+                  <td data-label="First Name">{{ data.session_name }}</td>
+
+                  <td data-label="First Name">{{ data.mentorship_name }}</td>
+                  <td data-label="Date">
+                    {{ data.start_date | date }} - {{ data.expiry_date | date }}
+                  </td>
+
+                  <td data-label="Status">
+                    <div
+                      class="form-check form-switch d-flex align-items-center"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                        role="switch"
+                        [checked]="data.status === 1 ? true : false"
+                        (click)="changesessionStatus($event, data._id)"
+                        id="flexSwitchCheckChecked"
+                      />
+                    </div>
+                  </td>
+                  <td data-label="First Name">
+                    {{ data?.mentorship_mode === 1 ? "Online" : "Offline" }}
+                  </td>
+
+                  <td>
+                    <div
+                      class="offlinepart"
+                      *ngIf="data?.mentorship_mode === 0"
+                    >
+                      <div class="location" (click)="goTomap(data._id, data.program_id)">
+                        <img
+                          src="../../../../../../assets/images/icon/location.svg"
+                          alt=""
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="offlinepart"
+                      *ngIf="data?.mentorship_mode === 1"
+                    >
+                      <div class="location">
+                        <span>--</span>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td data-label="Action">
+                    <p
+                      class="d-flex justify-content-end justify-content-lg-start"
+                    >
+                      <button
+                        class="secondary-round-btn"
+                        [routerLink]="['/session-details/']"
+                        [queryParams]="{ session_id: data._id }"
+                      >
+                        <i class="bi bi-eye" title="View"></i>
+                      </button>
+                    </p>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls
+              (pageChange)="pageChange($event)"
+              (pageChange)="sessionPage = $event"
+            >
+            </pagination-controls>
+            <div class="check" *ngIf="sessionData?.length === 0">
+              <h3 class="text-center w-100">No record found</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

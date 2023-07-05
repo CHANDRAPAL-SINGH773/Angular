@@ -1,0 +1,120 @@
+@import "/src/styles.scss";
+
+.sidebar {
+  width: 250px;
+  height: calc(100vh);
+  background: $light;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  z-index: 5;
+  overflow: auto;
+  ul {
+    color: $dark;
+    padding: 10px;
+    list-style: none;
+    li {
+      margin: 10px;
+      border-radius: 6px;
+      font-size: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px;
+      font-weight: 400;
+      i {
+        display: block;
+        width: 15px;
+        text-align: center;
+      }
+      img {
+        display: block;
+        width: 20px;
+        text-align: center;
+      }
+      span {
+        text-align: left;
+      }
+
+      &:hover {
+        background-color: $secondary;
+        color: $dark;
+        cursor: pointer;
+      }
+      &.active {
+        background-color: $secondary;
+        color: $dark;
+      }
+    }
+    .active {
+      background-color: $light;
+      color: $primary;
+    }
+  }
+  .logo {
+    padding: 20px 0 0;
+    text-align: center;
+    @include itemPosition(center, center);
+    gap: 15px;
+    img {
+      width: 150px;
+    }
+    i {
+      color: $dark;
+      cursor: pointer;
+      font-size: 22px;
+    }
+  }
+}
+
+.mobileSidebar {
+  width: 250px;
+  transition: 0.5s;
+  transform: translate(0) !important;
+}
+@media only screen and (max-width: 1400px) {
+  .sidebar {
+    width: 220px;
+
+    ul {
+      padding: 5px;
+      li {
+        margin: 5px;
+        img {
+          width: 18px;
+        }
+        span {
+          font-size: 12px;
+        }
+      }
+    }
+    .logo {
+      img {
+        width: 120px;
+      }
+    }
+  }
+  .mobileSidebar {
+    width: 220px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .sidebar {
+    transform: translate(-220px);
+    transition: 0.5s;
+  }
+  .sidebarCollapse {
+    transform: translate(0px);
+  }
+}
+
+.darkSpace {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background-color: $dark;
+  opacity: 0.3;
+  z-index: 1;
+}

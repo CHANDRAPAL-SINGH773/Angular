@@ -1,0 +1,25 @@
+agm-map {
+  height: 90vh;
+}
+
+.icon {
+  gap: 10px;
+  border: 1px solid skyblue;
+  width: 40px;
+  height: 40px;
+  justify-content: center;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 10px;
+  background-color: lightcyan;
+
+  &:hover {
+    color: lightcyan;
+    background-color:skyblue;
+  }
+
+  &.active {
+    color: lightcyan;
+    background-color:skyblue;
+  }
+}

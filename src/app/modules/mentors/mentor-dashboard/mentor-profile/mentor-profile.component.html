@@ -1,0 +1,393 @@
+<div class="container-fluid">
+  <div class="row m-2">
+    <div class="col-12">
+      <form [formGroup]="mentorprofileForm" class="form">
+        <div class="row">
+          <div class="col">
+            <div class="uploadProfile">
+              <label for="upload">
+                <div class="profileImage">
+                  <img class="rounded-circle" *ngIf="oneUserData?.image" [src]="imgsrc" class="img-fluid" alt="image" />
+                  <img class="rounded-circle" *ngIf="!oneUserData?.image"
+                    src="../../../../../assets/images/uploadProfile.png" [src]="imgsrc" class="img-fluid" alt="image" />
+                </div>
+                <!-- (change)="handleimage($event, 'image')"  -->
+                <input type="file" class="d-none" id="upload" (change)="handleimage($event, 'image')"
+                  placeholder="Image" formControlName="image" accept="image/x-png,image/jpg,image/jpeg" /><br />
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="firstName">First Name</label><span class="invaliddiv">*</span>
+              <input type="text" class="form-control" id="firstName" placeholder="First Name"
+                formControlName="firstName" (keypress)="onlyLettersAndSpace($event)"
+                [ngClass]="{ 'is-invalid': submitted && mentorprofileForm.get('firstName')!.errors?.['required']}" />
+              <div *ngIf="
+                  submitted && mentorprofileForm.controls['firstName']!.errors
+                " class="invaliddiv">
+                <div *ngIf="mentorprofileForm.controls['firstName']!.errors?.['required']">
+                  First Name is required
+                </div>
+                <div *ngIf="mentorprofileForm.controls['firstName']!.errors?.['whitespace']">
+                  Input must not contain only white spaces.
+                </div>
+                <div *ngIf="mentorprofileForm.controls['firstName']!.errors?.['maxlength']">
+                  First Name should not exceed 20 characters
+                </div>
+                <!-- <div
+                  *ngIf="mentorprofileForm.controls['firstName']!.errors?.['pattern']"
+                >
+                  First Name can only contain string.
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="lastName">Last Name</label><span class="invaliddiv">*</span>
+              <input type="text" class="form-control" id="lastName" placeholder="Last Name" formControlName="lastName"
+                (keypress)="onlyLettersAndSpace($event)"
+                [ngClass]="{ 'is-invalid': submitted && mentorprofileForm.get('lastName')!.errors?.['required']}" />
+              <div *ngIf="
+                  submitted && mentorprofileForm.controls['lastName']!.errors
+                " class="invaliddiv">
+                <div *ngIf="mentorprofileForm.controls['lastName']!.errors?.['required']">
+                  Last Name is required
+                </div>
+                <div *ngIf="mentorprofileForm.controls['lastName']!.errors?.['whitespace']">
+                  Input must not contain only white spaces.
+                </div>
+                <div *ngIf="mentorprofileForm.controls['lastName']!.errors?.['maxlength']">
+                  Last Name should not exceed 20 characters.
+                </div>
+                <!-- <div
+                  *ngIf="mentorprofileForm.controls['lastName']!.errors?.['pattern']"
+                >
+                  Last Name can only contain string.
+                </div> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="Gender">Gender</label>
+              <select id="Gender" formControlName="gender" class="form-control">
+                <option value="Male" default>Male</option>
+                <option value="Female">Female</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <!--   <div class="col-md-4">
+           <div class="inputField">
+              <label for="Age">Age</label>
+              <input type="number" class="form-control" id="Age" formControlName="age" placeholder="Age" />
+            <p >{{ getAge(oneUserData.date_of_birth) }}</p> 
+            </div>
+          </div> -->
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="dob">Date of Birth</label>
+              <!-- <input type="date" class="form-control" (change)="agelistener($event)" formControlName="date_of_birth"
+                id="dob" /> -->
+              <input type="date" class="form-control" formControlName="date_of_birth" id="dob" />
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="mobile">Mobile No.</label><span class="invaliddiv">*</span>
+              <input type="number" class="form-control" id="mobile" placeholder="Mobile No." formControlName="phone"
+                (keypress)="onlyNumbers($event)"
+                [ngClass]="{ 'is-invalid': submitted && mentorprofileForm.get('phone')!.errors?.['required']}" />
+              <div *ngIf="submitted && mentorprofileForm.controls['phone']!.errors" class="invaliddiv">
+                <div *ngIf="mentorprofileForm.controls['phone']!.errors?.['required']">
+                  Mobile number is required
+                </div>
+                <div *ngIf="mentorprofileForm.controls['phone']!.errors?.['pattern']">
+                  Mobile number should be 10 digits and must be integer only
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="Country">Country</label>
+              <!-- <select class="form-control" appCountryFlags placeholder="Country" formControlName="country">
+               
+              </select> -->
+
+              <select class="form-control" placeholder="Country" formControlName="country">
+                <option *ngFor="let country of countryCodes" [value]="country.name">
+                  {{ country.name }} ({{ country.code }})
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="Language">Language</label>
+              <select class="form-control" placeholder="Language" formControlName="language">
+                <option *ngFor="let languages of languages" [value]="languages.name">
+                  {{ languages.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="Verification">Verification Id</label>
+              <label for="uploadFileVerification" class="uploadFile">
+                Verification Id
+                <!-- (change)="handleimage($event, 'verificationId')" -->
+                <input type="file" class="form-control d-none" (change)="handleimage($event, 'verificationId')"
+                  id="uploadFileVerification" placeholder="Image" formControlName="verificationId"
+                  accept="image/*,application/pdf" />
+                <i class="fa-solid fa-arrow-up-from-bracket"></i>
+              </label>
+            </div>
+          </div>
+
+          <div class="col-md-4" *ngIf="verificationIdFiles">
+            <div class="inputField">
+              <label for="Verification">Verification Id</label>
+              <div class="cursor ifreame-pdf">
+                <button class="btn btn-main" data-toggle="modal" data-target="#viewpdf">
+                  View
+                </button>
+                <!-- <iframe class="cursor" type="application/pdf" [src]="verificationIdFiles | safe: 'resourceUrl'"></iframe> -->
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="City">City</label>
+              <input type="text" class="form-control" id="City" placeholder="City" formControlName="city"
+                (keypress)="onlyLettersAndSpace($event)" />
+              <!-- <div
+                *ngIf="mentorprofileForm.controls['city']!.errors?.['pattern']"
+                class="invaliddiv"
+                [ngStyle]="{ color: 'red' }"
+              >
+                City can only contain string.
+              </div> -->
+            </div>
+          </div>
+
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="Address">Address</label>
+              <input type="text" class="form-control" id="Address" placeholder="Address" formControlName="address"
+                (keypress)="onlyAlphaNumeric($event)" />
+              <!-- <div
+                *ngIf="mentorprofileForm.controls['address']!.errors?.['pattern']"
+                class="invaliddiv"
+                [ngStyle]="{ color: 'red' }"
+              >
+                Address can only contain alphabetic characters.
+              </div> -->
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="inputField">
+              <label for="Province">State/Province</label>
+              <input type="text" class="form-control" id="Province" placeholder="Province" formControlName="province"
+                (keypress)="onlyLettersAndSpace($event)" />
+              <!-- <div
+                *ngIf="mentorprofileForm.controls['province']!.errors?.['pattern']"
+                class="invaliddiv"
+                [ngStyle]="{ color: 'red' }"
+              >
+                State/Province can only contain string.
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row"></div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="inputField">
+              <label for="PostalCode">Postal Code/Zip Code</label>
+              <input type="text" class="form-control" id="PostalCode" placeholder="Postal Code"
+                formControlName="postalcode" (keypress)="onlyAlphaNumeric($event)" />
+              <!-- <div
+                *ngIf="mentorprofileForm.controls['lastName']!.errors?.['pattern']"
+                class="invaliddiv"
+                [ngStyle]="{ color: 'red' }"
+              >
+                Postal Code can only contain alphabetic characters.
+              </div> -->
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="inputField">
+              <label for="Bio">Bio</label>
+              <textarea type="text" class="form-control" id="Bio" rows="4" placeholder="Bio" formControlName="bio">
+              </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <div class="inputField">
+              <!-- <p>Add Documents</p> -->
+              <h5 class="my-3">Skill Certification</h5>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <!-- <div class="inputField"> -->
+            <label for="skill" class="mx-2">Skills</label>
+            <ng-container formArrayName="skills">
+              <ng-container *ngFor="let _ of medicine.controls; let i = index">
+                <ng-container [formGroupName]="i">
+                  <!-- <div class="field_icon_wrap"> -->
+                  <div class="row addSkills">
+                    <div class="col-md-3">
+                      <div class="inputField">
+                        <!-- <label for="skill">Skill Type</label> -->
+                        <label class="mr-2">Skill Name</label><span class="invaliddiv">*</span>
+                        <input type="text" formControlName="skillName" (keypress)="onlyLettersAndSpace($event)" />
+                        <div *ngIf="medicine.controls[i].get('skillName')?.errors?.['required'] ">
+                          <small class="text-danger">Skill name is required.</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3">
+                      <div class="inputField">
+                        <label class="mr-2">Skill Type</label><span class="invaliddiv">*</span>
+                        <select id="selectProgram" class="form-control" formControlName="category_id">
+                          <!-- [ngClass]="{ 'is-invalid': submitted && editprogramForm.get('category_id')!.errors?.['required']}"> -->
+                          <option value="" selected>Select Category</option>
+                          <option *ngFor="let data of gotCategories" [value]="data._id" default>
+                            {{ data.categoryName | titlecase }}
+                          </option>
+                        </select>
+                        <!-- <input type="text" formControlName="skillType" id="skillName" /> -->
+                        <!-- <input type="text" class="form-control" id="skillName" /> -->
+                        <div *ngIf="medicine.controls[i].get('category_id')?.errors?.['required'] ">
+                          <small class="text-danger">Skill Type is required.</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-3 uploadAddbtn">
+                      <div class="inputField">
+                        <!-- <img [src]="url" height="50" alt="Image"> <br/> -->
+                        <label for="Verification">Upload Certificate</label>
+                        <label for="UploadCertificate{{ i }}" class="uploadFile">
+                          Upload Certificate
+                          <input type="file" (change)="handleimages($event, 'skills', i)" id="UploadCertificate{{ i }}"
+                            class="form-control d-none" accept="image/*,application/pdf" />
+                          <i class="fa-solid fa-arrow-up-from-bracket"></i>
+                        </label>
+                      </div>
+                      <button class="btn btn-main p-0" style="width: 44px" (click)="addNewData()" *ngIf="i === 0">
+                        <i class="fa-solid fa-plus"></i>
+                      </button>
+                      <button class="btn btn-main p-0" style="width: 44px" (click)="deleteMobile(i)" *ngIf="i !== 0">
+                        <i class="fa-solid fa-minus"></i>
+                      </button>
+                    </div>
+                    <div class="col-md-3" *ngIf="showPreview[i]">
+                      <div class="inputField">
+                        <label for="Verification">Skill Certificate</label>
+                        <div class="cursor ifreame-pdf">
+                          <button class="btn btn-main" data-toggle="modal" data-target="#viewPreviwe"
+                            (click)="viewSkills(i)">
+                            View
+                          </button>
+                          <!-- <iframe class="cursor" type="application/pdf" [src]="verificationIdFiles | safe: 'resourceUrl'"></iframe> -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </ng-container>
+            </ng-container>
+            <!-- </div> -->
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="inputField"></div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <div class="buttons">
+              <button class="btn btn-main-outline" (click)="save()">
+                Save
+              </button>
+              <!-- <button class="btn btn-main">Add Bank Account</button> -->
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- verification pdf/image View Start-->
+
+<div class="modal fade" id="viewpdf" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View your Document</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeaddModal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <iframe class="cursor" type="application/pdf" [src]="verificationIdFiles | safe : 'resourceUrl'"></iframe>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- verification pdf/image View End-->
+
+<!-- skills pdf/image View Start-->
+<div class="modal fade" id="viewPreviwe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">View your Document</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closeaddModal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div *ngIf="noCertificate === ''; else Next" class="no-certificate">
+        <h5 class="no-certificate-text">
+          You have not uploaded any certificate. Please upload one.
+        </h5>
+      </div>
+      <ng-template #Next>
+        <iframe class="cursor" type="application/pdf" [src]="viewSkill | safe : 'resourceUrl'"></iframe>
+      </ng-template>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dishowPreviewmiss="modal" data-dismiss="modal"
+          aria-label="Close">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- skills pdf/image View End-->

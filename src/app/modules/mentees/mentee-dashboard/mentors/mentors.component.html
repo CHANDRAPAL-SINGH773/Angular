@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="searchBox">
+          <div class="icon">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </div>
+          <div class="searchBox">
+            <input type="text" class="form-control" (keyup)="onKeyUpEvent($event)" placeholder="type first or last name" />
+          </div>
+          <!-- <div class="icon">
+            <i class="fa-solid fa-filter"></i>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mentorsList">
+    <div class="row">
+      <div class="col-md-4 mt-3" *ngFor="
+          let data of UserData
+            | paginate
+              : {
+                  itemsPerPage: 10,
+                  currentPage: usersPage,
+                  totalItems: totaldocs
+                }
+        " routerLink="/mentee/mentee-dashboard/mentors-details" [queryParams]="{ user_id: data._id }">
+        <div class="content h-100">
+          <div class="image">
+            <img *ngIf="data.image" [src]="imagecategory + data.image" alt="" />
+            <img *ngIf="!data.image" src="../../assets/images/user.png" alt="" />
+            <!-- <img src="../../../../../assets/images/mentorImage.png" alt="" /> -->
+            <img src="../../../../../assets/images/icon/verify.svg" alt="" class="verify"
+              *ngIf="data.verified_badge === true" />
+          </div>
+          <div class="text w-100">
+            <div class="heading">
+              <h3>
+                {{ data.firstName ? data.firstName : "-" }}
+                {{ data.lastName ? data.lastName : "-" }}
+              </h3>
+              <div class="stars">
+                <i *ngIf="data.rating" class="fa-solid fa-star"></i>
+                <span [ngClass]="{'new': !data.rating}">{{ data.rating ? data.rating : "NEW" }}</span>
+              </div>
+            </div>
+            <div class="paragraph">
+              <p class="bio" *ngIf="data.skills && data.skills.length > 0">
+                {{getSkillNames(data)}}
+              </p>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      <pagination-controls class="mt-4" (pageChange)="pageChange($event)"></pagination-controls>
+    </div>
+  </div>
+</div>

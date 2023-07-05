@@ -1,0 +1,689 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col">
+      <div class="filterBar">
+        <div class="pageTitle">
+          <div class="icon">
+            <!-- <i class="fa-solid fa-chevron-left" [routerLink]="['/mentee/mentee-dashboard']"></i> -->
+            <i class="fa-solid fa-chevron-left" (click)="goBack()"></i>
+          </div>
+          <p class="mb-0">Programs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="primaryLayout">
+    <div class="row">
+      <div class="col">
+        <div class="profileContent">
+          <div class="profile">
+            <div class="image">
+              <img *ngIf="allData?.image" width="150px" height="150px" [src]="showImage + allData?.image"
+                class="img-fluid" alt="" />
+
+              <img *ngIf="!allData?.image" src="../../../../../assets/images/sessions.png" class="img-fluid" alt="" />
+              <img class="medal" *ngIf="allData?.verify_badge" src="../../../../../assets/images/medal.png" alt="" />
+            </div>
+            <div class="text2">
+              <h5 class="title">
+                {{ allData.mentorship_name ? allData.mentorship_name : "-" }}
+              </h5>
+              <h6 class="subtitle">
+                {{
+                allData.category_id?.categoryName
+                ? allData.category_id?.categoryName
+                : "-"
+                }}
+              </h6>
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>&nbsp;
+                <span>{{ allData.start_date | date : "mediumDate" }} </span>&nbsp; <i
+                  class="fa-solid fa-clock"></i>&nbsp;<span>
+                  03:50 PM</span>
+              </div>
+              <div class="price">
+                <div class="row">
+                  <div class="col-5">
+                    <h5>{{ allData.price | currency }}</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="offlinepart d-flex cursor-pointer" [routerLink]="['/mentee/mentee-dashboard/view-ratings']"
+            [queryParams]="{ program_id:allData._id}">
+            <div class="location d-flex">
+              <img src="../../../../../../assets/images/icon/viewrating.svg" alt="" />
+              <p class="mb-0">View Ratings</p>
+            </div>
+            <div class="rightBtn">
+              <i class="fa-solid fa-chevron-right"></i>
+            </div>
+          </div> -->
+          <div class="chat" *ngIf="role === 10" (click)="showMessage()">
+            <div class="chatIcon">
+              <img src="../.../../../../../../../assets/images/icon/ChatIcon.svg" alt="" />
+            </div>
+          </div>
+          <div class="chat" *ngIf="role !== 10">
+            <div class="chatIcon" (click)="createGroupFuntion()">
+              <img src="../.../../../../../../../assets/images/icon/ChatIcon.svg" alt="" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="tabButtons">
+          <button class="btn btn-tab" [class.active]="ids === 'program'" (click)="changeTab('program')">
+            Program Details
+          </button>
+          <button class="btn btn-tab" [class.active]="ids === 'sessions'" (click)="changeTab('sessions')">
+            Session Details
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row tabContent" *ngIf="ids === 'program'">
+      <div class="col-12 programDetails">
+        <h3>Program Description</h3>
+        <p>
+          {{
+          allData.description ? allData.description : "No description found"
+          }}
+        </p>
+        <div class="row mt-4">
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Mentorship Mode</p>
+              <h4 *ngIf="allData.mentorship_mode == 1">Online</h4>
+              <h4 *ngIf="allData.mentorship_mode == 0">Offline</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0" *ngIf="allData.mentorship_mode == 0">
+            <div class="data">
+              <p>Location</p>
+              <h4>{{ allData.location ? allData.location : "-" }}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Allowed Mentees</p>
+              <h4>{{ allData.mentee_limit ? allData.mentee_limit : "-" }}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Mentee registered</p>
+              <h4>{{ registerMetees }}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Available slots</p>
+              <h4>{{ availableSlots }}</h4>
+            </div>
+          </div>
+          <div class="col-xl-2 col-lg-3 col-md-4 col-6 mt-3 mt-xl-0">
+            <div class="data">
+              <p>Mentor Availability</p>
+              <h4>
+                {{
+                allData.availibility_from ? allData.availibility_from : "N/A"
+                }}
+                To
+                {{ allData.availibility_to ? allData.availibility_to : "N/A" }}
+              </h4>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 aboutMentor">
+        <h3>About Mentor</h3>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="mentorContent">
+              <div class="mentorProfile">
+                <div class="image">
+                  <img *ngIf="allData.user_id?.image" [src]="showImage + allData.user_id?.image" class="img-fluid"
+                    alt="" />
+                  <img *ngIf="!allData.user_id?.image" src="../../../../../assets/images/user.png" class="img-fluid"
+                    alt="" />
+
+                  <img src="../../../../../assets/images/icon/verify.svg" alt="" class="verify"
+                    *ngIf="allData.user_id?.verified_badge === true" />
+                </div>
+                <div class="aboutMentorProfile">
+                  <h3>
+                    {{
+                    allData.user_id?.firstName
+                    ? allData.user_id?.firstName
+                    : "-"
+                    }}
+                    {{
+                    allData.user_id?.lastName
+                    ? allData.user_id?.lastName
+                    : "-"
+                    }}
+                  </h3>
+                  <p>
+                    {{ allData.experience ? allData.experience : "-" }}
+                    of Experience
+                  </p>
+                </div>
+              </div>
+              <div class="heading">
+                <div class="stars">
+                  <i *ngIf="rating" class="fas fa-star"></i>
+                  <span [ngClass]="{'new': !rating}">{{ rating ? rating : 'NEW' }}</span>
+                  <!-- <i class="fa-solid fa-star"></i> -->
+                  <!-- <span>{{
+                    allData.user_id?.rating ? allData.user_id?.rating : "NEW"
+                    }}</span> -->
+                </div>
+              </div>
+            </div>
+            <p class="bio">
+              {{ allData.user_id?.bio ? allData.user_id?.bio : "-" }}
+            </p>
+            <div class="Biodata">
+              <div class="data">
+                <p>Language</p>
+                <h4>
+                  {{
+                  allData.user_id?.language ? allData.user_id?.language : "-"
+                  }}
+                </h4>
+              </div>
+              <div class="data">
+                <p>Past Programs</p>
+                <h4>{{pastProgramCount}}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="role !== 10">
+        <!-- <div *ngIf="availableSlots <= 0" class="col-12">
+          <div class="buttonsPairAllignment">
+            <i *ngIf="disblebookButton == true && availableSlots <= 0" class="bi bi-info-circle-fill hover-text"><span class="tooltip-text" id="left">No available slots for
+                this program.</span></i>
+            <button class="btn btn-main" data-toggle="modal" data-target="#bookProgram" data-dismiss="modal" disabled>
+              Book Program
+            </button>
+          </div>
+        </div> -->
+
+        <!-- <div class="buttonsPairAllignment">
+
+        </div> -->
+
+        <div class="buttonsPairAllignment">
+          <div class="buttonsPairAllignment">
+            <i *ngIf="availableSlots <= 0 && !disblebookButton" class="bi bi-info-circle-fill hover-text"><span
+                class="tooltip-text" id="left">No available slots for this program.
+              </span></i>
+            <i *ngIf="disblebookButton && availableSlots >= 0" class="bi bi-info-circle-fill hover-text"><span
+                class="tooltip-text" id="left">This program has already been booked 
+              </span></i>
+            <!-- <i *ngIf="disblebookButton && availableSlots <= 0" class="bi bi-info-circle-fill hover-text"><span
+                class="tooltip-text" id="left">This program has already booked</span></i> -->
+
+            <button *ngIf="disblebookButton && availableSlots >= 0" class="btn btn-main" data-toggle="modal"
+              (click)="getrewards()" data-target="#bookProgram" data-dismiss="modal"
+              [disabled]="disblebookButton && availableSlots >= 0">
+              Book Program
+            </button>
+            <button *ngIf="!disblebookButton && availableSlots >= 0" class="btn btn-main" data-toggle="modal"
+              (click)="getrewards()" data-target="#bookProgram" data-dismiss="modal"
+              [disabled]="!disblebookButton && availableSlots == 0">
+              Book Program
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="row tabContent" *ngIf="ids === 'sessions'">
+      <div class="check" *ngIf="sessionDetail?.length === 0">
+        <h3 class="text-center w-100">No session found</h3>
+      </div>
+      <div class="col-md-6" *ngFor="let session of sessionDetail; let i = index">
+        <div class="content">
+          <div class="contentDetail">
+            <div class="image">
+              <img class="rounded-circle" *ngIf="session?.image" [src]="showImage + session?.image" class="profile"
+                alt="" />
+              <img class="rounded-circle" *ngIf="!session?.image" src="../../../../assets/images/sessions.png"
+                class="profile" alt="" />
+            </div>
+            <div class="text">
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>{{ session.start_date | date : "mediumDate" }}
+                  {{ session.time ? session.time : "-" }}</span>
+              </div>
+              <h6 class="subtitle">
+                {{ session.session_name ? session.session_name : "-" }}
+              </h6>
+              <h5 class="title">Session duration</h5>
+              <h6 class="title">
+                {{ session.session_duration ? session.session_duration : "-" }}
+                hour(s)
+              </h6>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div class="col-md-6">
+        <div class="content">
+          <div class="contentDetail">
+            <div class="image">
+              <img src="../../../../assets/images/currentsession1.png" alt="" />
+            </div>
+            <div class="text">
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>03-16-2022 | 03:50 PM</span>
+              </div>
+              <h6 class="subtitle">
+                Pariatur duis deserunt mollit dolore cillum.
+              </h6>
+              <h5 class="title">Session duration</h5>
+              <h6 class="title">15:20 Min</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="content">
+          <div class="contentDetail">
+            <div class="image">
+              <img src="../../../../assets/images/currentsession1.png" alt="" />
+            </div>
+            <div class="text">
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>03-16-2022 | 03:50 PM</span>
+              </div>
+              <h6 class="subtitle">
+                Pariatur duis deserunt mollit dolore cillum.
+              </h6>
+              <h5 class="title">Session duration</h5>
+              <h6 class="subtitle">15:20 Min</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="content">
+          <div class="contentDetail">
+            <div class="image">
+              <img src="../../../../assets/images/currentsession1.png" alt="" />
+            </div>
+            <div class="text">
+              <div class="time">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>03-16-2022 | 03:50 PM</span>
+              </div>
+              <h6 class="subtitle">
+                Pariatur duis deserunt mollit dolore cillum.
+              </h6>
+              <h5 class="title">Session duration</h5>
+              <h6 class="title">15:20 Min</h6>
+            </div>
+          </div>
+        </div>
+      </div> -->
+
+      <!-- <div class="col-12">
+        <div class="buttonsPairAllignment">
+          <button class="btn btn-main" data-toggle="modal" data-target="#bookProgram" data-dismiss="modal">
+            Book Program
+          </button>
+        </div>
+
+      </div> -->
+      <!-- <ng-template #next>
+        <p>Ok</p>
+                </ng-template> -->
+    </div>
+  </div>
+</div>
+
+<!-- Book Program Popup  -->
+<div class="modal fade" id="bookProgram" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Book Program</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <div class="d-flex">
+              <div class="AmountBox">
+                <h4>Amount to Pay</h4>
+                <h3>{{ allData.price | currency }}</h3>
+              </div>
+              <div class="AmountBox">
+                <h4>Final Amount to Pay</h4>
+                <h3>
+                  {{
+                  finalAmount
+                  ? (finalAmount | currency)
+                  : (allData.price | currency)
+                  }}
+                </h3>
+              </div>
+            </div>
+
+            <div *ngIf="rewardId" class="row">
+              <div class="col-md-6"><button class="btn btn-main" (click)="cancelCoupan()">Cancel Coupon</button></div>
+
+            </div>
+          </div>
+        </div>
+        <div class="row" *ngIf="rewardData.length > 0">
+          <div class="col-12">
+            <div class="row couponsCards">
+              <div class="col-12">
+                <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                  <div class="carousel-inner">
+                    <div class="carousel-item" *ngFor="let rewards of rewardData; let i = index"
+                      [class.active]="i === 0">
+                      <div class="coupons" (click)="applyCoupen(rewards, allData.price)">
+                        <div class="couponsImg">
+                          <img src="../../../../../assets/images/coupons.svg" alt="" />
+                          <p>
+                            {{ rewards.percentOff ? rewards.percentOff : "-" }}%
+                            Off
+                          </p>
+                        </div>
+                        <h5>{{ rewards.type ? rewards.type : "-" }}</h5>
+                        <h6>
+                          {{ rewards.description ? rewards.description : "-" }}
+                        </h6>
+                      </div>
+                    </div>
+                  </div>
+                  <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                  <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-2" data-dismiss="modal">
+          <button class="btn btn-main" routerLink="/mentee/mentee-dashboard/add-account">
+            Add Card
+          </button>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h5 *ngIf="cardDetails.length > 0">Pay From</h5>
+            <div class="bankcard d-block">
+              <div class="cardList" *ngFor="let card of cardDetails">
+                <div class="bankIcon col-md-3" *ngIf="card.brand == 'Visa'">
+                  <img class="m-0" src="../../../../../../assets/images/visacard.png" alt="" />
+                </div>
+                <div class="bankIcon" *ngIf="card.brand == 'MasterCard'">
+                  <img src="../../../../../../assets/images/Mastercard.png" alt="" />
+                </div>
+                <div class="bankIcon" *ngIf="card.brand == 'American Express'">
+                  <img src="../../../../../../assets/images/american-express.png" alt="" />
+                </div>
+                <div class="bankIcon" *ngIf="card.brand == ''">
+                  <p>Card</p>
+                </div>
+                <div class="backText col-md-9" data-dismiss="modal" data-toggle="modal" data-target="#cardselected"
+                  (click)="getid(card.id)">
+                  <p class="mb-0">Pay via Card</p>
+                  <div>
+                    <span>xxx xxxx xxxx {{ card.last4 }}</span>
+                  </div>
+                </div>
+                <div>
+                  <!-- <i class="fa-solid fa-trash-can" (click)="deleteCard(card.customer, card.id)"></i> -->
+                  <i class="fa-solid fa-trash-can" (click)="getDeleteCardDetails(card.customer, card.id)" data-toggle="modal" data-target="#deleteCategory" type="button" data-dismiss="modal" aria-label="Close"></i>
+                </div>
+              </div>
+              <!-- <div></div> -->
+              <!-- <div class="nextArrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div> -->
+            </div>
+          </div>
+          <!-- <div class="col-12">
+            <button class="btn btn-main" data-toggle="modal" data-target="#paymentMethods" data-dismiss="modal">
+              Proceed to Pay
+            </button>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Method Popup -->
+<div class="modal fade" id="paymentMethods" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Method</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row mt-5">
+          <ngx-stripe-card [options]="cardOptions" [elementsOptions]="elementsOptions"></ngx-stripe-card>
+          <!-- <button (click)="createToken()" class="btn btn-main" data-dismiss="modal" aria-label="Close">
+            Pay
+          </button> -->
+          <!-- <div class="col-12">
+            class="md-3 border rounded"
+            <div class="bankcard" data-toggle="modal" data-target="#bookSuccessfully" data-dismiss="modal">
+              <div class="cardList">
+                <div class="bankIcon">
+                  <img src="../../../../../../assets/images/Mastercard.png" alt="" />
+                </div>
+                <div class="backText">
+                  <p class="mb-0">One Finance **4157</p>
+                </div>
+              </div>
+              <div class="nextArrow">
+                <i class="fa-solid fa-chevron-right" (click)="bookProgram()"></i>
+              </div>
+            </div>
+            <div class="bankcard">
+              <div class="cardList">
+                <div class="bankIcon">
+                  <img src="../../../../../../assets/images/Visa.png" alt="" />
+                </div>
+                <div class="backText">
+                  <p class="mb-0">One Finance **4157</p>
+                </div>
+              </div>
+              <div class="nextArrow">
+                <i class="fa-solid fa-chevron-right"></i>
+              </div>
+            </div>
+            <div class="bankcard">
+              <div class="cardList">
+                <div class="bankIcon">
+                  <img src="../../../../../../assets/images/Mastercard.png" alt="" />
+                </div>
+                <div class="backText">
+                  <p class="mb-0">One Finance **4157</p>
+                </div>
+              </div>
+              <div class="nextArrow">
+                <i class="fa-solid fa-chevron-right" ></i>
+              </div>
+            </div>
+          </div> -->
+
+          <!--  <div class="primaryLayout">
+            <div class="row bankHeader">
+              <div class="col-12">
+
+                <h4>Card Details</h4>
+              </div>
+            </div>
+            <form action="" class="form">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="inputField">
+                    <label for="accountNumber">Card Number</label>
+                    <input type="text" name="" id="Card Number" placeholder="Card Number" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="inputField">
+                    <label for="ExpDate">Exp. Date</label>
+                    <input type="date" name="" id="ExpDate" placeholder="Exp. Date" class="form-control" />
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="inputField">
+                    <label for="cvv">CVV</label>
+                    <input type="text" name="" id="cvv" placeholder="CVV" class="form-control" />
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="inputField">
+                    <label for="cardHolder">Card Holder Name</label>
+                    <input type="text" name="" id="cardHolder" placeholder="Card Holder Name" class="form-control" />
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div class="row mt-3 p-2">
+              <div class="col text-right">
+                <div class="buttonsPairAllignment">
+                  <button class="btn btn-main-outline">Save</button>
+                  <button class="btn btn-main" data-toggle="modal" data-target="#verifyOtp">
+                    Add Card
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Book Program successfully  -->
+
+<div class="modal fade" id="bookSuccessfully" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Method</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <img src="../../../../../../assets/images/bookProgram.png" alt="" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <h4>Your payment has been successfully completed.</h4>
+          </div>
+          <div class="col-12">
+            <button (click)="navigate()" data-dismiss="modal" class="btn btn-main">
+              Continue
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="cardselected" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Payment Method</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12">
+            <h4>Ready to proceed with the payment?</h4>
+          </div>
+          <div class="col-12 d-flex p-2">
+            <div class="col-md-6 mr-2">
+              <button data-dismiss="modal" class="btn btn-main">Close</button>
+            </div>
+
+            <div class="col-md-6">
+              <button (click)="cardSelected()" data-dismiss="modal" class="btn btn-main">
+                Continue
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- delete popup for conformation -->
+
+<div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="closemodaldelete">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body text-center p-4">
+        <h3>Are you sure to delete this category?</h3>
+      </div>
+      <!-- <div class="modal-body">
+                <input type="text" placeholder="Category Name" [(ngModel)]="categoryName" value = {{categoryName}} class="space"><br>
+            </div> -->
+      <div class="deletePairAllignments">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Close
+        </button>
+       
+        <button type="button" class="btn btn-main"  data-dismiss="modal"(click)="deleteCard()" data-toggle="modal" data-target="#bookProgram" >
+          Sure
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
